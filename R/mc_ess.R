@@ -12,8 +12,8 @@
 #' @seealso \code{gof}, \code{plogLik}, \code{pAIC}, \code{pKLIC},
 #' \code{GOSHO} and \code{RJC}.
 #'
-#' @source Bonat, W. H. (2016). Multiple Response Variables Regression
-#' Models in R: The mcglm Package. Journal of Statistical Software, submitted.
+#' @source Bonat, W. H. (2018). Multiple Response Variables Regression
+#' Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
 #'
 #' @source Wang, M. (2014). Generalized Estimating Equations in Longitudinal Data
 #' Analysis: A Review and Recent Developments. Advances in Statistics, 1(1)1--13.
@@ -25,7 +25,8 @@ ESS <- function(object, verbose = TRUE) {
     b <- c(as.matrix(object$observed)) - c(as.matrix(object$fitted))
     ess <- as.numeric(t(b)%*%object$inv_C%*%b)
     df <- length(coef(object)$Estimates)
-    ess <- ess/df
+    df2 <- length(object$observed) - df
+    ess <- ess/df2
     if (verbose) cat("ESS", ess)
     return(invisible(list("ESS" = ess)))
   }
@@ -38,7 +39,8 @@ ESS <- function(object, verbose = TRUE) {
     inv_C <- bdiag(inv_C.list)
     ess <- as.numeric(t(b)%*%inv_C%*%b)
     df <- sum(unlist(lapply(object, function(x)length(coef(x)$Estimates))))
-    ess <- ess/df
+    df2 <- length(Y) - df
+    ess <- ess/df2
     if (verbose) cat("ESS", ess)
     return(invisible(list("ESS" = ess)))
   }

@@ -4,12 +4,12 @@
 \alias{mc_matrix_linear_predictor}
 \title{Matrix Linear Predictor}
 \source{
+Bonat, W. H. (2018). Multiple Response Variables Regression
+Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
+
 Bonat, W. H. and Jorgensen, B. (2016) Multivariate
     covariance generalized linear models.
-    Journal of Royal Statistical Society - Series C X(X):XX--XX.
-
-Bonat, W. H. (2016). Multiple Response Variables Regression
-Models in R: The mcglm Package. Journal of Statistical Software, submitted.
+    Journal of Royal Statistical Society - Series C 65:649--675.
 }
 \usage{
 mc_matrix_linear_predictor(tau, Z)
@@ -41,11 +41,10 @@ Z1 <- Matrix(rep(1,5)\%*\%t(rep(1,5)))
 Z <- list(Z0, Z1)
 mc_matrix_linear_predictor(tau = c(1,0.8), Z = Z)
 }
-\author{
-Wagner Hugo Bonat, \email{wbonat@ufpr.br}
-}
 \seealso{
 \code{mc_id}, \code{mc_dist}, \code{mc_ma}, \code{mc_rw},
 \code{mc_mixed} and \code{mc_car}.
 }
-
+\author{
+Wagner Hugo Bonat, \email{wbonat@ufpr.br}
+}

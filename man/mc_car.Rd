@@ -4,8 +4,8 @@
 \alias{mc_car}
 \title{Conditional Autoregressive Model Structure}
 \source{
-Bonat, W. H. (2016). Multiple Response Variables Regression
-Models in R: The mcglm Package. Journal of Statistical Software, submitted.
+Bonat, W. H. (2018). Multiple Response Variables Regression
+Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
 }
 \usage{
 mc_car(list_neigh, intrinsic = FALSE)
@@ -31,11 +31,10 @@ based on spatial coordinates. This way to specify the matrix linear
 predictor can also be applied for spatial continuous data,
 as an approximation.
 }
-\author{
-Wagner Hugo Bonat, \email{wbonat@ufpr.br}
-}
 \seealso{
 \code{mc_id}, \code{mc_compute_rho}, \code{mc_conditional_test},
  \code{mc_dist}, \code{mc_ma}, \code{mc_rw} \cr and \code{mc_mixed}.
 }
-
+\author{
+Wagner Hugo Bonat, \email{wbonat@ufpr.br}
+}

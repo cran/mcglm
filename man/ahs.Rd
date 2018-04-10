@@ -12,7 +12,7 @@ Deb, P. and Trivedi, P. K. (1997) Demand for medical care by
 
 Bonat, W. H. and Jorgensen, B. (2016) Multivariate
     covariance generalized linear models.
-    Journal of Royal Statistical Society - Series C X(X):XX--XX.
+    Journal of Royal Statistical Society - Series C 65:649--675.
 }
 \usage{
 data(ahs)
@@ -92,4 +92,3 @@ fit.ahs <- mcglm(linear_pred = c(form1, form2),
 summary(fit.ahs)
 }
 \keyword{datasets}
-

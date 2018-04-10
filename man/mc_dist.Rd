@@ -4,8 +4,8 @@
 \alias{mc_dist}
 \title{Distance Models Structure}
 \source{
-Bonat, W. H. (2016). Multiple Response Variables Regression
-Models in R: The mcglm Package. Journal of Statistical Software, submitted.
+Bonat, W. H. (2018). Multiple Response Variables Regression
+Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
 }
 \usage{
 mc_dist(id, time, data, method = "euclidean")
@@ -46,12 +46,11 @@ data <- data.frame("id" = id, "time" = time)
 mc_dist(id = "id", time = "time", data = data)
 mc_dist(id = "id", time = "time", data = data, method = "canberra")
 }
-\author{
-Wagner Hugo Bonat, \email{wbonat@ufpr.br}
-}
 \seealso{
 \code{\link[stats]{dist}}, \code{mc_id},
 \code{mc_conditional_test}, \code{mc_car}, \code{mc_ma},
 \code{mc_rw} and \code{mc_mixed}.
 }
-
+\author{
+Wagner Hugo Bonat, \email{wbonat@ufpr.br}
+}

@@ -17,8 +17,8 @@
 #' @param order order of the random walk model.
 #' @param proper logical.
 #'
-#' @source Bonat, W. H. (2016). Multiple Response Variables Regression
-#' Models in R: The mcglm Package. Journal of Statistical Software, submitted.
+#' @source Bonat, W. H. (2018). Multiple Response Variables Regression
+#' Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
 #'
 #' @return If \code{proper = FALSE} a matrix of \code{dgCMatrix} class.
 #'         If \code{proper = TRUE} a list with two matrices of
@@ -57,7 +57,11 @@ mc_rw <- function(id, time, data, order = 1, proper = FALSE) {
     } else {
         Z1.list <- list()
     }
-    data.id <- split(data, data[id])
+    data.id <- split(data, data[id], drop = TRUE)
+    DD <- sum(abs(diff(do.call(c,lapply(data.id, function(x)dim(x)[1])))))
+    if( DD != 0) {
+      stop("Model requires equal number of observations by id. \n")
+    }
     for(i in 1:length(data.id)) {
         n <- dim(data.id[[i]])[1]
         ordem <- as.numeric(data.id[[i]][[time]])

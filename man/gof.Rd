@@ -4,8 +4,8 @@
 \alias{gof}
 \title{Measures of Goodness-of-Fit}
 \source{
-Bonat, W. H. (2016). Multiple Response Variables Regression
-Models in R: The mcglm Package. Journal of Statistical Software, submitted.
+Bonat, W. H. (2018). Multiple Response Variables Regression
+Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
 
 Wang, M. (2014). Generalized Estimating Equations in Longitudinal Data
 Analysis: A Review and Recent Developments. Advances in Statistics, 1(1)1--13.
@@ -23,13 +23,12 @@ Returns a data frame containing goodness-of-fit measures.
 \description{
 Extract the pseudo Gaussian log-likelihood (plogLik),
 pseudo Akaike Information Criterion (pAIC), pseudo Kullback-Leibler
-Information Criterion (pKLIC) and Error Sum of Squares (ESS)
+Information Criterion (pKLIC) and pseudo Bayesian Information Criterion (pBIC)
 for objects of \code{mcglm} class.
+}
+\seealso{
+\code{plogLik}, \code{pAIC}, \code{pKLIC} and \code{pBIC}.
 }
 \author{
 Wagner Hugo Bonat, \email{wbonat@ufpr.br}
 }
-\seealso{
-\code{plogLik}, \code{pAIC}, \code{pKLIC}, \code{ESS}.
-}
-

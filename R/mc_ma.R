@@ -23,8 +23,8 @@
 #' function is a simple call of the \code{\link[Matrix]{bandSparse}}
 #' function from the \code{Matrix} package.
 #'
-#' @source Bonat, W. H. (2016). Multiple Response Variables Regression
-#' Models in R: The mcglm Package. Journal of Statistical Software, submitted.
+#' @source Bonat, W. H. (2018). Multiple Response Variables Regression
+#' Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
 #'
 #' @return A matrix of \code{dgCMatrix} class.
 #'
@@ -49,7 +49,11 @@ mc_ma <- function(id, time, data, order = 1) {
   data <- data[order(data[id]),]
   data$id3 <- 1:dim(data)[1]
   Z1.list <- list()
-  data.id <- split(data, data[id])
+  data.id <- split(data, data[id], drop = TRUE)
+  DD <- sum(abs(diff(do.call(c,lapply(data.id, function(x)dim(x)[1])))))
+  if( DD != 0) {
+    stop("Model requires equal number of observations by id. \n")
+  }
   for(i in 1:length(data.id)) {
     NN <- dim(data.id[[i]])[1]
     ordem <- as.numeric(data.id[[i]][[time]])

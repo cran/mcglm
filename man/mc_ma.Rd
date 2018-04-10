@@ -4,8 +4,8 @@
 \alias{mc_ma}
 \title{Moving Average Models Structure}
 \source{
-Bonat, W. H. (2016). Multiple Response Variables Regression
-Models in R: The mcglm Package. Journal of Statistical Software, submitted.
+Bonat, W. H. (2018). Multiple Response Variables Regression
+Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
 }
 \usage{
 mc_ma(id, time, data, order = 1)
@@ -49,11 +49,10 @@ mc_ma(id = "id", time = "time", data = data, order = 1)
 mc_ma(id = "id", time = "time", data = data, order = 2)
 
 }
-\author{
-Wagner Hugo Bonat, \email{wbonat@ufpr.br}
-}
 \seealso{
 \code{mc_id}, \code{mc_dist}, \code{mc_car},
 \code{mc_rw} and \code{mc_mixed}.
 }
-
+\author{
+Wagner Hugo Bonat, \email{wbonat@ufpr.br}
+}

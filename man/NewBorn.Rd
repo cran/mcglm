@@ -8,7 +8,7 @@
 \source{
 Bonat, W. H. and Jorgensen, B. (2016) Multivariate
     covariance generalized linear models.
-    Journal of Royal Statistical Society - Series C X(X):XX--XX.
+    Journal of Royal Statistical Society - Series C 65:649--675.
 }
 \usage{
 data(NewBorn)
@@ -83,8 +83,7 @@ fit <- mcglm(linear_pred = c(formu), matrix_pred = list(Z0),
             link = c("logit"), variance = c("binomialP"),
             power_fixed = c(TRUE),
             data = NewBorn,
-            control_algorithm = list(verbose = FALSE, tunning = 0.5))
+            control_algorithm = list(verbose = FALSE, tuning = 0.5))
 summary(fit)
 }
 \keyword{datasets}
-

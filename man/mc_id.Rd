@@ -4,8 +4,8 @@
 \alias{mc_id}
 \title{Independent Model Structure}
 \source{
-Bonat, W. H. (2016). Multiple Response Variables Regression
-Models in R: The mcglm Package. Journal of Statistical Software, submitted.
+Bonat, W. H. (2018). Multiple Response Variables Regression
+Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
 }
 \usage{
 mc_id(data)
@@ -21,10 +21,9 @@ Builds an identity matrix to be used as a component of
 the matrix linear predictor. It is in general the first component of
 the matrix linear predictor, a kind of intercept matrix.
 }
-\author{
-Wagner Hugo Bonat, \email{wbonat@ufpr.br}
-}
 \seealso{
 \code{mc_dist}, \code{mc_ma}, \code{mc_rw} and \code{mc_mixed}.
 }
-
+\author{
+Wagner Hugo Bonat, \email{wbonat@ufpr.br}
+}

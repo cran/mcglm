@@ -4,8 +4,8 @@
 \alias{ESS}
 \title{Generalized Error Sum of Squares}
 \source{
-Bonat, W. H. (2016). Multiple Response Variables Regression
-Models in R: The mcglm Package. Journal of Statistical Software, submitted.
+Bonat, W. H. (2018). Multiple Response Variables Regression
+Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
 
 Wang, M. (2014). Generalized Estimating Equations in Longitudinal Data
 Analysis: A Review and Recent Developments. Advances in Statistics, 1(1)1--13.
@@ -26,11 +26,10 @@ Returns the value of the generalized error sum of squares (ESS).
 Extract the generalized error sum of squares (ESS) for
 objects of \code{mcglm} class.
 }
-\author{
-Wagner Hugo Bonat, \email{wbonat@ufpr.br}
-}
 \seealso{
 \code{gof}, \code{plogLik}, \code{pAIC}, \code{pKLIC},
 \code{GOSHO} and \code{RJC}.
 }
-
+\author{
+Wagner Hugo Bonat, \email{wbonat@ufpr.br}
+}

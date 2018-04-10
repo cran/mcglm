@@ -76,7 +76,7 @@
 #'
 #' @source Bonat, W. H. and Jorgensen, B. (2016) Multivariate
 #'     covariance generalized linear models.
-#'     Journal of Royal Statistical Society - Series C X(X):XX--XX.
+#'     Journal of Royal Statistical Society - Series C 65:649--675.
 #'
 #' @examples
 #'require(mcglm)
@@ -140,13 +140,13 @@ NULL
 #'
 #' @format a \code{data.frame} with 1216 records and 11 variables.
 #'
-#' @source Bonat, et. al. (2016). Modelling the covariance structure in
+#' @source Bonat, et. al. (2017). Modelling the covariance structure in
 #' marginal multivariate count models: Hunting in Bioko Island.
-#' Environmetrics, submitted.
+#' Journal of Agricultural Biological and Environmental Statistics, 22(4):446--464.
 #'
-#' @source Bonat, W. H. (2016). Multiple Response Variables Regression
-#' Models in R: The mcglm Package.
-#' Journal of Statistical Software, submitted.
+#' @source Bonat, W. H. (2018). Multiple Response Variables Regression
+#' Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
+#'
 #'
 #' @examples
 #' \donttest{
@@ -201,8 +201,8 @@ NULL
 #'
 #' @format a \code{data.frame} with 250 records and 9 variables.
 #'
-#' @source Bonat, W. H. (2016). Multiple Response Variables Regression
-#' Models in R: The mcglm Package. Journal of Statistical Software, submitted.
+#' @source Bonat, W. H. (2018). Multiple Response Variables Regression
+#' Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
 #'
 #' @examples
 #' \donttest{
@@ -214,7 +214,7 @@ NULL
 #' fit.ca <- mcglm(linear_pred = c(form.ca), matrix_pred = list(Z1),
 #'                link = "log", variance = "tweedie", covariance = "inverse",
 #'                power_fixed = FALSE, data = soil,
-#'                control_algorith = list(max_iter = 500, tunning = 0.1))
+#'                control_algorith = list(max_iter = 500, tuning = 0.1))
 #' summary(fit.ca)
 #' # Conditional hypothesis test
 #' mc_conditional_test(fit.ca, parameters = c("power11","tau11","tau12"),
@@ -298,7 +298,7 @@ NULL
 #'
 #' @source Bonat, W. H. and Jorgensen, B. (2016) Multivariate
 #'     covariance generalized linear models.
-#'     Journal of Royal Statistical Society - Series C X(X):XX--XX.
+#'     Journal of Royal Statistical Society - Series C 65:649--675.
 #'
 #' @examples
 #' library(mcglm)
@@ -310,7 +310,7 @@ NULL
 #'             link = c("logit"), variance = c("binomialP"),
 #'             power_fixed = c(TRUE),
 #'             data = NewBorn,
-#'             control_algorithm = list(verbose = FALSE, tunning = 0.5))
+#'             control_algorithm = list(verbose = FALSE, tuning = 0.5))
 #' summary(fit)
 NULL
 
@@ -351,8 +351,8 @@ NULL
 #'
 #' @format a \code{data.frame} with 75 records and 7 variables.
 #'
-#' @source Bonat, W. H. (2016). Multiple Response Variables Regression
-#' Models in R: The mcglm Package. Journal of Statistical Software, submitted.
+#' @source Bonat, W. H. (2018). Multiple Response Variables Regression
+#' Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
 #'
 #' @examples
 #' library(mcglm)

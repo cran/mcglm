@@ -38,7 +38,7 @@ trellis.par.set(ps)
 
 ## ---- eval=FALSE--------------------------------------------------
 #  library(devtools)
-#  install_git("http://git.leg.ufpr.br/wbonat/mcglm.git")
+#  install_git("wbonat/mcglm")
 
 ## ---- eval=FALSE, error=FALSE, message=FALSE, warning=FALSE-------
 #  library(mcglm)
@@ -197,7 +197,7 @@ fit4.logitPQ <- mcglm(linear_pred = c(y1 ~ covariate),
                       link = "logit", variance = "binomialPQ",
                       power_fixed = FALSE,
                       Ntrial = list(rep(10,250)), 
-                      control_algorithm = list(tunning = 0.5),
+                      control_algorithm = list(tuning = 0.5),
                       data = data)
 
 ## -----------------------------------------------------------------

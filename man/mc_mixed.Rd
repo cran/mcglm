@@ -4,12 +4,12 @@
 \alias{mc_mixed}
 \title{Mixed Models Structure}
 \source{
-Bonat, W. H. (2016). Multiple Response Variables Regression
-Models in R: The mcglm Package. Journal of Statistical Software, submitted.
+Bonat, W. H. (2018). Multiple Response Variables Regression
+Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
 
 Bonat, et. al. (2016). Modelling the covariance structure in
 marginal multivariate count models: Hunting in Bioko Island.
-Environmetrics, submitted.
+Journal of Agricultural Biological and Environmental Statistics, 22(4):446--464.
 }
 \usage{
 mc_mixed(formula, data)
@@ -63,11 +63,10 @@ mc_mixed(~0 + SUBJECT/x1, data = data)
 mc_mixed(~0 + SUBJECT/(x1 + x2), data = data)
 
 }
-\author{
-Wagner Hugo Bonat, \email{wbonat@ufpr.br}
-}
 \seealso{
 \code{mc_id}, \code{mc_conditional_test},
  \code{mc_dist}, \code{mc_ma}, \code{mc_rw} and \code{mc_car}.
 }
-
+\author{
+Wagner Hugo Bonat, \email{wbonat@ufpr.br}
+}

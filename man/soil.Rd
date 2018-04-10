@@ -6,8 +6,8 @@
 \title{Soil Chemistry Properties Data}
 \format{a \code{data.frame} with 250 records and 9 variables.}
 \source{
-Bonat, W. H. (2016). Multiple Response Variables Regression
-Models in R: The mcglm Package. Journal of Statistical Software, submitted.
+Bonat, W. H. (2018). Multiple Response Variables Regression
+Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
 }
 \usage{
 data(soil)
@@ -47,7 +47,7 @@ form.ca <- CA ~ COORD.X*COORD.Y + SAND + SILT + CLAY + PHWATER
 fit.ca <- mcglm(linear_pred = c(form.ca), matrix_pred = list(Z1),
                link = "log", variance = "tweedie", covariance = "inverse",
                power_fixed = FALSE, data = soil,
-               control_algorith = list(max_iter = 500, tunning = 0.1))
+               control_algorith = list(max_iter = 500, tuning = 0.1))
 summary(fit.ca)
 # Conditional hypothesis test
 mc_conditional_test(fit.ca, parameters = c("power11","tau11","tau12"),
@@ -58,4 +58,3 @@ mc_compute_rho(fit.ca)
 
 }
 \keyword{datasets}
-

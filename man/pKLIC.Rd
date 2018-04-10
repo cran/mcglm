@@ -4,8 +4,8 @@
 \alias{pKLIC}
 \title{Pseudo Kullback-Leibler Information Criterion}
 \source{
-Bonat, W. H. (2016). Multiple Response Variables Regression
-Models in R: The mcglm Package. Journal of Statistical Software, submitted.
+Bonat, W. H. (2018). Multiple Response Variables Regression
+Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
 }
 \usage{
 pKLIC(object, verbose = TRUE)
@@ -24,11 +24,10 @@ criterion.
 Extract the pseudo Kullback-Leibler information criterion
 (pKLIC) for objects of \code{mcglm} class.
 }
-\author{
-Wagner Hugo Bonat, \email{wbonat@ufpr.br}
-}
 \seealso{
 \code{gof}, \code{plogLik}, \code{ESS}, \code{pAIC},
 \code{GOSHO} and \code{RJC}.
 }
-
+\author{
+Wagner Hugo Bonat, \email{wbonat@ufpr.br}
+}

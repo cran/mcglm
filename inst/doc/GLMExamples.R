@@ -38,7 +38,7 @@ trellis.par.set(ps)
 
 ## ---- eval=FALSE--------------------------------------------------
 #  library(devtools)
-#  install_git("http://git.leg.ufpr.br/wbonat/mcglm.git")
+#  install_git("wbonat/mcglm")
 
 ## ---- eval=FALSE, error=FALSE, message=FALSE, warning=FALSE-------
 #  library(mcglm)
@@ -65,9 +65,9 @@ Z0 <- Diagonal(dim(d.AD)[1],1)
 fit.qglm <- mcglm(linear_pred = c(counts ~ outcome + treatment),
                   matrix_pred = list("resp1" = list(Z0)),
                   link = "log", variance = "tweedie", data = d.AD,
-                  control_algorithm = list("verbose" = FALSE,
-                                           "method" = "chaser",
-                                           "tunning" = 0.8))
+                  control_algorithm = list(verbose = FALSE,
+                                           method = "chaser",
+                                           tuning = 0.8))
 
 ## ---- warning = FALSE, message = FALSE----------------------------
 cbind("GLM" = coef(fit.glm),
@@ -173,7 +173,7 @@ fit.joint.mcglm <- mcglm(linear_pred = c(lot1 ~ log(u), lot2 ~ log(u)),
                          control_initial = list_initial,
                          control_algorithm = list("correct" = TRUE,
                                                  "method" = "rc",
-                                                 "tunning" = 0.001,
+                                                 "tuning" = 0.001,
                                                  "max_iter" = 100))
 summary(fit.joint.mcglm)
 

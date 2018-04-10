@@ -4,8 +4,8 @@
 \alias{mc_compute_rho}
 \title{Autocorrelation Estimates}
 \source{
-Bonat, W. H. (2016). Multiple Response Variables Regression
-Models in R: The mcglm Package. Journal of Statistical Software, submitted.
+Bonat, W. H. (2018). Multiple Response Variables Regression
+Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
 }
 \usage{
 mc_compute_rho(object, level = 0.975)
@@ -29,10 +29,9 @@ interpretation in terms of spatial autocorrelation.
 The function \code{mc_compute_rho} computes the autocorrelation
 based on a fitted model.
 }
-\author{
-Wagner Hugo Bonat, \email{wbonat@ufpr.br}
-}
 \seealso{
 \code{mc_car} and \code{mc_conditional_test}.
 }
-
+\author{
+Wagner Hugo Bonat, \email{wbonat@ufpr.br}
+}
