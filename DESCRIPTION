@@ -1,8 +1,8 @@
 Package: mcglm
 Type: Package
 Title: Multivariate Covariance Generalized Linear Models
-Version: 0.4.0
-Date: 2018-04-10
+Version: 0.5.0
+Date: 2019-06-25
 Author: Wagner Hugo Bonat [aut, cre],
   Walmes Marques Zeviani [ctb],
   Fernando de Pol Mayer [ctb]
@@ -33,15 +33,16 @@ Description: Fitting multivariate covariance generalized linear
 Depends: R (>= 3.2.1)
 Suggests: testthat, plyr, lattice, latticeExtra, knitr, rmarkdown,
         MASS, mvtnorm, tweedie, devtools
-Imports: stats, Matrix, assertthat, graphics
+Imports: stats, Matrix, assertthat, graphics, Rcpp (>= 0.12.16)
 License: GPL-3 | file LICENSE
 LazyData: TRUE
 URL: https://github.com/wbonat/mcglm
 BugReports: https://github.com/wbonat/mcglm/issues
 Encoding: UTF-8
 VignetteBuilder: knitr
-RoxygenNote: 6.0.1
-NeedsCompilation: no
-Packaged: 2018-04-10 18:52:38 UTC; wagner
+RoxygenNote: 6.1.1
+LinkingTo: Rcpp, RcppArmadillo
+NeedsCompilation: yes
+Packaged: 2019-06-24 18:45:49 UTC; wagner
 Repository: CRAN
-Date/Publication: 2018-04-10 22:01:49 UTC
+Date/Publication: 2019-06-24 19:30:03 UTC

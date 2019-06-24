@@ -37,7 +37,7 @@
 #' should be sparse or not.
 #' @param y_vec a vector of the stacked response variables.
 #' @param correct a logical indicating if the algorithm will use the
-#' correction term or not. Default \code{correct = TRUE}.
+#' correction term or not. Default \code{correct = FALSE}.
 #' @param max_iter maximum number of iterations. Default \code{max_iter = 20}.
 #' @param tol a numeric specyfing the tolerance. Default \code{tol = 1e-04}.
 #' @param method a string specyfing the method used to fit the models
@@ -68,7 +68,7 @@
 #' Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
 #'
 #' @importFrom stats as.formula binomial coef dist fitted glm make.link
-#' model.frame model.matrix na.exclude pchisq qchisq qnorm quasi
+#' model.frame model.matrix na.exclude pchisq qchisq qnorm pnorm quasi
 #' residuals vcov model.response
 #' @importFrom utils combn
 #' @importFrom grDevices dev.new
@@ -78,7 +78,7 @@ fit_mcglm <- function(list_initial, list_link, list_variance,
                       list_covariance, list_X, list_Z,
                       list_offset, list_Ntrial, list_power_fixed,
                       list_sparse, y_vec,
-                      correct = TRUE, max_iter, tol = 0.001,
+                      correct = FALSE, max_iter, tol = 0.001,
                       method = "rc",
                       tuning = 0, verbose) {
     ## Transformation from list to vector
@@ -150,9 +150,18 @@ fit_mcglm <- function(list_initial, list_link, list_variance,
             cov_temp <- mc_pearson(y_vec = y_vec, mu_vec = mu_vec,
                                    Cfeatures = Cfeatures,
                                    inv_J_beta = inv_J_beta, D = D,
-                correct = correct, compute_variability = TRUE)
+                correct = correct, compute_variability = FALSE)
             step <- tuning * solve(cov_temp$Sensitivity, cov_temp$Score)
         }
+        #if(method == "gradient") {
+        #  cov_temp <- mc_pearson(y_vec = y_vec, mu_vec = mu_vec,
+        #                         Cfeatures = Cfeatures,
+        #                         inv_J_beta = inv_J_beta, D = D,
+        #                         correct = correct,
+        #                         compute_sensitivity = FALSE,
+        #                         compute_variability = FALSE)
+        #  step <- tuning * cov_temp$Score
+        #}
         if (method == "rc") {
             cov_temp <- mc_pearson(y_vec = y_vec, mu_vec = mu_vec,
                                    Cfeatures = Cfeatures,
@@ -182,7 +191,9 @@ fit_mcglm <- function(list_initial, list_link, list_variance,
         cov_ini <- cov_next
         solucao_cov[i, ] <- cov_next
         ## Checking the convergence
+        #sol = abs(c(solucao_beta[i, ], solucao_cov[i, ]))
         tolera <- abs(c(solucao_beta[i, ], solucao_cov[i, ]) - c(solucao_beta[i - 1, ], solucao_cov[i - 1, ]))
+        #tolera <- tolera/sol
         # if(verbose == TRUE){print(round(tolera, 4))}
         if (all(tolera <= tol) == TRUE)
             break
@@ -221,7 +232,9 @@ fit_mcglm <- function(list_initial, list_link, list_variance,
     p2 <- rbind(V_cov_beta, cov_temp$Variability)
     joint_variability <- cbind(p1, p2)
     inv_S_beta <- inv_J_beta
-    inv_S_cov <- solve(cov_temp$Sensitivity)
+    # Problem 1 x 1 matrix
+    # IMPROVE IT
+    inv_S_cov <- solve(as.matrix(cov_temp$Sensitivity))
     mat0 <- Matrix(0, ncol = dim(S_cov_beta)[1], nrow = dim(S_cov_beta)[2])
     cross_term <- -inv_S_cov %*% S_cov_beta %*% inv_S_beta
     p1 <- rbind(inv_S_beta, cross_term)
