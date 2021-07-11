@@ -152,7 +152,8 @@ mc_twin_bio <- function(id, twin.id, type, replicate = NULL,
   for(i in 1:length(data.twin)) {
     twin_temp <- data.twin[[i]]
     twin_temp$COD_ORDER1 <- 1:dim(twin_temp)[1]
-    twin_temp <- twin_temp[order(twin_temp[twin.id]),]
+    #twin_temp <- twin_temp[order(twin_temp[twin.id]),]
+    twin_temp <- twin_temp[do.call(base::order, as.list(twin_temp[twin.id])),]
     twin_temp$COD_ORDER2 <- 1:dim(twin_temp)[1]
     if(!is.null(replicate)) {
       n_replicate <- length(unique(twin_temp[[replicate]]))
@@ -163,11 +164,13 @@ mc_twin_bio <- function(id, twin.id, type, replicate = NULL,
       R_matrix <- Diagonal(n_replicate, 1)
     }
     if(unique(twin_temp[type]) == "mz") {
-      twin_temp = twin_temp[order(twin_temp$COD_ORDER1),]
+      #twin_temp = twin_temp[order(twin_temp$COD_ORDER1),]
+      twin_temp <- twin_temp[do.call(base::order, as.list(twin_temp$COD_ORDER1)),]
       M_temp <- kronecker(MZ, R_matrix)[twin_temp$COD_ORDER2,twin_temp$COD_ORDER2]
     }
     if(unique(twin_temp[type]) == "dz") {
-      twin_temp = twin_temp[order(twin_temp$COD_ORDER1),]
+      #twin_temp = twin_temp[order(twin_temp$COD_ORDER1),]
+      twin_temp <- twin_temp[do.call(base::order, as.list(twin_temp$COD_ORDER1)),]
       M_temp <- kronecker(DZ, R_matrix)[twin_temp$COD_ORDER2,twin_temp$COD_ORDER2]
     }
     M_list[[i]] <- M_temp

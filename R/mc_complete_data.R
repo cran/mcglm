@@ -1,4 +1,4 @@
-#' @title Complete Data Set with NA
+#' @title Complete data in case of missing observations
 #' @author Wagner Hugo Bonat, \email{wbonat@@ufpr.br}
 #'
 #' @description The function \code{mc_complete_data} completes a data

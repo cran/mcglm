@@ -79,7 +79,7 @@
 #'     Journal of Royal Statistical Society - Series C 65:649--675.
 #'
 #' @examples
-#'require(mcglm)
+#' require(mcglm)
 #' data(ahs, package="mcglm")
 #' form1 <- Ndoc ~ income + age
 #' form2 <- Nndoc ~ income + age
@@ -205,10 +205,9 @@ NULL
 #' Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
 #'
 #' @examples
+#' library(mcglm)
+#' library(Matrix)
 #' data(soil, package="mcglm")
-#' neigh <- spdep::tri2nb(soil[,1:2])
-#' ## Sptail model
-#' ## Z1 <- mc_car(neigh) take too long
 #' Z1 <- mc_id(soil)
 #' # Linear predictor
 #' form.ca <- CA ~ COORD.X*COORD.Y + SAND + SILT + CLAY + PHWATER
@@ -217,7 +216,6 @@ NULL
 #'                power_fixed = TRUE, data = soil,
 #'                control_algorith = list(max_iter = 1000, tuning = 0.1,
 #'                verbose = FALSE, tol = 1e-03))
-#' ## mc_compute_rho(fit.ca) only for spatial model
 #'
 
 NULL

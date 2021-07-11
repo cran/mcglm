@@ -2,9 +2,9 @@
 % Please edit documentation in R/mc_core_pearson.R
 \name{mc_core_pearson}
 \alias{mc_core_pearson}
-\title{Core of the Pearson estimating function.}
+\title{Core of Pearson estimating functions}
 \usage{
-mc_core_pearson(product, inv_C, res)
+mc_core_pearson(product, inv_C, res, W)
 }
 \arguments{
 \item{product}{A matrix.}
@@ -12,6 +12,8 @@ mc_core_pearson(product, inv_C, res)
 \item{inv_C}{A matrix.}
 
 \item{res}{A vector of residuals.}
+
+\item{W}{Matrix of weights.}
 }
 \value{
 A vector

@@ -2,7 +2,7 @@
 % Please edit documentation in R/mc_complete_data.R
 \name{mc_complete_data}
 \alias{mc_complete_data}
-\title{Complete Data Set with NA}
+\title{Complete data in case of missing observations}
 \source{
 Bonat, W. H. (2018). Multiple Response Variables Regression
 Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.

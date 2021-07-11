@@ -1,8 +1,8 @@
-#' @title Auxiliar function: Build F matrix for Wald multivariate test
+#' @title Auxiliary function: Build F matrix for Wald multivariate test
 #' @name mc_build_F
 #' @author Wagner Hugo Bonat
 #'
-#' @description The function \code{mc_build_F} is just an auxiliar
+#' @description The function \code{mc_build_F} is just an auxiliary
 #'     function to construct the design matrix for multivariate Wald-type
 #'     test.
 #'

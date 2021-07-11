@@ -2,7 +2,7 @@
 % Please edit documentation in R/mc_build_F.R
 \name{mc_build_F}
 \alias{mc_build_F}
-\title{Auxiliar function: Build F matrix for Wald multivariate test}
+\title{Auxiliary function: Build F matrix for Wald multivariate test}
 \usage{
 mc_build_F(vector)
 }
@@ -13,7 +13,7 @@ mc_build_F(vector)
 A matrix.
 }
 \description{
-The function \code{mc_build_F} is just an auxiliar
+The function \code{mc_build_F} is just an auxiliary
     function to construct the design matrix for multivariate Wald-type
     test.
 }

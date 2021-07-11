@@ -47,16 +47,17 @@
 #' the step-length. Default \code{tuning = 1}.
 #' @param verbose a logical if TRUE print the values of the covariance
 #' parameters used on each iteration. Default \code{verbose = FALSE}
+#' @param weights Vector of weights for model fitting.
 #' @usage fit_mcglm(list_initial, list_link, list_variance,
 #'          list_covariance, list_X, list_Z, list_offset,
 #'          list_Ntrial, list_power_fixed, list_sparse,
 #'          y_vec, correct, max_iter, tol, method,
-#'          tuning, verbose)
-#' @return A list with estimated regression and covariance parameters.
+#'          tuning, verbose, weights)
+#' @return A list with regression and covariance parameter estimates.
 #' Details about the estimation procedures as iterations, sensitivity,
 #' variability are also provided. In general the users do not need to
 #' use this function directly. The \code{\link{mcglm}} provides GLM
-#' interface for fitting \code{mcglm} .
+#' interface for fitting \code{mcglm}.
 #' @seealso \code{mcglm}, \code{mc_matrix_linear_predictor},
 #'  \code{mc_link_function} and \cr \code{mc_variance_function}.
 #'
@@ -80,7 +81,9 @@ fit_mcglm <- function(list_initial, list_link, list_variance,
                       list_sparse, y_vec,
                       correct = FALSE, max_iter, tol = 0.001,
                       method = "rc",
-                      tuning = 0, verbose) {
+                      tuning = 0, verbose, weights) {
+    ## Diagonal matrix with weights
+    W <- Diagonal(length(y_vec), weights)
     ## Transformation from list to vector
     parametros <- mc_list2vec(list_initial, list_power_fixed)
     n_resp <- length(list_initial$regression)
@@ -121,7 +124,8 @@ fit_mcglm <- function(list_initial, list_link, list_variance,
             compute_derivative_cov = FALSE)
         # Step 1.3 - Update the regression parameters
         beta_temp <- mc_quasi_score(D = D, inv_C = Cfeatures$inv_C,
-                                    y_vec = y_vec, mu_vec = mu_vec)
+                                    y_vec = y_vec, mu_vec = mu_vec,
+                                    W = W)
         solucao_beta[i, ] <- as.numeric(beta_ini - solve(beta_temp$Sensitivity, beta_temp$Score))
         score_beta_temp[i, ] <- as.numeric(beta_temp$Score)
         list_initial <- mc_updateBeta(list_initial, solucao_beta[i, ],
@@ -150,24 +154,26 @@ fit_mcglm <- function(list_initial, list_link, list_variance,
             cov_temp <- mc_pearson(y_vec = y_vec, mu_vec = mu_vec,
                                    Cfeatures = Cfeatures,
                                    inv_J_beta = inv_J_beta, D = D,
-                correct = correct, compute_variability = FALSE)
+                                   correct = correct,
+                                   compute_variability = FALSE,
+                                   W = W)
             step <- tuning * solve(cov_temp$Sensitivity, cov_temp$Score)
         }
-        #if(method == "gradient") {
-        #  cov_temp <- mc_pearson(y_vec = y_vec, mu_vec = mu_vec,
-        #                         Cfeatures = Cfeatures,
-        #                         inv_J_beta = inv_J_beta, D = D,
-        #                         correct = correct,
-        #                         compute_sensitivity = FALSE,
-        #                         compute_variability = FALSE)
-        #  step <- tuning * cov_temp$Score
-        #}
+        if(method == "gradient") {
+        cov_temp <- mc_pearson(y_vec = y_vec, mu_vec = mu_vec,
+                                 Cfeatures = Cfeatures,
+                                 inv_J_beta = inv_J_beta, D = D,
+                                 correct = correct,
+                                 compute_sensitivity = FALSE,
+                                 compute_variability = FALSE, W = W)
+          step <- tuning * cov_temp$Score
+        }
         if (method == "rc") {
             cov_temp <- mc_pearson(y_vec = y_vec, mu_vec = mu_vec,
                                    Cfeatures = Cfeatures,
                                    inv_J_beta = inv_J_beta, D = D,
                                    correct = correct,
-                                   compute_variability = TRUE)
+                                   compute_variability = TRUE, W = W)
             step <- solve(tuning * cov_temp$Score %*% t(cov_temp$Score)
                           %*% solve(cov_temp$Variability) %*%
                             cov_temp$Sensitivity + cov_temp$Sensitivity)%*% cov_temp$Score
@@ -213,21 +219,23 @@ fit_mcglm <- function(list_initial, list_link, list_variance,
                             compute_C = TRUE,
                             compute_derivative_beta = FALSE)
     beta_temp2 <- mc_quasi_score(D = D, inv_C = Cfeatures$inv_C,
-                                 y_vec = y_vec, mu_vec = mu_vec)
+                                 y_vec = y_vec, mu_vec = mu_vec, W = W)
     inv_J_beta <- solve(beta_temp2$Sensitivity)
 
     cov_temp <- mc_pearson(y_vec = y_vec, mu_vec = mu_vec,
                            Cfeatures = Cfeatures, inv_J_beta = inv_J_beta,
                            D = D, correct = correct,
-                           compute_variability = TRUE)
+                           compute_variability = TRUE, W = W)
+    #### Here I need to compute the cross-sensitivity and variability
+    inv_CW <- Cfeatures$inv_C%*%W
     Product_beta <- lapply(Cfeatures$D_C_beta, mc_multiply,
-                           bord2 = Cfeatures$inv_C)
+                           bord2 = inv_CW)
     S_cov_beta <- mc_cross_sensitivity(Product_cov = cov_temp$Extra,
                                        Product_beta = Product_beta,
                                        n_beta_effective = length(beta_temp$Score))
     res <- y_vec - mu_vec
     V_cov_beta <- mc_cross_variability(Product_cov = cov_temp$Extra,
-                                       inv_C = Cfeatures$inv_C, res = res, D = D)
+                                       inv_C = inv_CW, res = res, D = D)
     p1 <- rbind(beta_temp2$Variability, t(V_cov_beta))
     p2 <- rbind(V_cov_beta, cov_temp$Variability)
     joint_variability <- cbind(p1, p2)
@@ -252,6 +260,7 @@ fit_mcglm <- function(list_initial, list_link, list_variance,
                    C = Cfeatures$C, Information = inf,
                    mu_list = mu_list, inv_S_beta = inv_S_beta,
                    joint_inv_sensitivity = joint_inv_sensitivity,
-                   joint_variability = joint_variability)
+                   joint_variability = joint_variability,
+                   W = W)
     return(output)
 }

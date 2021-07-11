@@ -12,7 +12,8 @@ mc_pearson(
   D = NULL,
   correct = FALSE,
   compute_sensitivity = TRUE,
-  compute_variability = FALSE
+  compute_variability = FALSE,
+  W
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ mc_pearson(
 \item{compute_sensitivity}{Logical.}
 
 \item{compute_variability}{Logical.}
+
+\item{W}{Matrix of weights.}
 }
 \value{
 A list with three components: (i) a vector of quasi-score

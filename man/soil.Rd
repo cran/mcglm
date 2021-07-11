@@ -40,10 +40,9 @@ Soil chemistry properties measured on a regular grid with
 }
 }
 \examples{
+library(mcglm)
+library(Matrix)
 data(soil, package="mcglm")
-neigh <- spdep::tri2nb(soil[,1:2])
-## Sptail model
-## Z1 <- mc_car(neigh) take too long
 Z1 <- mc_id(soil)
 # Linear predictor
 form.ca <- CA ~ COORD.X*COORD.Y + SAND + SILT + CLAY + PHWATER
@@ -52,7 +51,6 @@ fit.ca <- mcglm(linear_pred = c(form.ca), matrix_pred = list(Z1),
                power_fixed = TRUE, data = soil,
                control_algorith = list(max_iter = 1000, tuning = 0.1,
                verbose = FALSE, tol = 1e-03))
-## mc_compute_rho(fit.ca) only for spatial model
 
 }
 \keyword{datasets}

@@ -284,8 +284,6 @@ plot.mcglm <- function(x, type = "residuals", ...) {
     object <- x
     n_resp <- length(object$beta_names)
     if (type == "residuals") {
-        graphics::par(mar = c(2.6, 2.5, 0.1, 0.1), mgp = c(1.6, 0.6, 0),
-            mfrow = c(2, n_resp))
         for (i in 1:n_resp) {
             res <- residuals(object, type = "pearson")[, i]
             fit_values <- fitted(object)[, i]
@@ -302,8 +300,6 @@ plot.mcglm <- function(x, type = "residuals", ...) {
     if (type == "algorithm") {
         n_iter <- length(na.exclude(object$IterationCovariance[,
                                                                1]))
-        graphics::par(mar = c(2.6, 2.5, 0.1, 0.1), mgp = c(1.6, 0.6, 0),
-            mfrow = c(2, 2))
         graphics::matplot(object$IterationRegression[1:c(n_iter + 5), ],
                 type = "l", lty = 2, ylab = "Regression",
                 xlab = "Iterations")
@@ -331,9 +327,6 @@ plot.mcglm <- function(x, type = "residuals", ...) {
             res <- residuals(object, type = "pearson")[, i]
             dev.new()
             n_cov <- dim(comp_X[[i]])[2]
-            graphics::par(mar = c(2.6, 2.5, 0.5, 0.5),
-                mgp = c(1.6, 0.6, 0),
-                mfrow = c(1, c(n_cov - 1)))
             for (j in 2:n_cov) {
                 p1 <- comp_X[[i]][, j] + res
                 graphics::plot(p1 ~ object$list_X[[i]][, j],
@@ -352,6 +345,7 @@ plot.mcglm <- function(x, type = "residuals", ...) {
 #'
 #' @param x fitted model objects of class \code{mcglm} as produced by \code{mcglm()}.
 #' @param ... further arguments passed to or from other methods.
+#' @return No return value.
 #'
 #' @seealso \code{summary}.
 #' @rdname print.mcglm

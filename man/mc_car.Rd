@@ -2,7 +2,7 @@
 % Please edit documentation in R/mc_car.R
 \name{mc_car}
 \alias{mc_car}
-\title{Conditional Autoregressive Model Structure}
+\title{Conditional Auto regressive Model Structure}
 \source{
 Bonat, W. H. (2018). Multiple Response Variables Regression
 Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
@@ -11,7 +11,7 @@ Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
 mc_car(list_neigh, intrinsic = FALSE)
 }
 \arguments{
-\item{list_neigh}{list of neighboors.}
+\item{list_neigh}{list of neighbors.}
 
 \item{intrinsic}{logical.}
 }
@@ -22,9 +22,9 @@ A list of a matrix (\code{intrinsic = TRUE}) or two matrices
 \description{
 The function \code{mc_car} helps to build the components
 of the matrix linear predictor used for fitting conditional
-autoregressive models. This function is used in general for fitting
-spatial areal data using the well known conditional autoregressive
-models (CAR). This function depends on a list of neighboors, such a
+auto regressive models. This function is used in general for fitting
+spatial areal data using the well known conditional auto regressive
+models (CAR). This function depends on a list of neighbors, such a
 list can be constructed, for example using the
 \code{tri2nb} function from the \code{spdep} package
 based on spatial coordinates. This way to specify the matrix linear

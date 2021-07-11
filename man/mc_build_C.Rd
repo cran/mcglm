@@ -23,7 +23,7 @@ mc_build_C(
 \arguments{
 \item{list_mu}{A list with values of the mean.}
 
-\item{list_Ntrial}{A list with the number of trials. Usefull only for
+\item{list_Ntrial}{A list with the number of trials. Useful only for
 binomial responses.}
 
 \item{rho}{Vector of correlation parameters.}

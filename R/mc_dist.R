@@ -47,7 +47,8 @@ mc_dist <- function(id, time, data, method = "euclidean") {
     return(output)
   }
   data$id2 <- 1:dim(data)[1]
-  data <- data[order(data[id]),]
+  #data <- data[order(as.vector(data[id])),]
+  data <- data[do.call(base::order, as.list(data[id])),]
   data$id3 <- 1:dim(data)[1]
   Z1.list <- list()
   data.id <- split(data, data[id], drop = TRUE)

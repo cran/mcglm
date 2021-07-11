@@ -13,6 +13,9 @@ covprod(A, res, W)
 
 \item{W}{A matrix of weights.}
 }
+\value{
+Return a matrix.
+}
 \description{
 Compute the cross-covariance matrix between covariance
     and regression parameters.  Equation (11) of Bonat and Jorgensen

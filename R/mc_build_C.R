@@ -7,7 +7,7 @@
 #'     respect to rho, power and tau parameters.
 #'
 #'@param list_mu A list with values of the mean.
-#'@param list_Ntrial A list with the number of trials. Usefull only for
+#'@param list_Ntrial A list with the number of trials. Useful only for
 #'     binomial responses.
 #'@param rho Vector of correlation parameters.
 #'@param list_tau A list with values for the tau parameters.

@@ -11,6 +11,9 @@
 
 \item{...}{further arguments passed to or from other methods.}
 }
+\value{
+No return value.
+}
 \description{
 The default print method for an object of \code{mcglm} class.
 }
