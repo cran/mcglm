@@ -18,14 +18,14 @@
 #' @export
 
 pKLIC <- function(object, verbose = TRUE) {
-  if(class(object) ==  "mcglm") {
+  if(isa(object, "mcglm")) {
     Pseudo <- plogLik(object = object, verbose = FALSE)
     penalty <- -sum(diag(object$joint_inv_sensitivity%*%object$joint_variability))
     pKLIC <- -2*Pseudo$plogLik + 2*penalty
     if (verbose) cat("pKLIC", pKLIC)
     return(invisible(list("pKLIC" = pKLIC)))
   }
-  if(class(object) == "list") {
+  if(isa(object, "list")) {
     Pseudo <- plogLik(object = object, verbose = FALSE)
     jis <- bdiag(lapply(object, function(x)x$joint_inv_sensitivity))
     jv <- bdiag(lapply(object, function(x)x$joint_variability))

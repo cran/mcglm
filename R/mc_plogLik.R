@@ -17,7 +17,7 @@ plogLik <- function(object, verbose = TRUE) {
             0.5*t(b)%*%inv.Sigma%*%b
         return(dens)
     }
-    if(class(object) == "mcglm") {
+    if(isa(object, "mcglm")) {
     b <- c(as.matrix(object$observed)) - c(as.matrix(object$fitted))
     det.Sigma <- determinant(object$C)$modulus
     ll <- round(as.numeric(my.gauss(b = b, det.Sigma = det.Sigma,
@@ -26,7 +26,7 @@ plogLik <- function(object, verbose = TRUE) {
     if (verbose) cat("Pseudo log Lik.", ll, sprintf("(df=%d)",df))
     return(invisible(list("plogLik" = ll, "df" = df)))
     }
-    if(class(object) == "list") {
+    if(isa(object, "list")) {
       Y <- do.call(c,lapply(object, function(x)as.numeric(x$observed)))
       mu <-do.call(c,lapply(object, function(x)as.numeric(x$fitted)))
       b <- Y - mu

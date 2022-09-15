@@ -30,7 +30,7 @@ mc_variability <- function(sensitivity, product, inv_C, C, res, W) {
     #    }
     #}
     Sensitivity2 <- mc_sensitivity_op(products = product, W = W^2)
-    Sensitivity2 <- forceSymmetric(Sensitivity2, uplo = FALSE)
+    Sensitivity2 <- forceSymmetric(Sensitivity2, uplo = "L")
     #sourceCpp("src/mc_variability_op.cpp")
     W <- as.vector(diag(W))
     Variability = mc_variability_op(sensitivity = Sensitivity2, WE = WE, k4 = k4, W = W)
@@ -41,6 +41,6 @@ mc_variability <- function(sensitivity, product, inv_C, C, res, W) {
     #                            sum(k4 * diag(W[[i]]) * diag(W[[j]])))
     #    }
     #}
-    Variability <- forceSymmetric(Variability, uplo = FALSE)
+    Variability <- forceSymmetric(Variability, uplo = "L")
     return(Variability)
 }

@@ -19,10 +19,10 @@
 
 pBIC <- function(object, verbose = TRUE) {
   Pseudo <- plogLik(object = object, verbose = FALSE)
-  if(class(object) == "mcglm") {
+  if(isa(object, "mcglm")) {
     Y = object$observed
   }
-  if(class(object) == "list") {
+  if(isa(object, "list")) {
     Y <- do.call(c,lapply(object, function(x)as.numeric(x$observed)))
   }
   NS <- length(Y)

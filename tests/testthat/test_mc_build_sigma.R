@@ -418,7 +418,7 @@ test_that(
     Omega <- mc_matrix_linear_predictor(tau = c(2,0.8,0.5), Z = Z)
     V <- mc_variance_function(mu = mu$mu, power = c(2), Ntrial = 1, variance = "power",
                               inverse = FALSE, derivative_power = TRUE, derivative_mu = FALSE)
-    Sigma <- as(Diagonal(length(mu$mu), mu$mu) + V$V_sqrt%*%Omega%*%V$V_sqrt,"dsyMatrix")
+    Sigma <- as(Diagonal(length(mu$mu), mu$mu) + V$V_sqrt%*%Omega%*%V$V_sqrt,"symmetricMatrix")
     inv_Sigma <- solve(Sigma)
     D_Sigma_power <- V$D_V_sqrt_power%*%Omega%*%V$V_sqrt + V$V_sqrt%*%Omega%*%V$D_V_sqrt_power
     D_Sigma_Z0 <- V$V_sqrt%*%Z[[1]]%*%V$V_sqrt

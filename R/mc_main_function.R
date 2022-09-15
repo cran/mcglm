@@ -99,7 +99,7 @@ mcglm <- function(linear_pred, matrix_pred, link, variance,
   offset <- as.list(offset)
   Ntrial <- as.list(Ntrial)
   power_fixed <- as.list(power_fixed)
-  if (class(control_initial) != "list") {
+  if (!isa(control_initial, "list")) {
     control_initial <-
       mc_initial_values(linear_pred = linear_pred,
                         matrix_pred = matrix_pred, link = link,
@@ -136,11 +136,11 @@ mcglm <- function(linear_pred, matrix_pred, link, variance,
   }
   if(!is.null(weights)) {
     y_vec[is.na(y_vec)] <- 0
-    if(class(weights) != "list") {weights <- as.list(weights)}
+    if(!isa(weights,"list")) {weights <- as.list(weights)}
     weights <- as.numeric(do.call(c, weights))
   }
   sparse <- lapply(matrix_pred, function(x) {
-    if (class(x) == "dgeMatrix") {
+    if (isa(x, "dgeMatrix") ) {
       FALSE
     } else TRUE
   })
@@ -159,7 +159,7 @@ mcglm <- function(linear_pred, matrix_pred, link, variance,
                              tuning = con$tuning,
                              verbose = con$verbose,
                              weights = weights))
-  if (class(model_fit) != "try-error") {
+  if (!isa(model_fit, "try-error") ) {
     model_fit$beta_names <- lapply(list_X, colnames)
     model_fit$power_fixed <- power_fixed
     model_fit$list_initial <- control_initial

@@ -1,16 +1,12 @@
 Package: mcglm
 Type: Package
 Title: Multivariate Covariance Generalized Linear Models
-Version: 0.7.0
-Date: 2021-07-07
-Author: Wagner Hugo Bonat [aut, cre],
-  Walmes Marques Zeviani [ctb],
-  Fernando de Pol Mayer [ctb]
+Version: 0.8.0
+Date: 2022-09-15
+Author: Wagner Hugo Bonat [aut, cre]
 Maintainer: Wagner Hugo Bonat <wbonat@ufpr.br>
 Authors@R: c(person(c("Wagner","Hugo"), "Bonat", role = c("aut", "cre"),
-                    email = "wbonat@ufpr.br"),
-	     person(c("Walmes","Marques"), "Zeviani", role = "ctb"),
-	     person(c("Fernando", "de Pol"), "Mayer", role = "ctb"))
+                    email = "wbonat@ufpr.br"))
 Description: Fitting multivariate covariance generalized linear
      models (McGLMs) to data.  McGLM is a general framework for non-normal
      multivariate data analysis, designed to handle multivariate response
@@ -30,18 +26,18 @@ Description: Fitting multivariate covariance generalized linear
      similar to the glm() R function. 
      See Bonat (2018) <doi:10.18637/jss.v084.i04>, for more information 
      and examples.
-Depends: R (>= 4.1.0)
+Depends: R (>= 4.2.0)
 Suggests: testthat, knitr, rmarkdown, MASS, mvtnorm, tweedie, devtools
 Imports: stats, Matrix, assertthat, graphics, Rcpp (>= 0.12.16)
 License: GPL-3 | file LICENSE
 LazyData: TRUE
-URL: http://mcglm.leg.ufpr.br/
+URL: mcglm.leg.ufpr.br
 BugReports: https://github.com/wbonat/mcglm/issues
 Encoding: UTF-8
 VignetteBuilder: knitr
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.0
 LinkingTo: Rcpp, RcppArmadillo
 NeedsCompilation: yes
-Packaged: 2021-07-11 01:53:02 UTC; wagner
+Packaged: 2022-09-15 18:27:11 UTC; root
 Repository: CRAN
-Date/Publication: 2021-07-11 07:40:08 UTC
+Date/Publication: 2022-09-15 19:36:07 UTC

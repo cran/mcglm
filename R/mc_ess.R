@@ -21,7 +21,7 @@
 #' @export
 
 ESS <- function(object, verbose = TRUE) {
-  if(class(object) == "mcglm") {
+  if(isa(object, "mcglm")) {
     b <- c(as.matrix(object$observed)) - c(as.matrix(object$fitted))
     ess <- as.numeric(t(b)%*%object$inv_C%*%b)
     df <- length(coef(object)$Estimates)
@@ -30,7 +30,7 @@ ESS <- function(object, verbose = TRUE) {
     if (verbose) cat("ESS", ess)
     return(invisible(list("ESS" = ess)))
   }
-  if(class(object) == "list") {
+  if(isa(object, "list")) {
     Y <- do.call(c,lapply(object, function(x)as.numeric(x$observed)))
     mu <-do.call(c,lapply(object, function(x)as.numeric(x$fitted)))
     b <- Y - mu
