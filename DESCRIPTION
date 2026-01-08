@@ -1,8 +1,8 @@
 Package: mcglm
 Type: Package
 Title: Multivariate Covariance Generalized Linear Models
-Version: 0.8.0
-Date: 2022-09-15
+Version: 0.9.0
+Date: 2026-01-07
 Author: Wagner Hugo Bonat [aut, cre]
 Maintainer: Wagner Hugo Bonat <wbonat@ufpr.br>
 Authors@R: c(person(c("Wagner","Hugo"), "Bonat", role = c("aut", "cre"),
@@ -26,18 +26,18 @@ Description: Fitting multivariate covariance generalized linear
      similar to the glm() R function. 
      See Bonat (2018) <doi:10.18637/jss.v084.i04>, for more information 
      and examples.
-Depends: R (>= 4.2.0)
+Depends: R (>= 4.5.0)
 Suggests: testthat, knitr, rmarkdown, MASS, mvtnorm, tweedie, devtools
 Imports: stats, Matrix, assertthat, graphics, Rcpp (>= 0.12.16)
-License: GPL-3 | file LICENSE
+License: GPL-3
 LazyData: TRUE
-URL: mcglm.leg.ufpr.br
-BugReports: https://github.com/wbonat/mcglm/issues
+URL: https://github.com/bonatwagner/mcglm
+BugReports: https://github.com/bonatwagner/mcglm/issues
 Encoding: UTF-8
 VignetteBuilder: knitr
-RoxygenNote: 7.2.0
+RoxygenNote: 7.3.3
 LinkingTo: Rcpp, RcppArmadillo
 NeedsCompilation: yes
-Packaged: 2022-09-15 18:27:11 UTC; root
+Packaged: 2026-01-07 11:59:24 UTC; wagner
 Repository: CRAN
-Date/Publication: 2022-09-15 19:36:07 UTC
+Date/Publication: 2026-01-08 19:20:07 UTC

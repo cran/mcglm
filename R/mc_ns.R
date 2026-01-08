@@ -1,27 +1,59 @@
-#' @title Non-structure Model Structure
+#' @title Non-structured Covariance Model
 #' @author Wagner Hugo Bonat, \email{wbonat@@ufpr.br}
 #'
-#' @description The function \code{mc_non} builds the components
-#' of the matrix linear predictor used for fitting non-structured
-#' covariance matrix. In general this model is hard to fit due to the
-#' large number of parameters.
+#' @description
+#' Constructs the components of the matrix linear predictor associated
+#' with a fully non-structured covariance model in multivariate covariance
+#' generalized linear models. This specification allows each pair of
+#' observations within a unit to have its own covariance parameter,
+#' resulting in a highly flexible but parameter-intensive model.
 #'
-#' @param id name of the column (string) containing the subject index.
-#' Note this structure was designed to deal with longitudinal data.
-#' For times series or spatial data use the same id for all observations
-#' (one unit sample).
-#' @param group name of the column (string) containing a group specific
-#' for which the covariance should change.
-#' @param marca level (string) of the column group for which the
-#' covariance should change.
-#' @param data data set.
-#' @return A list of a n*(n-1)/2 matrices.
+#' Due to the quadratic growth in the number of parameters, this structure
+#' is typically suitable only for datasets with a small number of repeated
+#' measurements per unit.
 #'
-#' @source Bonat, W. H. (2018). Multiple Response Variables Regression
-#' Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
+#' @param id A character string giving the name of the column in
+#'   \code{data} that identifies the observational units (e.g., subjects).
+#'   Each unit must have the same number of observations. For time series
+#'   or spatial data without replication, the same identifier should be
+#'   used for all observations.
+#' @param data A \code{data.frame} containing the variables referenced by
+#'   \code{id} and, optionally, \code{group}.
+#' @param group An optional character string giving the name of a column in
+#'   \code{data} that defines groups for which different covariance
+#'   structures may be specified. If \code{NULL}, a single non-structured
+#'   covariance model is used for all units.
+#' @param marca An optional character string specifying the level of
+#'   \code{group} for which the non-structured covariance components are
+#'   excluded (i.e., set to zero). This allows selective activation of the
+#'   non-structured covariance according to group membership.
 #'
-#' @seealso \code{mc_id}, \code{mc_dglm}, \code{mc_dist}, \code{mc_ma},
-#' \code{mc_rw} \cr and \code{mc_mixed}.
+#' @return
+#' A list of symmetric block-diagonal matrices, each representing one
+#' covariance component of the non-structured matrix linear predictor.
+#' The length of the list is equal to \eqn{n(n - 1) / 2}, where \eqn{n} is
+#' the number of observations per unit. Each element of the list is a
+#' sparse matrix of class \code{"dgCMatrix"} obtained by stacking unit-
+#' specific covariance blocks along the diagonal. These matrices are used
+#' internally to construct the dispersion linear predictor in
+#' \code{mcglm}.
+#'
+#' @details
+#' The function requires a balanced design, meaning that all units
+#' identified by \code{id} must have the same number of observations.
+#' An error is raised otherwise. When \code{group} and \code{marca} are
+#' provided, covariance components are generated only for units not
+#' belonging to the specified level \code{marca}; for those units, the
+#' corresponding blocks are set to zero.
+#'
+#' @seealso
+#' \code{mc_id}, \code{mc_dglm}, \code{mc_dist}, \code{mc_ma},
+#' \code{mc_rw}, \code{mc_mixed}
+#'
+#' @source
+#' Bonat, W. H. (2018). Multiple Response Variables Regression Models in R:
+#' The mcglm Package. Journal of Statistical Software, 84(4), 1--30.
+#'
 #' @export
 
 mc_ns <- function(id, data, group = NULL, marca = NULL) {

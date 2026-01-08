@@ -30,6 +30,7 @@ mc_multiply2(bord1, bord2)
 }
 \value{
 The matrix product \code{bord1 * middle * bord2}.
+    The returned object is intended for internal use only.
 }
 \description{
 The function \code{mc_sandwich} is just an auxiliar

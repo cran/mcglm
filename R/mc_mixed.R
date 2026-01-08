@@ -1,57 +1,80 @@
-#' @title  Mixed Models Structure
+#' @title Mixed Models Structure
 #' @author Wagner Hugo Bonat, \email{wbonat@@ufpr.br}
 #'
-#' @description The function \code{mc_mixed} helps to build the components
-#' of the matrix linear predictor associated with mixed models. It is
-#' useful to model the covariance structure as a function of known
-#' covariates in a linear mixed model fashion (Bonat, et. al. 2016).
-#' The \code{mc_mixed} function was designed to analyse repeated measures
-#' and longitudinal data, where in general the observations are taken
-#' at a fixed number of groups, subjects or unit samples.
+#' @description
+#' Constructs the components of the matrix linear predictor associated
+#' with mixed-effects covariance structures in multivariate covariance
+#' generalized linear models. The function builds symmetric matrices
+#' representing variance and covariance components as functions of known
+#' covariates, following a linear mixed model formulation.
 #'
-#' @param formula a formula model to build the matrix linear predictor.
-#'    See details.
-#' @param data data set.
-#' @return A list of matrices.
+#' The \code{mc_mixed} function is primarily intended for repeated measures
+#' and longitudinal data, where observations are collected within a fixed
+#' number of groups, subjects, or experimental units.
 #'
-#' @details The \code{formula} argument should be specified similar to
-#' the linear predictor for the mean structure, however the first
-#' component should be 0 and the second component should always
-#' indicate the name of the column containing the subject
-#' or unit sample index. It should be a \code{factor}. The other covariates
-#' are specified after a slash "\" in the usual way. For example,
-#' \code{~0 + SUBJECT/(x1 + x2)} means that the column SUBJECT contains the
-#' subject or unit sample index, while the covariates that can be continuous
-#' or factors are given in the columns x1 and x2. Be careful the parenthesis
-#' after the "\" are mandatory, when including more than one covariate.
-#' The special case where only the SUBJECT effect is requested the formula
-#' takes the form \code{~ 0 + SUBJECT} without any extra covariate.
-#' This structure corresponds to the well known compound symmetry structure.
-#' By default the function \code{mc_mixed} include all interaction terms,
-#' the users can ignore the interactions terms removing them from the
-#' matrix linear predictor.
+#' @param formula A model formula specifying the structure of the matrix
+#'   linear predictor for the dispersion component. The first term must
+#'   remove the intercept (\code{0 +}), and the second term must identify
+#'   the grouping variable (e.g., subject or unit), which must be a
+#'   \code{factor}. Additional covariates may be specified after a slash
+#'   (\code{/}) to define random slopes and associated covariance
+#'   components.
+#' @param data A \code{data.frame} containing all variables referenced in
+#'   \code{formula}.
+#'
+#' @return
+#' A list of symmetric sparse matrices of class \code{"dsCMatrix"}, each
+#' corresponding to a variance or covariance component of the matrix
+#' linear predictor for the dispersion structure. The list includes
+#' matrices associated with main effects and, by default, their pairwise
+#' interaction terms as implied by the mixed-effects specification in the
+#' formula. These matrices are used internally to construct the linear
+#' predictor of the covariance model in \code{mcglm}. It is intended to be
+#' supplied to the \code{matrix_pred} argument of \code{\link{mcglm}}.
+#'
+#' @details
+#' The \code{formula} argument follows a syntax similar to that used for
+#' linear mixed models. The grouping variable must be provided as the
+#' second term in the formula and must be a \code{factor}; no internal
+#' coercion is performed. Covariates specified after the slash
+#' (\code{/}) may be continuous or categorical and define additional
+#' variance and covariance components. When only the grouping variable
+#' is specified (e.g., \code{~ 0 + SUBJECT}), the resulting structure
+#' corresponds to the compound symmetry covariance model.
+#'
+#' By default, all pairwise interaction terms between components are
+#' included in the matrix linear predictor. Interaction terms may be
+#' excluded by removing the corresponding components from the resulting
+#' list.
 #'
 #' @examples
 #' SUBJECT <- gl(2, 6)
 #' x1 <- rep(1:6, 2)
-#' x2 <- rep(gl(2,3),2)
-#' data <- data.frame(SUBJECT, x1 , x2)
+#' x2 <- rep(gl(2, 3), 2)
+#' data <- data.frame(SUBJECT, x1, x2)
+#'
 #' # Compound symmetry structure
-#' mc_mixed(~0 + SUBJECT, data = data)
-#' # Compound symmetry + random slope for x1 and interaction or correlation
-#' mc_mixed(~0 + SUBJECT/x1, data = data)
-#' # Compound symmetry + random slope for x1 and x2 plus interactions
-#' mc_mixed(~0 + SUBJECT/(x1 + x2), data = data)
+#' mc_mixed(~ 0 + SUBJECT, data = data)
 #'
-#' @source Bonat, W. H. (2018). Multiple Response Variables Regression
-#' Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
+#' # Compound symmetry with random slope for x1
+#' mc_mixed(~ 0 + SUBJECT/x1, data = data)
 #'
-#' @source Bonat, et. al. (2016). Modelling the covariance structure in
+#' # Compound symmetry with random slopes for x1 and x2 and interactions
+#' mc_mixed(~ 0 + SUBJECT/(x1 + x2), data = data)
+#'
+#' @seealso
+#' \code{mc_id}, \code{mc_conditional_test}, \code{mc_dist},
+#' \code{mc_ma}, \code{mc_rw}, \code{mc_car}
+#'
+#' @source
+#' Bonat, W. H. (2018). Multiple Response Variables Regression Models in R:
+#' The mcglm Package. Journal of Statistical Software, 84(4), 1--30.
+#'
+#' @source
+#' Bonat, W. H., et al. (2016). Modelling the covariance structure in
 #' marginal multivariate count models: Hunting in Bioko Island.
-#' Journal of Agricultural Biological and Environmental Statistics, 22(4):446--464.
-#'
-#' @seealso \code{mc_id}, \code{mc_conditional_test},
-#'  \code{mc_dist}, \code{mc_ma}, \code{mc_rw} and \code{mc_car}.
+#' Journal of Agricultural, Biological, and Environmental Statistics,
+#' 22(4), 446--464.
 #'
 #' @export
 

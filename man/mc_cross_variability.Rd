@@ -17,7 +17,7 @@ mc_cross_variability(Product_cov, inv_C, res, D)
 }
 \value{
 The cross-variability matrix between regression and
-    covariance parameters.
+    covariance parameters. The returned object is intended for internal use only.
 }
 \description{
 Compute the cross-variability matrix between covariance

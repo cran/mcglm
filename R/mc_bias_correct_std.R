@@ -13,9 +13,8 @@
 #'     observations. The data set are assumed to be sorted so that
 #'     observations on a cluster are contiguous rows for all entities.
 #'
-#' @return A variance-covariance matrix.
-#'    Note that the function assumes that the data are in the correct
-#'    order.
+#' @return A list with two elements. A vector of standard error and a variance-covariance
+#'     matrix computed based on a bias corrected approach as described in the reference.
 #'
 #' @source Nuamah, I. F. and Qu, Y. and Aminu, S. B. (1996). A SAS macro
 #' for stepwise correlated binary regression. Computer Methods

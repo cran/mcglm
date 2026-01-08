@@ -3,54 +3,55 @@
 \docType{data}
 \name{soil}
 \alias{soil}
-\title{Soil Chemistry Properties Data}
+\title{Soil Chemistry Properties Dataset}
 \format{
-a \code{data.frame} with 250 records and 9 variables.
+A \code{data.frame} with 250 observations and 9 variables:
+\describe{
+  \item{\code{COORD.X}}{X coordinate of the sampling point.}
+  \item{\code{COORD.Y}}{Y coordinate of the sampling point.}
+  \item{\code{SAND}}{Proportion of sand in the soil sample.}
+  \item{\code{SILT}}{Proportion of silt in the soil sample.}
+  \item{\code{CLAY}}{Proportion of clay in the soil sample.}
+  \item{\code{PHWATER}}{Soil pH measured in water.}
+  \item{\code{CA}}{Calcium content of the soil.}
+  \item{\code{MG}}{Magnesium content of the soil.}
+  \item{\code{K}}{Potassium content of the soil.}
+}
 }
 \source{
-Bonat, W. H. (2018). Multiple Response Variables Regression
-Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
+Bonat, W. H. (2018). "Multiple Response Variables Regression Models in R: The mcglm Package." \emph{Journal of Statistical Software}, 84(4):1–30.
 }
 \usage{
 data(soil)
 }
 \description{
-Soil chemistry properties measured on a regular grid with
-10 x 25 points spaced by 5 meters.
-
-\itemize{
-
-\item \code{COORD.X} - X coordinate.
-
-\item \code{COORD.Y} - Y coordinate.
-
-\item \code{SAND} - Sand portion of the sample.
-
-\item \code{SILT} - Silt portion of the sample.
-
-\item \code{CLAY} - Clay portion of the sample.
-
-\item \code{PHWATER} - Soil pH at water.
-
-\item \code{CA} - Calcium content.
-
-\item \code{MG} - Magnesium content.
-
-\item \code{K} - Potassio content.
-}
+Soil chemistry properties measured on a regular grid of 10 × 25 points,
+spaced by 5 meters. Each record contains the chemical composition and
+coordinates of the soil sample.
 }
 \examples{
 library(mcglm)
-library(Matrix)
-data(soil, package="mcglm")
-Z1 <- mc_id(soil)
-# Linear predictor
-form.ca <- CA ~ COORD.X*COORD.Y + SAND + SILT + CLAY + PHWATER
-fit.ca <- mcglm(linear_pred = c(form.ca), matrix_pred = list(Z1),
-               link = "log", variance = "tweedie", covariance = "inverse",
-               power_fixed = TRUE, data = soil,
-               control_algorith = list(max_iter = 1000, tuning = 0.1,
-               verbose = FALSE, tol = 1e-03))
+data(soil, package = "mcglm")
 
+# Spatial model (tri2nb could be used but takes long)
+Z1 <- mc_id(soil)
+
+# Linear predictor example
+form.ca <- CA ~ COORD.X*COORD.Y + SAND + SILT + CLAY + PHWATER
+fit.ca <- mcglm(
+  linear_pred = c(form.ca),
+  matrix_pred = list(Z1),
+  link = "log",
+  variance = "tweedie",
+  covariance = "inverse",
+  power_fixed = TRUE,
+  data = soil,
+  control_algorithm = list(
+    max_iter = 1000,
+    tuning = 0.1,
+    verbose = FALSE,
+    tol = 1e-03
+  )
+)
 }
 \keyword{datasets}

@@ -22,7 +22,10 @@ indicating the time. For spatial data use the same index for all observations.}
 \item{method}{distance measure to be used.}
 }
 \value{
-A matrix of dgCMatrix class.
+A list containing a sparse matrix of class \code{dgCMatrix}.
+  This matrix represents the design matrix for the linear predictor and
+  is intended to be supplied to the \code{matrix_pred} argument of
+  \code{\link{mcglm}}.
 }
 \description{
 The function \code{mc_dist} helps to build the components

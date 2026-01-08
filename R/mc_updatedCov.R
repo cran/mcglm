@@ -1,19 +1,39 @@
-#' @title Updated covariance parameters
+#' @title Update Covariance Parameters
 #' @author Wagner Hugo Bonat
 #'
-#' @description This function update a list of covariance parameters. It
-#'     will be useful only inside the fitting algorithm.
+#' @description
+#' Updates the covariance and power parameter vectors stored in a list used
+#' during the model fitting algorithm. This function is intended for
+#' internal use and distributes covariance parameters across response-specific
+#' components and the correlation parameter.
 #'
-#' @param list_initial A list of initial values.
-#' @param covariance A vector with actual covariance parameters values.
-#' @param information A list with information about the number of
-#'     parameters in the model. In general the output from
-#'     \link{mc_getInformation}.
-#' @param list_power_fixed A list of logicals indicating if the power
-#'     parameter should be estimated or not.
-#' @param n_resp A numeric specyfing the number of response variables.
+#' @param list_initial
+#' A list containing the current values of the model parameters. The elements
+#' \code{tau}, \code{power}, and \code{rho} are updated by this function.
+#'
+#' @param covariance
+#' A numeric vector containing the current values of the covariance parameters
+#' for all response variables and, if applicable, the correlation parameter.
+#'
+#' @param list_power_fixed
+#' A list of logical values indicating for each response whether the power
+#' parameter should remain fixed (\code{TRUE}) or be updated (\code{FALSE}).
+#'
+#' @param information
+#' A list containing model dimension information, including the number of
+#' \code{tau} and \code{power} parameters per response variable, and the number
+#' of correlation parameters. Typically the output of \code{\link{mc_getInformation}}.
+#'
+#' @param n_resp
+#' An integer specifying the number of response variables in the model.
+#'
+#' @return
+#' A list with the same structure as \code{list_initial}, where the elements
+#' \code{tau}, \code{power}, and \code{rho} contain the updated covariance
+#' parameter values for each response variable and the correlation parameter.
+#' The returned object is intended for internal use only.
+#'
 #' @keywords internal
-#' @return A list with updated values of the covariance parameters.
 
 mc_updateCov <- function(list_initial, covariance, list_power_fixed,
                          information, n_resp) {

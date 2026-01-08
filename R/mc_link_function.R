@@ -24,7 +24,15 @@
 #'     \code{"sqrt"}, \code{"1/mu^2"} and \code{inverse}.
 #'     A user defined link function can be used (see Details).
 #'
-#' @return A list with two elements: mu and D (see Details).
+#' @return A list with the following components:
+#' \describe{
+#'   \item{mu}{A numeric vector of length \eqn{n} containing the mean
+#'   response values obtained by applying the inverse link function to
+#'   the linear predictor.}
+#'   \item{D}{A numeric matrix of dimension \eqn{n \times p} containing
+#'   the derivatives of \eqn{\mu} with respect to the regression parameters
+#'   \eqn{\beta}.}
+#' }
 #'
 #' @seealso \code{\link[stats]{model.matrix}},
 #'     \code{\link[stats]{make.link}}.

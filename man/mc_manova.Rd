@@ -2,25 +2,37 @@
 % Please edit documentation in R/mc_manova.R
 \name{mc_manova}
 \alias{mc_manova}
-\title{MANOVA-type test for mcglm objects.}
+\title{MANOVA-Type Test for Multivariate Covariance GLMs}
 \usage{
 mc_manova(object, ...)
 }
 \arguments{
-\item{object}{an object of \code{mcglm} class.}
+\item{object}{An object of class \code{"mcglm"}.}
 
-\item{...}{additional arguments affecting the summary produced. Note
-that there is no extra options for mcglm object class.}
+\item{...}{Further arguments (currently not used).}
 }
 \value{
-MANOVA table for mcglm objects.
+A data frame containing the MANOVA-type test results with the following
+columns:
+\describe{
+  \item{Effects}{Names of the tested model effects.}
+  \item{Df}{Degrees of freedom associated with each effect.}
+  \item{Hotelling-Lawley}{Hotelling–Lawley trace statistic.}
+  \item{Chi-square}{Chi-square test statistic.}
+  \item{p-value}{P-values from the chi-square approximation.}
+}
 }
 \description{
-IT IS AN EXPERIMENTAL FUNCTION BE CAREFUL!
-MANOVA-type test for multivariate covariance generalized
-linear models.
+Performs a MANOVA-type Wald test for multivariate covariance
+generalized linear models fitted using \code{\link{mcglm}}.
+The test is based on quadratic forms of the estimated regression
+parameters and their covariance matrix, yielding statistics
+analogous to the Hotelling–Lawley trace.
+}
+\seealso{
+\code{\link{mcglm}}, \code{\link{coef.mcglm}},
+  \code{\link{vcov.mcglm}}
 }
 \author{
 Wagner Hugo Bonat, \email{wbonat@ufpr.br}
 }
-\keyword{internal}

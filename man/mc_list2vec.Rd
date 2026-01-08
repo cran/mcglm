@@ -13,7 +13,14 @@ mc_list2vec(list_initial, list_power_fixed)
 power parameter should be estimated or not.}
 }
 \value{
-A vector of model parameters.
+A list with the following components:
+\describe{
+  \item{beta_ini}{A numeric vector containing the initial values of the
+  regression parameters stacked across all response variables.}
+  \item{cov_ini}{A numeric vector containing the initial values of the
+  covariance-related parameters, including dispersion, power, and
+  correlation parameters, after removing fixed power parameters.}
+}
 }
 \description{
 This function takes a list of parameters and tranforms

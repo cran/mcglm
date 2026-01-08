@@ -14,7 +14,14 @@ mc_id(data)
 \item{data}{the data set to be used.}
 }
 \value{
-A list of matrix.
+A list with a single component:
+\describe{
+  \item{Z0}{A sparse identity matrix of class \code{ddiMatrix} with dimension
+  equal to the number of observations, representing the intercept component
+  of the matrix linear predictor.}
+}
+It is intended to be supplied to the \code{matrix_pred} argument of
+\code{\link{mcglm}}.
 }
 \description{
 Builds an identity matrix to be used as a component of

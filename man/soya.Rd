@@ -3,52 +3,43 @@
 \docType{data}
 \name{soya}
 \alias{soya}
-\title{Soybeans}
+\title{Soybeans Experiment Data}
 \format{
-a \code{data.frame} with 75 records and 7 variables.
+A \code{data.frame} with 75 observations and 7 variables:
+\describe{
+  \item{\code{pot}}{Factor with five levels of potassium fertilization.}
+  \item{\code{water}}{Factor with three levels of amount of water in the soil.}
+  \item{\code{block}}{Factor with five levels representing experimental blocks.}
+  \item{\code{grain}}{Continuous variable representing grain yield per plant.}
+  \item{\code{seeds}}{Count variable representing number of seeds per plant.}
+  \item{\code{viablepeas}}{Binomial variable representing number of viable peas per plant.}
+  \item{\code{totalpeas}}{Binomial variable representing total number of peas per plant.}
+}
 }
 \source{
-Bonat, W. H. (2018). Multiple Response Variables Regression
-Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
+Bonat, W. H. (2018). Multiple Response Variables Regression Models in R: The mcglm Package. \emph{Journal of Statistical Software}, 84(4):1--30.
 }
 \usage{
 data(soya)
 }
 \description{
-Experiment carried out in a vegetation house with
-soybeans. The experiment has two plants by plot with three levels of
-the factor amount of water in the soil (\code{water})
-and five levels of potassium fertilization (\code{pot}).
-The plots were arranged in five blocks (\code{block}).
-Three response variables are of the interest, namely, grain yield,
-number of seeds and number of viable peas per plant.
-The data set has 75 observations of 7 variables.
-
-\itemize{
-
-\item \code{pot} - Factor five levels of potassium fertilization.
-
-\item \code{water} - Factor three levels of amount of water in the soil.
-
-\item \code{block} - Factor five levels.
-
-\item \code{grain} - Continuous - Grain yield per plant.
-
-\item \code{seeds} - Count - Number of seeds per plant.
-
-\item \code{viablepeas} - Binomial - Number of viable peas per plant.
-
-\item \code{totalpeas} - Binomial - Total number of peas per plant.
-}
+Dataset from an experiment conducted in a vegetation house with soybeans.
+Each plot contained two plants and the experiment involved three levels of
+soil water (\code{water}) and five levels of potassium fertilization (\code{pot}),
+arranged in five blocks (\code{block}). Three response variables are recorded:
+grain yield, number of seeds, and number of viable peas per plant. The dataset
+contains 75 observations and 7 variables.
 }
 \examples{
 library(mcglm)
 library(Matrix)
-data(soya, package="mcglm")
+data(soya, package = "mcglm")
+
+# Linear predictor example
 formu <- grain ~ block + factor(water) * factor(pot)
 Z0 <- mc_id(soya)
 fit <- mcglm(linear_pred = c(formu), matrix_pred = list(Z0),
-          data = soya)
-          anova(fit)
+            data = soya)
+anova(fit)
 }
 \keyword{datasets}

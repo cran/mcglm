@@ -7,7 +7,7 @@
 #'     respect to rho, power and tau parameters.
 #'
 #'@param list_mu A list with values of the mean.
-#'@param list_Ntrial A list with the number of trials. Useful only for
+#'@param list_Ntrial A list with the number of trials. Usefull only for
 #'     binomial responses.
 #'@param rho Vector of correlation parameters.
 #'@param list_tau A list with values for the tau parameters.
@@ -27,8 +27,10 @@
 #'@param compute_derivative_cov Logical. Compute or not the derivative
 #'     of C with respect the covariance parameters.
 #'@keywords internal
-#'@return A list with the inverse of the C matrix and the derivatives of
-#'     the C matrix with respect to rho, power and tau parameters.
+#'@return A list of matrices. This function return the variance-covariance matrix
+#'     C or its inverse along with its respective matrices of derivatives with
+#'     respect to rho, power and tau parameters.
+#'     The returned object is intended for internal use only.
 
 mc_build_C <- function(list_mu, list_Ntrial, rho, list_tau, list_power,
                        list_Z, list_sparse, list_variance,

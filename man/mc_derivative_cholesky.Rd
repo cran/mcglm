@@ -14,7 +14,9 @@ mc_derivative_cholesky(derivada, inv_chol_Sigma, chol_Sigma)
 \item{chol_Sigma}{A matrix.}
 }
 \value{
-A list of matrix.
+A list of matrix. The matrices are the derivative of the Cholesky decomposition
+of Sigma or its inverse with respect to the dispersion parameters.
+The returned object is intended for internal use only.
 }
 \description{
 This function compute the derivative of the Cholesky

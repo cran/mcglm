@@ -12,8 +12,9 @@
 #' @param sparse Logical force to use sparse matrix representation
 #'     'dsCMatrix'.
 #' @keywords internal
-#' @return A list with the \eqn{\Omega} matrix its inverse and
-#'     derivatives with respect to \eqn{\tau}.
+#' @return A list of matrices. The function returns the \eqn{\Omega} matrix its
+#'     inverse and derivatives with respect to \eqn{\tau}.
+#'     The returned object is intended for internal use only.
 
 mc_build_omega <- function(tau, Z, covariance_link, sparse = FALSE) {
     if (covariance_link == "identity") {

@@ -11,7 +11,14 @@
 #' @details It is an internal function, in general the users never will
 #'     use this function.  It will be useful, only if the user wants to
 #'     implement a different variance-covariance matrix.
-#' @return A vector of model parameters.
+#' @return A list with the following components:
+#' \describe{
+#'   \item{beta_ini}{A numeric vector containing the initial values of the
+#'   regression parameters stacked across all response variables.}
+#'   \item{cov_ini}{A numeric vector containing the initial values of the
+#'   covariance-related parameters, including dispersion, power, and
+#'   correlation parameters, after removing fixed power parameters.}
+#' }
 
 mc_list2vec <- function(list_initial, list_power_fixed) {
     cov_ini <- do.call(c, Map(c, list_initial$power, list_initial$tau))

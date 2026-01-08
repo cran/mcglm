@@ -2,7 +2,7 @@
 % Please edit documentation in R/mc_S3_methods.R
 \name{summary.mcglm}
 \alias{summary.mcglm}
-\title{Summarizing}
+\title{Summary for mcglm Objects}
 \usage{
 \method{summary}{mcglm}(
   object,
@@ -12,24 +12,53 @@
 )
 }
 \arguments{
-\item{object}{an object of \code{mcglm} class.}
+\item{object}{A fitted object of class \code{mcglm}.}
 
-\item{verbose}{logical. Print or not the model summary.}
+\item{verbose}{Logical; if \code{TRUE} (default), prints the summary to the console.
+If \code{FALSE}, the summary is returned invisibly.}
 
-\item{print}{print only part of the model summary, options are
-\code{Regression}, \code{power}, \code{Dispersion} and \code{Correlation}.}
+\item{print}{Character vector specifying which components of the summary to print.
+Possible values are \code{"Regression"}, \code{"Power"}, \code{"Dispersion"},
+and \code{"Correlation"}. Default prints all components.}
 
-\item{...}{additional arguments affecting the summary produced. Note
-the there is no extra options for mcglm object class.}
+\item{...}{Further arguments passed to or from other methods. Currently ignored.}
 }
 \value{
-Print a \code{mcglm} object.
+Invisibly returns a list containing summary tables:
+\itemize{
+  \item For each response: \code{Regression}, \code{Power}, \code{Dispersion}.
+  \item If applicable: \code{Correlation} summary.
+}
+Each table contains parameter estimates, standard errors, Wald Z values,
+and two-sided p-values.
 }
 \description{
-The default summary method for an object of \code{mcglm} class.
+Produces a comprehensive summary of a fitted \code{mcglm} object.
+The summary includes estimates, standard errors, Wald Z statistics,
+and p-values for regression, dispersion, power, and correlation parameters.
+The function can either print the summary to the console or return it invisibly.
+}
+\details{
+The summary also prints information about the model fitting, including
+the link, variance, and covariance functions used, the algorithm method,
+any correction applied, and the number of iterations completed.
+}
+\examples{
+library(mcglm)
+set.seed(123)
+mydata <- data.frame(y = rnorm(10), x1 = rnorm(10),
+                    x2 = rbinom(10, size = 1, prob = 0.5))
+Z0 <- mc_id(mydata)
+fit <- mcglm(c(y ~ x1 + x2), matrix_pred = list(Z0), data = mydata)
+# Print full summary
+summary(fit)
+# Get summary invisibly
+out <- summary(fit, verbose = FALSE)
+
+
 }
 \seealso{
-\code{print}.
+\code{\link{print.mcglm}}, \code{\link{coef.mcglm}}, \code{\link{residuals.mcglm}}
 }
 \author{
 Wagner Hugo Bonat, \email{wbonat@ufpr.br}

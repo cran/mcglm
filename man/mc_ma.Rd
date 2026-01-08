@@ -2,7 +2,7 @@
 % Please edit documentation in R/mc_ma.R
 \name{mc_ma}
 \alias{mc_ma}
-\title{Moving Average Models Structure}
+\title{Moving Average Model Structure}
 \source{
 Bonat, W. H. (2018). Multiple Response Variables Regression
 Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
@@ -21,25 +21,31 @@ the time.}
 
 \item{data}{data set.}
 
-\item{order}{order of the moving average process.}
+\item{order}{An integer specifying the order of the moving average process.}
 }
 \value{
-A matrix of \code{dgCMatrix} class.
+A list with the following component:
+\describe{
+  \item{Z1}{A sparse matrix of class \code{nsCMatrix} representing the
+  moving average component of the matrix linear predictor. The matrix
+  has dimension equal to the total number of observations and is
+  constructed as a block-diagonal matrix, with one block per subject
+  (or time series), each block encoding a moving average structure of
+  the specified order.}
+}
 }
 \description{
-The function \code{mc_ma} helps to build the components
-of the matrix linear predictor associated with moving average models.
-This function is generaly used for the analysis of longitudinal and
-times series data. The user can specify the order of the moving
-average process.
+Builds components of the matrix linear predictor associated
+  with moving average (MA) covariance structures. This function is mainly
+  intended for longitudinal data analysis, but can also be used for
+  time series data
 }
 \details{
-This function was designed mainly to deal with longitudinal
-data, but can also be used for times series analysis. In that case,
-the \code{id} argument should contain only one index. It pretends a
-longitudinal data taken just for one individual or unit sample. This
-function is a simple call of the \code{\link[Matrix]{bandSparse}}
-function from the \code{Matrix} package.
+This function was primarily designed for longitudinal data,
+  but it can also be used for time series analysis. In this case, the
+  \code{id} argument should contain a single identifier, representing
+  one observational unit. Internally, the function constructs block-diagonal
+  band matrices using \code{\link[Matrix]{bandSparse}}.
 }
 \examples{
 id <- rep(1:2, each = 4)

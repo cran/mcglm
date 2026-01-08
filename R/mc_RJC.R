@@ -1,24 +1,43 @@
-#' @title Rotnitzky-Jewell Information Criterion
+#' @title Rotnitzky--Jewell Information Criterion
 #' @author Wagner Hugo Bonat, \email{wbonat@@ufpr.br}
 #'
-#' @description Compute the Rotnitzky-Jewell information criterion
-#' for an object of \code{mcglm} class.
-#' WARNINGS: This function is limited to models with ONE response variable.
+#' @description
+#' Computes the Rotnitzky--Jewell information criterion (RJC) for objects of
+#' class \code{mcglm}. This criterion is based on quasi-likelihood theory
+#' and is intended for model assessment in marginal models.
 #'
-#' @param object an object of \code{mcglm} class.
-#' @param id a vector which identifies the clusters. The length and
-#'     order of \code{id} should be the same as the number of
-#'     observations. Data are assumed to be sorted so that observations
-#'     on a cluster are contiguous rows for all entities in the formula.
-#' @param verbose logical. Print or not the RJC value.
-#' @return The value of the Rotnitzky-Jewell information criterion.
-#' Note that the function assumes that the data are in the correct order.
+#' @details
+#' The RJC is defined using the sensitivity and variability structures of
+#' the estimating equations and measures the discrepancy between them.
+#' The implementation assumes that the data are correctly ordered such
+#' that observations belonging to the same cluster are stored in
+#' contiguous rows.
 #'
-#' @source Wang, M. (2014). Generalized Estimating Equations in Longitudinal Data
-#' Analysis: A Review and Recent Developments. Advances in Statistics, 1(1)1--13.
+#' \strong{Warning:} This function is restricted to models with a single
+#' response variable.
+#'
+#' @param object An object of class \code{mcglm} representing a fitted
+#'   marginal model.
+#' @param id An integer or factor vector identifying the clusters. Its
+#'   length and ordering must match the number and ordering of the
+#'   observations used to fit the model.
+#' @param verbose Logical. If \code{TRUE}, the value of the RJC is printed
+#'   to the console.
+#'
+#' @return
+#' An invisible list with a single component:
+#' \describe{
+#'   \item{RJC}{A numeric scalar giving the value of the
+#'   Rotnitzky--Jewell information criterion.}
+#' }
+#'
+#' @source
+#' Wang, M. (2014). Generalized estimating equations in longitudinal data
+#' analysis: A review and recent developments. \emph{Advances in Statistics},
+#' 1(1), 1--13.
 #'
 #' @seealso \code{gof}, \code{plogLik}, \code{pAIC}, \code{pKLIC},
-#' \code{ESS} and \code{GOSHO}.
+#'   \code{ESS}, \code{GOSHO}
 #'
 #' @export
 

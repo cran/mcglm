@@ -6,8 +6,8 @@
 #'
 #' @param product A list of matrix.
 #' @param W Matrix of weights.
-#' @return The sensitivity matrix associated with the Pearson estimating
-#'     function.
+#' @return A matrix. The sensitivity matrix associated with the Pearson estimating
+#'     function. The returned object is intended for internal use only.
 #' @keywords internal
 #' @details This function implements the equation 7 of Bonat and
 #'     Jorgensen (2016).

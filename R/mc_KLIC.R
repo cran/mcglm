@@ -6,8 +6,12 @@
 #' @param object an object or a list of objects representing a model
 #' of \code{mcglm} class.
 #' @param verbose logical. Print or not the pKLIC value.
-#' @return Returns the value of the pseudo Kullback-Leibler information
-#' criterion.
+#' @return An invisible list with a single numeric component:
+#' \describe{
+#'   \item{pKLIC}{The pseudo Kullback–Leibler Information Criterion computed
+#'   from the pseudo log-likelihood and a penalty term based on the sensitivity
+#'   and variability matrices.}
+#' }
 #'
 #' @seealso \code{gof}, \code{plogLik}, \code{ESS}, \code{pAIC},
 #' \code{GOSHO} and \code{RJC}.
@@ -18,14 +22,14 @@
 #' @export
 
 pKLIC <- function(object, verbose = TRUE) {
-  if(isa(object, "mcglm")) {
+  if(inherits(object, "mcglm")) {
     Pseudo <- plogLik(object = object, verbose = FALSE)
     penalty <- -sum(diag(object$joint_inv_sensitivity%*%object$joint_variability))
     pKLIC <- -2*Pseudo$plogLik + 2*penalty
     if (verbose) cat("pKLIC", pKLIC)
     return(invisible(list("pKLIC" = pKLIC)))
   }
-  if(isa(object, "list")) {
+  if(inherits(object, "list")) {
     Pseudo <- plogLik(object = object, verbose = FALSE)
     jis <- bdiag(lapply(object, function(x)x$joint_inv_sensitivity))
     jv <- bdiag(lapply(object, function(x)x$joint_variability))

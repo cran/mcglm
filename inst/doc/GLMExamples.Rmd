@@ -9,10 +9,12 @@ vignette: >
 ---
 
 ```{r setup, include=FALSE}
+#-----------------------------------------------------------------------
+
 library(knitr)
-opts_chunk$set(
-    dev.args=list(family="Palatino"))
-options(width=68)
+#-----------------------------------------------------------------------
+
+## show.settings()
 
 ```
 
@@ -22,8 +24,8 @@ To install the stable version of [`mcglm`][], use
 `devtools::install_git()`. For more information, visit [mcglm/README].
 
 ```{r, eval=FALSE}
-library(devtools)
-install_git("wbonat/mcglm")
+#library(devtools)
+#install_git("bonatwagner/mcglm")
 ```
 
 ```{r, eval=FALSE, error=FALSE, message=FALSE, warning=FALSE}
@@ -316,5 +318,5 @@ summary(fit.logit.power)
 
 <!---------------------------------------------------------------------- -->
 
-[`mcglm`]: https://github.com/wbonat/mcglm
-[mcglm/README]: https://github.com/wbonat/mcglm/blob/master/README.md
+[`mcglm`]: https://github.com/bonatwagner/mcglm
+[mcglm/README]: https://github.com/bonatwagner/mcglm/blob/main/README.md

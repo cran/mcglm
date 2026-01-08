@@ -12,6 +12,7 @@
 #' @param dM A matrix.
 #' @keywords internal
 #' @return A list with two elements: \eqn{expm(M)} and its derivatives.
+#'    The returned object is intended for internal use only.
 #' @seealso \code{\link[Matrix]{expm}}, \code{\link[base]{eigen}}.
 #' @examples
 #' M <- matrix(c(1,0.8,0.8,1), 2,2)

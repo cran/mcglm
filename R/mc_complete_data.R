@@ -1,4 +1,4 @@
-#' @title Complete data in case of missing observations
+#' @title Complete Data Set with NA
 #' @author Wagner Hugo Bonat, \email{wbonat@@ufpr.br}
 #'
 #' @description The function \code{mc_complete_data} completes a data
@@ -10,7 +10,9 @@
 #' @param id name of the column (string) containing the subject id.
 #' @param index name of the column (string) containing the index to be completed.
 #' @param id.exp how the index is expected to be for all subjects.
-#' @return A data.frame with the same number of observations by subject.
+#' @return A data.frame with the same number of observations by subject. It is intended
+#' as a helper function to build the linear matrix predictor for models that require
+#' the same number of observations by subjects.
 #'
 #' @source Bonat, W. H. (2018). Multiple Response Variables Regression
 #' Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.

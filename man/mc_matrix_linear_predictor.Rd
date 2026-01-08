@@ -7,43 +7,47 @@
 Bonat, W. H. (2018). Multiple Response Variables Regression
 Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
 
-Bonat, W. H. and Jorgensen, B. (2016) Multivariate
-    covariance generalized linear models.
-    Journal of Royal Statistical Society - Series C 65:649--675.
+Bonat, W. H. and Jorgensen, B. (2016). Multivariate covariance
+generalized linear models. Journal of the Royal Statistical Society:
+Series C, 65:649--675.
 }
 \usage{
 mc_matrix_linear_predictor(tau, Z)
 }
 \arguments{
-\item{tau}{a numeric vector of dispersion parameters.}
+\item{tau}{A numeric vector of dispersion parameters.}
 
-\item{Z}{a list of known matrices.}
+\item{Z}{A list of known matrices with compatible dimensions.}
 }
 \value{
-A matrix.
+A matrix of class \code{\link[Matrix]{Matrix}} representing the
+matrix linear predictor
+\deqn{U = \tau_1 Z_1 + \cdots + \tau_D Z_D.}
+The returned matrix has the same dimensions as the elements of \code{Z}.
+The returned object is intended for internal use only.
 }
 \description{
-Compute the matrix linear predictor. It is an internal
-function, however, since the concept of matrix linear predictor
-was proposed recently. I decided let this function visible to the
-interested reader gets some feeling about how it works.
+Computes the matrix linear predictor used in multivariate covariance
+generalized linear models. The matrix linear predictor is defined
+as a linear combination of known matrices weighted by dispersion
+parameters.
 }
 \details{
-Given a list with a set of known matrices
-    (\eqn{Z_0,...,Z_D}) the function \cr
-    \code{mc_matrix_linear_predictor} returns \eqn{U = \tau_0 Z_0 +
-    ... + \tau_D Z_D}.
+Given a list of known matrices \eqn{(Z_1, \ldots, Z_D)} and a vector
+of dispersion parameters \eqn{(\tau_1, \ldots, \tau_D)}, this function
+computes their weighted sum. This object is typically used as a
+component of the matrix linear predictor in covariance modeling.
 }
 \examples{
-require(Matrix)
-Z0 <- Diagonal(5, 1)
-Z1 <- Matrix(rep(1,5)\%*\%t(rep(1,5)))
+Z0 <- Matrix::Diagonal(5, 1)
+Z1 <- Matrix::Matrix(rep(1, 5) \%*\% t(rep(1, 5)))
 Z <- list(Z0, Z1)
-mc_matrix_linear_predictor(tau = c(1,0.8), Z = Z)
+mc_matrix_linear_predictor(tau = c(1, 0.8), Z = Z)
+
 }
 \seealso{
 \code{mc_id}, \code{mc_dist}, \code{mc_ma}, \code{mc_rw},
-\code{mc_mixed} and \code{mc_car}.
+  \code{mc_mixed}, \code{mc_car}
 }
 \author{
 Wagner Hugo Bonat, \email{wbonat@ufpr.br}

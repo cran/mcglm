@@ -12,7 +12,7 @@
 #' @param inv_C A matrix. In general the output of the
 #'     \link{mc_build_C}.
 #' @return A vector with the correction terms to be used on the Pearson
-#'     estimating function.
+#'     estimating function. The returned object is intended for internal use only.
 #' @keywords internal
 #' @details It is an internal function useful inside the fitting
 #'     algorithm.

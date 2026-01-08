@@ -10,8 +10,11 @@
 #' @param id name of the column (string) containing the subject index.
 #' (If ts is not repeated measures, use id = 1 for all observations).
 #' @param data data set.
-#' @return A list of a diagonal matrices, whose values are given by
-#' the covariates assumed to describe the covariance structure.
+#' @return A list containing diagonal matrices with entries defined by the
+#'   covariates assumed to describe the matrix linear predictor.
+#'   Each matrix corresponds to one component of the covariance model and
+#'   is intended to be supplied to the \code{matrix_pred} argument of
+#'   \code{\link{mcglm}}.
 #'
 #' @source Bonat, W. H. (2018). Multiple Response Variables Regression
 #' Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.

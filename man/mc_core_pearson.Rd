@@ -2,7 +2,7 @@
 % Please edit documentation in R/mc_core_pearson.R
 \name{mc_core_pearson}
 \alias{mc_core_pearson}
-\title{Core of Pearson estimating functions}
+\title{Core of the Pearson estimating function.}
 \usage{
 mc_core_pearson(product, inv_C, res, W)
 }
@@ -16,7 +16,7 @@ mc_core_pearson(product, inv_C, res, W)
 \item{W}{Matrix of weights.}
 }
 \value{
-A vector
+A vector. The returned object is intended for internal use only.
 }
 \description{
 Core of the Pearson estimating function.

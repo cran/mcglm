@@ -3,89 +3,64 @@
 \docType{data}
 \name{NewBorn}
 \alias{NewBorn}
-\title{Respiratory Physiotherapy on Premature Newborns.}
+\title{Respiratory Physiotherapy on Premature Newborns}
 \format{
-a \code{data.frame} with 270 records and 21 variables.
+A \code{data.frame} with 270 observations and 21 variables:
+\describe{
+  \item{\code{Sex}}{Factor with levels \code{Female} and \code{Male}.}
+  \item{\code{GA}}{Gestational age in weeks.}
+  \item{\code{BW}}{Birth weight in grams.}
+  \item{\code{APGAR1M}}{APGAR index at the first minute of life.}
+  \item{\code{APGAR5M}}{APGAR index at the fifth minute of life.}
+  \item{\code{PRE}}{Factor indicating prematurity (YES/NO).}
+  \item{\code{HD}}{Factor indicating Hansen's disease (YES/NO).}
+  \item{\code{SUR}}{Factor indicating surfactant administration (YES/NO).}
+  \item{\code{JAU}}{Factor indicating jaundice (YES/NO).}
+  \item{\code{PNE}}{Factor indicating pneumonia (YES/NO).}
+  \item{\code{PDA}}{Factor indicating persistence of ductus arteriosus (YES/NO).}
+  \item{\code{PPI}}{Factor indicating primary pulmonary infection (YES/NO).}
+  \item{\code{OTHERS}}{Factor indicating other diseases (YES/NO).}
+  \item{\code{DAYS}}{Age in days.}
+  \item{\code{AUX}}{Factor indicating type of respiratory auxiliary (HOOD/OTHERS).}
+  \item{\code{RR}}{Respiratory rate (continuous).}
+  \item{\code{HR}}{Heart rate (continuous).}
+  \item{\code{SPO2}}{Oxygen saturation (bounded).}
+  \item{\code{TREAT}}{Factor with three levels: Respiratory physiotherapy, Evaluation 1, Evaluation 2, Evaluation 3.}
+  \item{\code{NBI}}{Newborn index.}
+  \item{\code{TIME}}{Days of treatment.}
+}
 }
 \source{
-Bonat, W. H. and Jorgensen, B. (2016) Multivariate
-    covariance generalized linear models.
-    Journal of Royal Statistical Society - Series C 65:649--675.
+Bonat, W. H. and Jorgensen, B. (2016). "Multivariate covariance generalized linear models." \emph{Journal of Royal Statistical Society, Series C}, 65:649–675.
 }
 \usage{
 data(NewBorn)
 }
 \description{
-The NewBorn dataset consists of a prospective study
-to assess the effect of respiratory physiotherapy on the
-cardiopulmonary function of ventilated preterm newborn infants with
-birth weight lower than 1500 g. The data set was collected and
-kindly made available by the nursing team of the Waldemar Monastier
-hospital, Campo Largo, PR, Brazil. The NewBorn dataset was analysed
-in Bonat and Jorgensen (2016) as an example of mixed outcomes
-regression model.
-
-\itemize{
-
-\item \code{Sex} - Factor two levels \code{Female} and \code{Male}.
-
-\item \code{GA} - Gestational age (weeks).
-
-\item \code{BW} - Birth weight (mm).
-
-\item \code{APGAR1M} - APGAR index in the first minute of life.
-
-\item \code{APGAR5M} - APGAR index in the fifth minute of life.
-
-\item \code{PRE} - Factor, two levels (Premature: YES; NO).
-
-\item \code{HD} - Factor, two levels (Hansen's disease, YES; NO).
-
-\item \code{SUR} - Factor, two levels (Surfactant, YES; NO).
-
-\item \code{JAU} - Factor, two levels (Jaundice, YES; NO).
-
-\item \code{PNE} - Factor, two levels (Pneumonia, YES; NO).
-
-\item \code{PDA} - Factor, two levels (Persistence of ductus
-arteriosus, YES; NO).
-
-\item \code{PPI} - Factor, two levels (Primary pulmonary infection,
-YES; NO).
-
-\item \code{OTHERS} - Factor, two levels (Other diseases, YES; NO).
-
-\item \code{DAYS} - Age (days).
-
-\item \code{AUX} - Factor, two levels (Type of respiratory auxiliary,
-HOOD; OTHERS).
-
-\item \code{RR} - Respiratory rate (continuous).
-
-\item \code{HR} - Heart rate (continuous).
-
-\item \code{SPO2} - Oxygen saturation (bounded).
-
-\item \code{TREAT} - Factor, three levels (Respiratory physiotherapy,
-Evaluation 1; Evaluation 2; Evaluation 3).
-
-\item \code{NBI} - Newborn index.
-
-\item \code{TIME} - Days of treatment.
-
-}
+The NewBorn dataset is from a prospective study assessing the effect of
+respiratory physiotherapy on cardiopulmonary function in ventilated
+preterm newborn infants with birth weight less than 1500 g. The dataset
+was collected by the nursing team of Waldemar Monastier Hospital, Campo
+Largo, PR, Brazil, and analyzed in Bonat and Jorgensen (2016) as an
+example of mixed outcomes regression models.
 }
 \examples{
 library(mcglm)
 library(Matrix)
-data(NewBorn, package="mcglm")
+data(NewBorn, package = "mcglm")
+
+# Linear predictor example
 formu <- SPO2 ~ Sex + APGAR1M + APGAR5M + PRE + HD + SUR
 Z0 <- mc_id(NewBorn)
-fit <- mcglm(linear_pred = c(formu), matrix_pred = list(Z0),
-            link = c("logit"), variance = c("binomialP"),
-            power_fixed = c(TRUE),
-            data = NewBorn,
-            control_algorithm = list(verbose = FALSE, tuning = 0.5))
+fit <- mcglm(
+  linear_pred = c(formu),
+  matrix_pred = list(Z0),
+  link = "logit",
+  variance = "binomialP",
+  power_fixed = TRUE,
+  data = NewBorn,
+  control_algorithm = list(verbose = FALSE, tuning = 0.5)
+)
 summary(fit)
 }
 \keyword{datasets}

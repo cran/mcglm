@@ -534,7 +534,7 @@ test_that(
                     list_tau = list_tau, list_Z = list_Z, list_power = list_power,
                     list_sparse = list_sparse, list_variance = list_variance,
                     list_covariance = list_covariance, list_power_fixed = list_power_fixed)
-    expect_equal(solve(Sigma), actual$inv_C)
+    expect_equal(as.matrix(solve(Sigma)), as.matrix(actual$inv_C))
     expect_equal(as.matrix(Sigma), as.matrix(solve(actual$inv_C)))
     expect_equal(as.matrix(bdiag(Z0,BLOCO_ZERO)), as.matrix(actual$D_C[[2]]))
     expect_equal(as.matrix(bdiag(Z1,BLOCO_ZERO)), as.matrix(actual$D_C[[3]]))
@@ -619,7 +619,7 @@ test_that(
                         list_tau = list_tau, list_Z = list_Z, list_power = list_power,
                         list_sparse = list_sparse, list_variance = list_variance,
                         list_covariance = list_covariance, list_power_fixed = list_power_fixed)
-    expect_equal(solve(Sigma), actual$inv_C)
+    expect_equal(as.matrix(solve(Sigma)), as.matrix(actual$inv_C))
     expect_equal(as.matrix(Sigma), as.matrix(solve(actual$inv_C)))
     expect_equal(as.matrix(bdiag(Z0,BLOCO_ZERO)), as.matrix(actual$D_C[[2]]))
     expect_equal(as.matrix(bdiag(Z1,BLOCO_ZERO)), as.matrix(actual$D_C[[3]]))
@@ -681,7 +681,7 @@ test_that(
                         list_covariance = list_covariance, list_power_fixed = list_power_fixed,
                         compute_C = TRUE, compute_derivative_beta = TRUE)
     expect_equal(as.matrix(solve(Sigma)), as.matrix(actual$inv_C))
-    expect_equal(Sigma, actual$C)
+    expect_equal(as.matrix(Sigma), as.matrix(actual$C))
     expect_equal(as.matrix(Sigma), as.matrix(solve(actual$inv_C)))
     expect_equal(as.matrix(bdiag(D_Sigma1_beta0,BLOCO_ZERO)), as.matrix(actual$D_C_beta[[1]]))
     expect_equal(as.matrix(bdiag(D_Sigma1_beta1,BLOCO_ZERO)), as.matrix(actual$D_C_beta[[2]]))
@@ -723,7 +723,7 @@ test_that(
                         list_covariance = list_covariance, list_power_fixed = list_power_fixed,
                         compute_C = TRUE, compute_derivative_beta = TRUE)
     expect_equal(as.matrix(solve(Sigma)), as.matrix(actual$inv_C))
-    expect_equal(Sigma, actual$C)
+    expect_equal(as.matrix(Sigma), as.matrix(actual$C))
     expect_equal(as.matrix(Sigma), as.matrix(solve(actual$inv_C)))
     expect_equal(as.matrix(bdiag(D_Sigma1_beta0,BLOCO_ZERO)), as.matrix(actual$D_C_beta[[1]]))
     expect_equal(as.matrix(bdiag(D_Sigma1_beta1,BLOCO_ZERO)), as.matrix(actual$D_C_beta[[2]]))
@@ -766,7 +766,7 @@ test_that(
                         list_covariance = list_covariance, list_power_fixed = list_power_fixed,
                         compute_C = TRUE, compute_derivative_beta = TRUE)
     expect_equal(as.matrix(solve(Sigma)), as.matrix(actual$inv_C))
-    expect_equal(Sigma, actual$C)
+    expect_equal(as.matrix(Sigma), as.matrix(actual$C))
     expect_equal(as.matrix(Sigma), as.matrix(solve(actual$inv_C)))
     expect_equal(as.matrix(bdiag(D_Sigma1_beta0,BLOCO_ZERO)), as.matrix(actual$D_C_beta[[1]]))
     expect_equal(as.matrix(bdiag(D_Sigma1_beta1,BLOCO_ZERO)), as.matrix(actual$D_C_beta[[2]]))
@@ -813,7 +813,7 @@ test_that(
                         list_covariance = list_covariance, list_power_fixed = list_power_fixed,
                         compute_C = TRUE, compute_derivative_beta = TRUE)
     expect_equal(as.matrix(solve(Sigma)), as.matrix(actual$inv_C))
-    expect_equal(Sigma, actual$C)
+    expect_equal(as.matrix(Sigma), as.matrix(actual$C))
     expect_equal(as.matrix(Sigma), as.matrix(solve(actual$inv_C)))
     expect_equal(as.matrix(bdiag(D_Sigma1_beta0,BLOCO_ZERO)), as.matrix(actual$D_C_beta[[1]]))
     expect_equal(as.matrix(bdiag(D_Sigma1_beta1,BLOCO_ZERO)), as.matrix(actual$D_C_beta[[2]]))
@@ -855,7 +855,7 @@ test_that(
                         list_covariance = list_covariance, list_power_fixed = list_power_fixed,
                         compute_C = TRUE, compute_derivative_beta = TRUE)
     expect_equal(as.matrix(solve(Sigma)), as.matrix(actual$inv_C))
-    expect_equal(Sigma, actual$C)
+    expect_equal(as.matrix(Sigma), as.matrix(actual$C))
     expect_equal(as.matrix(Sigma), as.matrix(solve(actual$inv_C)))
     expect_equal(as.matrix(-Sigma%*%bdiag(D_inv_Sigma1_beta0,BLOCO_ZERO)%*%Sigma),
                  as.matrix(actual$D_C_beta[[1]]))
@@ -902,7 +902,7 @@ test_that(
                         list_covariance = list_covariance, list_power_fixed = list_power_fixed,
                         compute_C = TRUE, compute_derivative_beta = TRUE)
     expect_equal(as.matrix(solve(Sigma)), as.matrix(actual$inv_C))
-    expect_equal(Sigma, actual$C)
+    expect_equal(as.matrix(Sigma), as.matrix(actual$C))
     expect_equal(as.matrix(Sigma), as.matrix(solve(actual$inv_C)))
     expect_equal(as.matrix(-Sigma%*%bdiag(D_inv_Sigma1_beta0,BLOCO_ZERO)%*%Sigma),
                  as.matrix(actual$D_C_beta[[1]]))
@@ -950,7 +950,7 @@ test_that(
                         list_covariance = list_covariance, list_power_fixed = list_power_fixed,
                         compute_C = TRUE, compute_derivative_beta = TRUE)
     expect_equal(as.matrix(solve(Sigma)), as.matrix(actual$inv_C))
-    expect_equal(Sigma, actual$C)
+    expect_equal(as.matrix(Sigma), as.matrix(actual$C))
     expect_equal(as.matrix(Sigma), as.matrix(solve(actual$inv_C)))
     expect_equal(as.matrix(-Sigma%*%bdiag(D_inv_Sigma1_beta0,BLOCO_ZERO)%*%Sigma),
                  as.matrix(actual$D_C_beta[[1]]))
@@ -1006,7 +1006,7 @@ test_that(
                         list_covariance = list_covariance, list_power_fixed = list_power_fixed,
                         compute_C = TRUE, compute_derivative_beta = TRUE)
     expect_equal(as.matrix(solve(Sigma)), as.matrix(actual$inv_C))
-    expect_equal(Sigma, actual$C)
+    expect_equal(as.matrix(Sigma), as.matrix(actual$C))
     expect_equal(as.matrix(Sigma), as.matrix(solve(actual$inv_C)))
     expect_equal(as.matrix(bdiag(D_Sigma1_beta0,BLOCO_ZERO)),
                  as.matrix(actual$D_C_beta[[1]]))

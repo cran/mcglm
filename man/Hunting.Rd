@@ -3,74 +3,56 @@
 \docType{data}
 \name{Hunting}
 \alias{Hunting}
-\title{Hunting in Pico Basile, Bioko Island, Equatorial Guinea.}
+\title{Hunting Data from Pico Basile, Bioko Island, Equatorial Guinea}
 \format{
-a \code{data.frame} with 1216 records and 11 variables.
+A \code{data.frame} with 1216 observations and 11 variables:
+\describe{
+  \item{\code{ALT}}{Factor with five levels indicating the altitude where the animal was caught.}
+  \item{\code{SEX}}{Factor with levels \code{Female} and \code{Male}.}
+  \item{\code{METHOD}}{Factor with levels \code{Escopeta} and \code{Trampa} indicating the method of capture.}
+  \item{\code{OT}}{Monthly number of other small animals hunted.}
+  \item{\code{BD}}{Monthly number of blue duikers hunted.}
+  \item{\code{OFFSET}}{Monthly number of hunter days.}
+  \item{\code{HUNTER}}{Hunter index.}
+  \item{\code{MONTH}}{Month index.}
+  \item{\code{MONTHCALENDAR}}{Month as calendar number (1 = January, ..., 12 = December).}
+  \item{\code{YEAR}}{Calendar year (2010–2013).}
+  \item{\code{HUNTER.MONTH}}{Index indicating observations taken for the same hunter and month.}
+}
 }
 \source{
-Bonat, et. al. (2017). Modelling the covariance structure in
-marginal multivariate count models: Hunting in Bioko Island.
-Journal of Agricultural Biological and Environmental Statistics, 22(4):446--464.
+Bonat, W. H., et al. (2017). "Modelling the covariance structure in marginal multivariate count models: Hunting in Bioko Island." \emph{Journal of Agricultural, Biological and Environmental Statistics}, 22(4):446–464.
 
-Bonat, W. H. (2018). Multiple Response Variables Regression
-Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
+Bonat, W. H. (2018). "Multiple Response Variables Regression Models in R: The mcglm Package." \emph{Journal of Statistical Software}, 84(4):1–30.
 }
 \usage{
 data(Hunting)
 }
 \description{
-Case study analysed in Bonat et. al. (2016) concernings
-on data of animals hunted in the village of Basile Fang,
-Bioko Norte Province, Bioko Island, Equatorial Guinea.
-Monthly number of blue duikers and other small animals
-shot or snared was collected for a random sample of 52 commercial
-hunters from August 2010 to September 2013.
-For each animal caught, the species, sex, method of capture and
-altitude were documented. The data set has 1216 observations.
-
-\itemize{
-
-\item \code{ALT} - Factor five levels indicating the Altitude where
-the animal was caught.
-
-\item \code{SEX} - Factor two levels \code{Female} and \code{Male}.
-
-\item \code{METHOD} - Factor two levels \code{Escopeta} and
-\code{Trampa}.
-
-\item \code{OT} - Monthly number of other small animals hunted.
-
-\item \code{BD} - Monthly number of blue duikers hunted.
-
-\item \code{OFFSET} - Monthly number of hunter days.
-
-\item \code{HUNTER} - Hunter index.
-
-\item \code{MONTH} - Month index.
-
-\item \code{MONTHCALENDAR} - Month using calendar numbers
-(1-January, ..., 12-December).
-
-\item \code{YEAR} - Year calendar (2010--2013).
-
-\item \code{HUNTER.MONTH} - Index indicating observations taken at
-the same HUNTER and MONTH.
-}
+This dataset contains a case study analyzed in Bonat et al. (2017) regarding
+animals hunted in the village of Basile Fang, Bioko Norte Province,
+Bioko Island, Equatorial Guinea. Monthly counts of blue duikers and other
+small animals shot or snared were collected from a random sample of 52
+commercial hunters between August 2010 and September 2013. For each animal
+caught, the species, sex, capture method, and altitude were recorded. The
+dataset contains 1216 observations.
 }
 \examples{
 library(mcglm)
 library(Matrix)
-data(Hunting, package="mcglm")
+data(Hunting, package = "mcglm")
 formu <- OT ~ METHOD*ALT + SEX + ALT*poly(MONTH, 4)
 Z0 <- mc_id(Hunting)
 Z1 <- mc_mixed(~0 + HUNTER.MONTH, data = Hunting)
-fit <- mcglm(linear_pred = c(formu), matrix_pred = list(c(Z0, Z1)),
-            link = c("log"), variance = c("poisson_tweedie"),
-            power_fixed = c(FALSE),
-            control_algorithm = list(max_iter = 100),
-            offset = list(log(Hunting$OFFSET)), data = Hunting)
+fit <- mcglm(linear_pred = c(formu),
+             matrix_pred = list(c(Z0, Z1)),
+             link = c("log"),
+             variance = c("poisson_tweedie"),
+             power_fixed = c(FALSE),
+             control_algorithm = list(max_iter = 100),
+             offset = list(log(Hunting$OFFSET)),
+             data = Hunting)
 summary(fit)
 anova(fit)
-
 }
 \keyword{datasets}

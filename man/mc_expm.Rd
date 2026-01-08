@@ -20,9 +20,9 @@ mc_expm(U, n = dim(U)[1], sparse = FALSE, inverse = FALSE)
 not.}
 }
 \value{
-A list with \eqn{\Omega = expm(U)} its inverse (if
-    \code{inverse = TRUE}) and auxiliares matrices to compute the
-    derivatives.
+A list containing \eqn{\Omega = expm(U)}, its inverse (if
+  \code{inverse = TRUE}), and auxiliary matrices used to compute the
+  derivatives. The returned object is intended for internal use only.
 }
 \description{
 Given a matrix \code{U} the function \code{mc_expm}

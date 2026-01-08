@@ -53,11 +53,20 @@
 #'          list_Ntrial, list_power_fixed, list_sparse,
 #'          y_vec, correct, max_iter, tol, method,
 #'          tuning, verbose, weights)
-#' @return A list with regression and covariance parameter estimates.
-#' Details about the estimation procedures as iterations, sensitivity,
-#' variability are also provided. In general the users do not need to
-#' use this function directly. The \code{\link{mcglm}} provides GLM
-#' interface for fitting \code{mcglm}.
+#' @return
+#' A list with the results of the estimation procedure for multivariate
+#' covariance generalized linear models.
+#'
+#' The object contains regression parameter estimates, covariance
+#' (dispersion) parameter estimates, fitted values, residuals and
+#' information about the iterative fitting process, such as the number
+#' of iterations, convergence status, sensitivity and variability
+#' matrices.
+#'
+#' The returned object is intended for internal use. End users should
+#' rely on the output provided by \code{\link{mcglm}}, which wraps this
+#' function.
+#'
 #' @seealso \code{mcglm}, \code{mc_matrix_linear_predictor},
 #'  \code{mc_link_function} and \cr \code{mc_variance_function}.
 #'

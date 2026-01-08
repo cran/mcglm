@@ -8,7 +8,14 @@
 #'
 #' @param object an object or a list of objects representing a model
 #' of \code{mcglm} class.
-#' @return Returns a data frame containing goodness-of-fit measures.
+#' @return A data frame with the following columns:
+#' \describe{
+#'   \item{plogLik}{Numeric value of the pseudo Gaussian log-likelihood.}
+#'   \item{Df}{Integer giving the number of estimated parameters.}
+#'   \item{pAIC}{Numeric value of the pseudo Akaike Information Criterion.}
+#'   \item{pKLIC}{Numeric value of the pseudo Kullback–Leibler Information Criterion.}
+#'   \item{BIC}{Numeric value of the pseudo Bayesian Information Criterion.}
+#' }
 #'
 #' @source Bonat, W. H. (2018). Multiple Response Variables Regression
 #' Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.

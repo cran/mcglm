@@ -2,30 +2,45 @@
 % Please edit documentation in R/mc_remove_na.R
 \name{mc_remove_na}
 \alias{mc_remove_na}
-\title{Remove NA from Matrix Linear Predictor}
-\source{
-Bonat, W. H. (2018). Multiple Response Variables Regression
-Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
-}
+\title{Remove Missing Observations from Matrix Linear Predictor}
 \usage{
 mc_remove_na(matrix_pred, cod)
 }
 \arguments{
-\item{matrix_pred}{a list of known matrices.}
+\item{matrix_pred}{A list of square matrices representing the components
+of the matrix linear predictor.}
 
-\item{cod}{index indicating the columns should be removed.}
+\item{cod}{An integer vector giving the indices of rows and columns to
+be removed. These indices usually correspond to missing observations
+in the stacked response vector.}
 }
 \value{
-A list of matrices.
+A list of square matrices of the same length as \code{matrix_pred},
+where, for each matrix, the rows and columns indexed by \code{cod}
+have been removed.
 }
 \description{
-The function \code{mc_remove_na} removes NA from each
-component of the matrix linear predictor. It is in general used after
-the function \code{mc_complete_data}.
+Removes rows and columns corresponding to missing observations from
+each component of a matrix linear predictor. This function is typically
+applied after completing the data structure (e.g., via
+\code{\link[mcglm]{mc_complete_data}}) and before fitting the model, in
+order to ensure compatibility between the response vector and the
+covariance-related design matrices.
+}
+\details{
+For each matrix \eqn{Z_d} in the matrix linear predictor, the function
+returns the submatrix obtained by deleting the rows and columns
+specified in \code{cod}. This operation preserves the symmetry and
+relative structure of the covariance components while aligning them
+with the reduced response vector.
+
+This is an internal utility function and is not intended to be called
+directly by end users.
 }
 \seealso{
-\code{mc_dglm}, \code{mc_ns}, \code{mc_ma} and \code{mc_rw}.
+\code{mc_dglm}, \code{mc_ns}, \code{mc_ma}, \code{mc_rw}
 }
 \author{
 Wagner Hugo Bonat, \email{wbonat@ufpr.br}
 }
+\keyword{internal}

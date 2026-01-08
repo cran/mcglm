@@ -13,7 +13,8 @@ mc_build_bdiag(n_resp, n_obs)
 data set.}
 }
 \value{
-A list of zero matrices.
+A list of matrices with elements equal to zero.
+    The returned object is intended for internal use only.
 }
 \description{
 Build a block-diagonal matrix of zeros. Such functions

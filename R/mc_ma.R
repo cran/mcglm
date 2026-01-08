@@ -1,11 +1,10 @@
-#' @title  Moving Average Models Structure
+#' @title  Moving Average Model Structure
 #' @author Wagner Hugo Bonat, \email{wbonat@@ufpr.br}
 #'
-#' @description The function \code{mc_ma} helps to build the components
-#' of the matrix linear predictor associated with moving average models.
-#' This function is generaly used for the analysis of longitudinal and
-#' times series data. The user can specify the order of the moving
-#' average process.
+#' @description Builds components of the matrix linear predictor associated
+#'   with moving average (MA) covariance structures. This function is mainly
+#'   intended for longitudinal data analysis, but can also be used for
+#'   time series data
 #'
 #' @param id name of the column (string) containing the subject index.
 #' Note that this structure was designed to deal with longitudinal data.
@@ -14,19 +13,26 @@
 #' @param time name of the column (string) containing the index indicating
 #' the time.
 #' @param data data set.
-#' @param order order of the moving average process.
+#' @param order An integer specifying the order of the moving average process.
 #'
-#' @details This function was designed mainly to deal with longitudinal
-#' data, but can also be used for times series analysis. In that case,
-#' the \code{id} argument should contain only one index. It pretends a
-#' longitudinal data taken just for one individual or unit sample. This
-#' function is a simple call of the \code{\link[Matrix]{bandSparse}}
-#' function from the \code{Matrix} package.
+#' @details This function was primarily designed for longitudinal data,
+#'   but it can also be used for time series analysis. In this case, the
+#'   \code{id} argument should contain a single identifier, representing
+#'   one observational unit. Internally, the function constructs block-diagonal
+#'   band matrices using \code{\link[Matrix]{bandSparse}}.
 #'
 #' @source Bonat, W. H. (2018). Multiple Response Variables Regression
 #' Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
 #'
-#' @return A matrix of \code{dgCMatrix} class.
+#' @return A list with the following component:
+#' \describe{
+#'   \item{Z1}{A sparse matrix of class \code{nsCMatrix} representing the
+#'   moving average component of the matrix linear predictor. The matrix
+#'   has dimension equal to the total number of observations and is
+#'   constructed as a block-diagonal matrix, with one block per subject
+#'   (or time series), each block encoding a moving average structure of
+#'   the specified order.}
+#' }
 #'
 #' @seealso \code{mc_id}, \code{mc_dist}, \code{mc_car},
 #' \code{mc_rw} and \code{mc_mixed}.
@@ -46,11 +52,10 @@ mc_ma <- function(id, time, data, order = 1) {
     return(output)
   }
   data$id2 <- 1:dim(data)[1]
-  #data <- data[order(data[id]),]
-  data <- data[do.call(base::order, as.list(data[id])),]
+  data <- data[order(data[[id]]),]
   data$id3 <- 1:dim(data)[1]
   Z1.list <- list()
-  data.id <- split(data, data[id], drop = TRUE)
+  data.id <- split(data, data[[id]], drop = TRUE)
   DD <- sum(abs(diff(do.call(c,lapply(data.id, function(x)dim(x)[1])))))
   if( DD != 0) {
     stop("Model requires equal number of observations by id. \n")

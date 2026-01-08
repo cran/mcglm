@@ -1,55 +1,88 @@
 #' @title Fitting Multivariate Covariance Generalized Linear Models
 #' @author Wagner Hugo Bonat, \email{wbonat@@ufpr.br}
 #'
-#' @description The function \code{mcglm} is used to fit multivariate
-#'     covariance generalized linear models.
-#'     The models are specified by a set of lists giving a symbolic
-#'     description of the linear and matrix linear predictors.
-#'     The user can choose between a list of link, variance and covariance
-#'     functions. The models are fitted using an estimating function
-#'     approach, combining quasi-score functions for regression
-#'     parameters and Pearson estimating function for covariance
-#'     parameters. For details see Bonat and Jorgensen (2016).
+#' @description Fits multivariate covariance generalized linear models.
+#'   Models are specified through lists defining the linear predictors
+#'   and matrix linear predictors. The user can choose among different
+#'   link, variance, and covariance functions. Model fitting is based on
+#'   an estimating function approach, combining quasi-score functions for
+#'   regression parameters and Pearson estimating functions for covariance
+#'   parameters.
 #'
-#' @param linear_pred a list of formula see \code{\link[stats]{formula}}
-#'     for details.
-#' @param matrix_pred a list of known matrices to be used on the matrix
-#'     linear predictor. For details see
-#'     \code{\link[mcglm]{mc_matrix_linear_predictor}}.
-#' @param link a list of link functions names. Options are:
-#'     \code{"logit"}, \code{"probit"}, \code{"cauchit"}, \code{"cloglog"},
-#'     \code{"loglog"}, \code{"identity"}, \code{"log"}, \code{"sqrt"},
-#'     \code{"1/mu^2"} and \code{"inverse"}.
-#'     See \code{\link{mc_link_function}} for details.
-#' @param variance a list of variance functions names.
-#'     Options are: \code{"constant"}, \code{"tweedie"},
-#'     \code{"poisson_tweedie"}, \code{"binomialP"} and \code{"binomialPQ"}. \cr
-#'     See \code{\link{mc_variance_function}} for details.
-#' @param covariance a list of covariance link functions names.
-#'     Options are: \code{"identity"}, \code{"inverse"} and
-#'     exponential-matrix \code{"expm"}.
-#' @param offset a list of offset values if any.
-#' @param Ntrial a list of number of trials on Bernoulli
-#'     experiments. It is useful only for \code{binomialP} and
-#'     \code{binomialPQ} variance functions.
-#' @param power_fixed a list of logicals indicating if the values of the
-#'     power parameter should be estimated or not.
-#' @param weights A list of weights for model fitting. Each element of
-#' the list should be a vector of weights of size equals the number of
-#' observations. Missing observations should be annotated as NA.
-#' @param control_initial a list of initial values for the fitting
-#'     algorithm. If no values are supplied automatic initial values
-#'     will be provided by the function \code{\link{mc_initial_values}}.
-#' @param control_algorithm a list of arguments to be passed for the
-#'     fitting algorithm. See \code{\link[mcglm]{fit_mcglm}} for
-#'     details.
-#' @param contrasts extra arguments to passed to
-#'     \code{\link[stats]{model.matrix}}.
+#' @param linear_pred A list of model formulas, one for each response.
+#'   See \code{\link[stats]{formula}} for details.
+#' @param matrix_pred A list of known matrices defining the matrix linear
+#'   predictor for the covariance structure. See
+#'   \code{\link[mcglm]{mc_matrix_linear_predictor}} for details.
+#'
+#' @param link A list of link function names, one for each response.
+#'   Possible values are \code{"logit"}, \code{"probit"}, \code{"cauchit"},
+#'   \code{"cloglog"}, \code{"loglog"}, \code{"identity"}, \code{"log"},
+#'   \code{"sqrt"}, \code{"1/mu^2"}, and \code{"inverse"}.
+#' @param variance A list of variance function names.
+#'   Possible values are \code{"constant"}, \code{"tweedie"},
+#'   \code{"poisson_tweedie"}, \code{"binomialP"}, and \code{"binomialPQ"}.
+#' @param covariance A list of covariance link function names.
+#'   Possible values are \code{"identity"}, \code{"inverse"}, and
+#'   \code{"expm"}.
+#' @param offset A list of numeric vectors specifying offsets for each
+#'   response. Use \code{NULL} if no offset is required.
+#' @param Ntrial A list of numeric vectors specifying the number of trials
+#'   for binomial responses. Only used for \code{binomialP} and
+#'   \code{binomialPQ} variance functions.
+#' @param power_fixed A list of logical values indicating whether the power
+#'   parameter should be fixed (\code{TRUE}) or estimated (\code{FALSE}).
+#' @param weights A list of numeric vectors of observation weights.
+#'   Each element must have length equal to the number of observations.
+#'   Missing observations should be coded as \code{NA}.
+#' @param control_initial A list of initial values for the fitting algorithm.
+#'   If set to \code{"automatic"}, initial values are generated internally
+#'   using \code{\link{mc_initial_values}}.
+#' @param control_algorithm A list of control parameters passed to the
+#'   fitting algorithm. See \code{\link[mcglm]{fit_mcglm}} for details.
+#' @param contrasts An optional list of contrasts passed to
+#'   \code{\link[stats]{model.matrix}}.
 #' @param data a data frame.
 #' @usage mcglm(linear_pred, matrix_pred, link, variance, covariance,
 #'        offset, Ntrial, power_fixed, data, control_initial,
 #'        contrasts, weights, control_algorithm)
-#' @return mcglm returns an object of class 'mcglm'.
+#' @return
+#' An object of class \code{"mcglm"} representing a fitted multivariate
+#' covariance generalized linear model.
+#'
+#' The returned object is a list produced by the fitting routine
+#' \code{\link{fit_mcglm}}, augmented with additional components used by
+#' post–estimation methods. The main components include:
+#'
+#' \describe{
+#'   \item{beta_names}{A list of character vectors giving the names of the
+#'     regression coefficients for each response variable.}
+#'   \item{power_fixed}{A list of logical values indicating whether the
+#'     power parameters were fixed or estimated.}
+#'   \item{list_initial}{A list of initial values used in the fitting
+#'     algorithm.}
+#'   \item{n_obs}{An integer giving the number of observations.}
+#'   \item{link}{A list of link functions used in the model.}
+#'   \item{variance}{A list of variance functions used in the model.}
+#'   \item{covariance}{A list of covariance link functions used in the model.}
+#'   \item{linear_pred}{A list of formulas defining the linear predictors.}
+#'   \item{matrix_pred}{A list of matrices defining the matrix linear predictors.}
+#'   \item{list_X}{A list of design matrices corresponding to the linear
+#'     predictors.}
+#'   \item{observed}{A matrix of observed response values, with rows
+#'     corresponding to observations and columns to response variables.}
+#'   \item{Ntrial}{A list containing the number of trials for each response
+#'     variable, when applicable.}
+#'   \item{offset}{A list of offset vectors used in the model.}
+#'   \item{sparse}{A list of logical values indicating whether each matrix
+#'     linear predictor is treated as sparse.}
+#'   \item{weights}{A numeric vector of weights used in the fitting process.}
+#'   \item{data}{The data frame used to fit the model.}
+#'   \item{con}{A list of control parameters used by the fitting algorithm.}
+#' }
+#'
+#' Additional components may be present for internal use by methods such as
+#' \code{print}, \code{summary} and \code{predict}.
 #'
 #' @seealso \code{fit_mcglm}, \code{mc_link_function} and
 #' \code{mc_variance_function}.
@@ -99,7 +132,7 @@ mcglm <- function(linear_pred, matrix_pred, link, variance,
   offset <- as.list(offset)
   Ntrial <- as.list(Ntrial)
   power_fixed <- as.list(power_fixed)
-  if (!isa(control_initial, "list")) {
+  if (!is.list(control_initial)) {
     control_initial <-
       mc_initial_values(linear_pred = linear_pred,
                         matrix_pred = matrix_pred, link = link,
@@ -107,25 +140,27 @@ mcglm <- function(linear_pred, matrix_pred, link, variance,
                         covariance = covariance, offset = offset,
                         Ntrial = Ntrial, contrasts = contrasts,
                         data = data)
-    cat("Automatic initial values selected.", "\n")
+    message("Automatic initial values selected.", "\n")
   }
   con <- list(correct = TRUE, max_iter = 20, tol = 1e-04,
               method = "chaser", tuning = 1, verbose = FALSE)
   con[(namc <- names(control_algorithm))] <- control_algorithm
   list_model_frame <- lapply(linear_pred, model.frame, na.action = 'na.pass', data = data)
+
+  old_na_action <- getOption("na.action")
+  on.exit(options(na.action = old_na_action), add = TRUE)
+
   if (!is.null(contrasts)) {
-    list_X <- list()
-    for (i in 1:n_resp) {
-      options(na.action='na.pass')
-      list_X[[i]] <- model.matrix(linear_pred[[i]],
-                                  contrasts = contrasts[[i]])
-      options(na.action='na.omit')
+    list_X <- vector("list", n_resp)
+    for (i in seq_len(n_resp)) {
+      options(na.action = "na.pass")
+      list_X[[i]] <- model.matrix(linear_pred[[i]], contrasts = contrasts[[i]])
     }
   } else {
-    options(na.action='na.pass')
+    options(na.action = "na.pass")
     list_X <- lapply(linear_pred, model.matrix, data = data)
-    options(na.action='na.omit')
   }
+
   list_Y <- lapply(list_model_frame, model.response)
   y_vec <- as.numeric(do.call(c, list_Y))
   if(is.null(weights)) {
@@ -136,11 +171,11 @@ mcglm <- function(linear_pred, matrix_pred, link, variance,
   }
   if(!is.null(weights)) {
     y_vec[is.na(y_vec)] <- 0
-    if(!isa(weights,"list")) {weights <- as.list(weights)}
+    if(!inherits(weights, "list")) {weights <- as.list(weights)}
     weights <- as.numeric(do.call(c, weights))
   }
   sparse <- lapply(matrix_pred, function(x) {
-    if (isa(x, "dgeMatrix") ) {
+    if (inherits(x, "dgeMatrix")) {
       FALSE
     } else TRUE
   })
@@ -159,7 +194,7 @@ mcglm <- function(linear_pred, matrix_pred, link, variance,
                              tuning = con$tuning,
                              verbose = con$verbose,
                              weights = weights))
-  if (!isa(model_fit, "try-error") ) {
+  if (!inherits(model_fit, "try-error")) {
     model_fit$beta_names <- lapply(list_X, colnames)
     model_fit$power_fixed <- power_fixed
     model_fit$list_initial <- control_initial

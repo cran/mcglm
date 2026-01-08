@@ -2,23 +2,27 @@
 % Please edit documentation in R/mc_S3_methods.R
 \name{print.mcglm}
 \alias{print.mcglm}
-\title{Print}
+\title{Print Method for mcglm Objects}
 \usage{
 \method{print}{mcglm}(x, ...)
 }
 \arguments{
-\item{x}{fitted model objects of class \code{mcglm} as produced by \code{mcglm()}.}
+\item{x}{A fitted object of class \code{mcglm}, typically returned by
+\code{mcglm()}.}
 
-\item{...}{further arguments passed to or from other methods.}
+\item{...}{Further arguments passed to or from other methods.}
 }
 \value{
-No return value.
+No return value, called for its side effects.
 }
 \description{
-The default print method for an object of \code{mcglm} class.
+Prints a concise summary of a fitted \code{mcglm} object, including
+the model call, link and variance functions, regression coefficients
+and dispersion parameters for each response variable.
 }
 \seealso{
-\code{summary}.
+\code{\link[base]{print}},
+\code{\link{summary.mcglm}}
 }
 \author{
 Wagner Hugo Bonat, \email{wbonat@ufpr.br}

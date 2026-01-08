@@ -11,10 +11,7 @@ covprod(A, res, W)
 
 \item{res}{A vector of residuals.}
 
-\item{W}{A matrix of weights.}
-}
-\value{
-Return a matrix.
+\item{W}{A matrix of weights. The returned object is intended for internal use only.}
 }
 \description{
 Compute the cross-covariance matrix between covariance

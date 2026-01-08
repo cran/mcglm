@@ -20,7 +20,8 @@ mc_derivative_expm(dU, UU, inv_UU, Q, n = dim(UU)[1], sparse = FALSE)
 \item{sparse}{Logical.}
 }
 \value{
-A matrix.
+A matrix with the derivative of the exponential matrix covariance link function.
+        The returned object is intended for internal use only.
 }
 \description{
 Compute the derivative of the exponential-matrix

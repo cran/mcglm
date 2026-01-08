@@ -2,30 +2,37 @@
 % Please edit documentation in R/mc_updatedCov.R
 \name{mc_updateCov}
 \alias{mc_updateCov}
-\title{Updated covariance parameters}
+\title{Update Covariance Parameters}
 \usage{
 mc_updateCov(list_initial, covariance, list_power_fixed, information, n_resp)
 }
 \arguments{
-\item{list_initial}{A list of initial values.}
+\item{list_initial}{A list containing the current values of the model parameters. The elements
+\code{tau}, \code{power}, and \code{rho} are updated by this function.}
 
-\item{covariance}{A vector with actual covariance parameters values.}
+\item{covariance}{A numeric vector containing the current values of the covariance parameters
+for all response variables and, if applicable, the correlation parameter.}
 
-\item{list_power_fixed}{A list of logicals indicating if the power
-parameter should be estimated or not.}
+\item{list_power_fixed}{A list of logical values indicating for each response whether the power
+parameter should remain fixed (\code{TRUE}) or be updated (\code{FALSE}).}
 
-\item{information}{A list with information about the number of
-parameters in the model. In general the output from
-\link{mc_getInformation}.}
+\item{information}{A list containing model dimension information, including the number of
+\code{tau} and \code{power} parameters per response variable, and the number
+of correlation parameters. Typically the output of \code{\link{mc_getInformation}}.}
 
-\item{n_resp}{A numeric specyfing the number of response variables.}
+\item{n_resp}{An integer specifying the number of response variables in the model.}
 }
 \value{
-A list with updated values of the covariance parameters.
+A list with the same structure as \code{list_initial}, where the elements
+\code{tau}, \code{power}, and \code{rho} contain the updated covariance
+parameter values for each response variable and the correlation parameter.
+The returned object is intended for internal use only.
 }
 \description{
-This function update a list of covariance parameters. It
-    will be useful only inside the fitting algorithm.
+Updates the covariance and power parameter vectors stored in a list used
+during the model fitting algorithm. This function is intended for
+internal use and distributes covariance parameters across response-specific
+components and the correlation parameter.
 }
 \author{
 Wagner Hugo Bonat

@@ -8,7 +8,9 @@
 #'@param Bdiag_chol_Sigma_within A block-diagonal matrix.
 #'@param t_Bdiag_chol_Sigma_within A block-diagonal matrix.
 #'@param II A diagonal matrix.
-#'@return A matrix.
+#'@return A list of matrices. The function returns a list of matrices corresponding
+#'to the derivatives of the variance-covariance matrix with respect to the correlations
+#'parameters rho. The returned object is intended for internal use only.
 #'@keywords internal
 #'@details It is an internal function used to build the derivatives of
 #'     the C matrix.

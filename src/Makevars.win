@@ -1,0 +1,9 @@
+## Makevars.win - configuração para Windows (Rtools45)
+
+## Flags gerais para C++ (mantém compatibilidade com CRAN)
+PKG_CXXFLAGS = $(SHLIB_CXXFLAGS)
+
+## Linkar contra BLAS, LAPACK e bibliotecas Fortran
+## Necessário para Armadillo e para evitar erros como "undefined reference to ddot_"
+PKG_LIBS = $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
+

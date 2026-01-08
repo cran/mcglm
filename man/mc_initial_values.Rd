@@ -36,8 +36,17 @@ experiments. It is useful only for \code{"binomialP"} and
 \item{data}{data frame.}
 }
 \value{
-Return a list of initial values to be used while fitting
-    in the \code{mcglm} function.
+A list containing initial values for model parameters:
+\describe{
+  \item{regression}{A list of numeric vectors with initial values for the
+  regression parameters of each response variable.}
+  \item{power}{A list of numeric vectors with initial values for the power
+  parameters associated with the variance functions.}
+  \item{tau}{A list of numeric vectors with initial values for the dispersion
+  and covariance-related parameters in the matrix linear predictor.}
+  \item{rho}{A numeric vector with initial values for the correlation
+  parameters between response variables.}
+}
 }
 \description{
 This function provides initial values to be used when

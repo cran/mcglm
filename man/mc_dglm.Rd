@@ -20,8 +20,11 @@ structure.}
 \item{data}{data set.}
 }
 \value{
-A list of a diagonal matrices, whose values are given by
-the covariates assumed to describe the covariance structure.
+A list containing diagonal matrices with entries defined by the
+  covariates assumed to describe the matrix linear predictor.
+  Each matrix corresponds to one component of the covariance model and
+  is intended to be supplied to the \code{matrix_pred} argument of
+  \code{\link{mcglm}}.
 }
 \description{
 The function \code{mc_dglm} builds the components

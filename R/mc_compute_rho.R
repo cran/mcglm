@@ -18,8 +18,9 @@
 #'
 #' @seealso \code{mc_car} and \code{mc_conditional_test}.
 #'
-#' @return Returns estimate, standard error and confidential interval for
-#' the spatial autocorrelation parameter.
+#' @return Returns a data frame with parameter estimate, standard error and
+#' confidential interval for the spatial autocorrelation parameter. It is used
+#' in the case of spatial models using the \code{mc_car} specification.
 #'
 #' @export
 

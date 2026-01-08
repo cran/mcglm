@@ -13,6 +13,7 @@ mc_dexp_gold(M, dM)
 }
 \value{
 A list with two elements: \eqn{expm(M)} and its derivatives.
+   The returned object is intended for internal use only.
 }
 \description{
 Given a matrix \eqn{M} and its derivative \eqn{dM} the

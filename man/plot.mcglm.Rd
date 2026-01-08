@@ -2,36 +2,67 @@
 % Please edit documentation in R/mc_S3_methods.R
 \name{plot.mcglm}
 \alias{plot.mcglm}
-\title{Residuals and algorithm check plots}
+\title{Diagnostic Plots for mcglm Objects}
 \usage{
-\method{plot}{mcglm}(x, type = "residuals", ...)
+\method{plot}{mcglm}(
+  x,
+  type = c("residuals", "algorithm", "partial_residuals"),
+  plot_graphics = TRUE,
+  ...
+)
 }
 \arguments{
-\item{x}{a fitted \code{mcglm} object.}
+\item{x}{A fitted object of class \code{mcglm}.}
 
-\item{type}{specify which graphical analysis will be performed.
-Options are: \code{"residuals"} and \code{"algorithm"}.}
+\item{type}{Character string specifying the type of diagnostic plot to produce.
+One of \code{"residuals"}, \code{"algorithm"}, or \code{"partial_residuals"}.}
 
-\item{...}{additional arguments affecting the plot produced. Note
-that there is no extra options for mcglm object class.}
+\item{plot_graphics}{Logical; if \code{TRUE} (default), the function produces the plots.
+If \code{FALSE}, the function only returns the data used for plotting,
+which can be used to produce custom plots.}
+
+\item{...}{Additional arguments; currently ignored. Included for compatibility
+with the generic \code{\link[graphics]{plot}} function.}
 }
 \value{
-The function \code{plot.mcglm} was designed to offer a fast
-residuals analysis based on the Pearson residuals. Current version
-offers a simple Pearson residuals versus fitted values and a quantile
-plot. When using \code{algorithm = TRUE} the function will plot a summary of
-the fitting algorithm shows the trajectory or iterations of the fitting
-algorithm. The iterations are shown in terms of values of the model
-parameters and also the actually value of the quasi-score and Pearson
-estimating functions. Hence, a quickly check of the algorithm
-convergence is obtained.
+A list containing the data used to generate the plots:
+\itemize{
+  \item For \code{"residuals"}: \code{fitted} values and \code{residuals}.
+  \item For \code{"algorithm"}: \code{IterationRegression},
+        \code{IterationCovariance}, \code{ScoreRegression},
+        \code{ScoreCovariance}.
+  \item For \code{"partial_residuals"}: \code{residuals}, \code{list_beta},
+        and \code{partial_residuals} containing x and y values for each covariate.
+}
 }
 \description{
-Residual and algorithm check analysis for objects of
-\code{mcglm} class.
+Produces diagnostic plots for fitted \code{mcglm} objects and returns
+the data used to generate the plots. Available diagnostics include:
+\itemize{
+  \item \code{"residuals"}: plots of fitted values vs. Pearson residuals
+        and Q-Q plots of residuals;
+  \item \code{"algorithm"}: plots of regression and covariance parameters
+        and quasi-score iterations to inspect algorithm convergence;
+  \item \code{"partial_residuals"}: partial residual plots for each
+        covariate in the model.
+}
+}
+\examples{
+library(mcglm)
+set.seed(123)
+mydata <- data.frame(y = rnorm(10), x1 = rnorm(10),
+                    x2 = rbinom(10, size = 1, prob = 0.5))
+Z0 <- mc_id(mydata)
+fit <- mcglm(c(y ~ x1 + x2), matrix_pred = list(Z0), data = mydata)
+# Produce plots and get data
+diag_data <- plot(fit, type = "residuals")
+# Only get data without plotting
+diag_data <- plot(fit, type = "partial_residuals", plot_graphics = FALSE)
+
 }
 \seealso{
-\code{residuals} and \code{fitted}.
+\code{\link[stats]{residuals}}, \code{\link[stats]{fitted}},
+\code{\link[graphics]{plot}}
 }
 \author{
 Wagner Hugo Bonat, \email{wbonat@ufpr.br}

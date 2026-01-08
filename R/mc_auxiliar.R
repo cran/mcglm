@@ -14,6 +14,7 @@
 #' @param bord2 A matrix.
 #' @keywords internal
 #' @return The matrix product \code{bord1 * middle * bord2}.
+#'     The returned object is intended for internal use only.
 
 ## Auxiliar function to multiply matrices ------------------------------
 mc_sandwich <- function(middle, bord1, bord2) {

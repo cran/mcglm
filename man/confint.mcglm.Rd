@@ -7,25 +7,27 @@
 \method{confint}{mcglm}(object, parm, level = 0.95, ...)
 }
 \arguments{
-\item{object}{a fitted \code{mcglm} object.}
+\item{object}{A fitted object of class \code{mcglm}.}
 
-\item{parm}{specifies for which parameters are to be given
-confidence intervals, either a vector of numbers or a vector of
-strings. If missing, all parameters are considered.}
+\item{parm}{Optional specification of parameters for which confidence intervals
+are required. Can be a numeric vector of indices or a character
+vector of parameter names. If omitted, confidence intervals for all
+parameters are returned.}
 
-\item{level}{the nominal confidence level.}
+\item{level}{Numeric value giving the confidence level. Must be between 0 and 1.
+Default is \code{0.95}.}
 
-\item{...}{additional arguments affecting the confidence interval
-produced. Note that there is no extra options for \code{mcglm}
-object class.}
+\item{...}{Additional arguments. Currently ignored and included for
+compatibility with the generic
+\code{\link[stats]{confint}} function.}
 }
 \value{
-A \code{data.frame} with confidence intervals, parameters
-    names, response variable number and parameters type.
+A numeric matrix with two columns corresponding to the lower and
+upper confidence limits. Rows correspond to model parameters.
 }
 \description{
-Computes confidence intervals for parameters in a fitted
-    \code{mcglm} model.
+Computes Wald-type confidence intervals for parameter estimates
+from a fitted \code{mcglm} model, based on asymptotic normality.
 }
 \author{
 Wagner Hugo Bonat, \email{wbonat@ufpr.br}

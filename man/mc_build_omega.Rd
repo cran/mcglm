@@ -18,8 +18,9 @@ identity, inverse, expm.}
 'dsCMatrix'.}
 }
 \value{
-A list with the \eqn{\Omega} matrix its inverse and
-    derivatives with respect to \eqn{\tau}.
+A list of matrices. The function returns the \eqn{\Omega} matrix its
+    inverse and derivatives with respect to \eqn{\tau}.
+    The returned object is intended for internal use only.
 }
 \description{
 This function build \eqn{\Omega} matrix according the

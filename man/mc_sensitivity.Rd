@@ -12,8 +12,8 @@ mc_sensitivity(product, W)
 \item{W}{Matrix of weights.}
 }
 \value{
-The sensitivity matrix associated with the Pearson estimating
-    function.
+A matrix. The sensitivity matrix associated with the Pearson estimating
+    function. The returned object is intended for internal use only.
 }
 \description{
 Compute the sensitivity matrix associated with the

@@ -9,8 +9,18 @@
 #'     parameters should be estimated or not.
 #' @param n_resp A number specyfing the nmber of response variables.
 #' @keywords internal
-#' @return The number of \eqn{\beta}'s, \eqn{\tau}'s, power and
-#'     correlation parameters.
+#' @return A list containing information about the number of model parameters:
+#' \describe{
+#'   \item{n_betas}{A list with the number of regression parameters
+#'   (\eqn{\beta}) for each response variable.}
+#'   \item{n_taus}{A list with the number of dispersion parameters
+#'   (\eqn{\tau}) for each response variable.}
+#'   \item{n_power}{A list with the number of power parameters for each
+#'   response variable, accounting for fixed parameters.}
+#'   \item{n_rho}{An integer giving the number of correlation parameters.}
+#'   \item{n_cov}{An integer giving the total number of covariance-related
+#'   parameters, including power, dispersion, and correlation parameters.}
+#' }
 
 mc_getInformation <- function(list_initial, list_power_fixed,
                               n_resp) {

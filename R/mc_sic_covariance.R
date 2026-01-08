@@ -1,48 +1,88 @@
-#' @title Score Information Criterion - Covariance
-#' @author Wagner Hugo Bonat, \email{wbonat@@ufpr.br}
+#' @title Score Information Criterion for Covariance Components
 #'
-#' @description Compute the score information criterion (SIC) for an
-#' object of \code{mcglm} class. The SIC-covariance is useful for
-#' selecting the components of the matrix linear predictor. It can be
-#' used to construct an stepwise procedure to select the components of
-#' the matrix linear predictor.
+#' @description
+#' Computes the Score Information Criterion (SIC) for covariance
+#' components of a fitted \code{mcglm} object. The SIC-covariance is used
+#' to select components of the matrix linear predictor and can be
+#' employed in stepwise selection procedures.
 #'
-#' @param object an object of \code{mcglm} class.
-#' @param scope a list of matrices to be tested.
-#' @param idx indicator of matrices belong to the same effect.
-#'    It is useful for the case where more than one matrix represents
-#'    the same effect.
-#' @param data data set containing all variables involved in the
-#'     model.
-#' @param penalty penalty term (default = 2).
-#' @param weights Vector of weights for model fitting.
-#' @param response index indicating for which response variable
-#'    SIC-covariance should be computed.
-#' @return A data frame containing SIC-covariance values,
-#' degree of freedom, Tu-statistics and chi-squared reference values
-#' for each matrix in the scope argument.
+#' @param object
+#' An object of class \code{mcglm}.
 #'
-#' @source Bonat, et. al. (2016). Modelling the covariance structure in
+#' @param scope
+#' A list of matrices to be tested for inclusion in the matrix linear
+#' predictor.
+#'
+#' @param idx
+#' An integer vector indicating which matrices in \code{scope} belong to
+#' the same effect. This is useful when more than one matrix represents
+#' a single covariance component.
+#'
+#' @param data
+#' A data frame containing all variables involved in the model.
+#'
+#' @param penalty
+#' A numeric penalty term applied to the SIC (default is 2).
+#'
+#' @param response
+#' An integer indicating the response variable for which the
+#' SIC-covariance is computed.
+#'
+#' @param weights
+#' An optional numeric vector of weights used in model fitting. If not
+#' provided, unit weights are assumed.
+#'
+#' @details
+#' The SIC-covariance is computed using the Pearson estimating function.
+#' For each group of matrices defined by \code{idx}, a score-based test
+#' statistic is calculated to assess the contribution of the associated
+#' covariance components, penalized by model complexity.
+#'
+#' @return
+#' A data frame with the following columns:
+#' \describe{
+#'   \item{SIC}{Score Information Criterion value.}
+#'   \item{df}{Degrees of freedom associated with the test.}
+#'   \item{df_total}{Total number of covariance parameters in the extended model.}
+#'   \item{Tu}{Score-based test statistic.}
+#'   \item{Chisq}{Reference chi-squared quantile with 95\% confidence level.}
+#' }
+#'
+#' @references
+#' Bonat, W. H., et al. (2016). Modelling the covariance structure in
 #' marginal multivariate count models: Hunting in Bioko Island.
-#' Journal of Agricultural Biological and Environmental Statistics, 22(4):446--464.
-
-#' @source Bonat, W. H. (2018). Multiple Response Variables Regression
-#' Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
+#' \emph{Journal of Agricultural, Biological and Environmental Statistics},
+#' 22(4), 446--464.
 #'
-#' @seealso \code{mc_sic}.
+#' Bonat, W. H. (2018). Multiple Response Variables Regression Models in R:
+#' The mcglm Package. \emph{Journal of Statistical Software}, 84(4), 1--30.
+#'
+#' @seealso
+#' \code{\link{mc_sic}}
+#'
 #' @examples
 #' set.seed(123)
 #' SUBJECT <- gl(10, 10)
 #' y <- rnorm(100)
 #' data <- data.frame(y, SUBJECT)
+#'
 #' Z0 <- mc_id(data)
-#' Z1 <- mc_mixed(~0+SUBJECT, data = data)
-#' # Reference model
-#' fit0 <- mcglm(c(y ~ 1), list(Z0), data = data)
-#' # Testing the effect of the matrix Z1
-#' mc_sic_covariance(fit0, scope = Z1, idx = 1,
-#' data = data, response = 1)
-#' # As expected Tu < Chisq indicating non-significance of Z1 matrix
+#' Z1 <- mc_mixed(~ 0 + SUBJECT, data = data)
+#'
+#' fit0 <- mcglm(
+#'   linear_pred = c(y ~ 1),
+#'   matrix_pred = list(Z0),
+#'   data = data
+#' )
+#'
+#' mc_sic_covariance(
+#'   fit0,
+#'   scope = Z1,
+#'   idx = 1,
+#'   data = data,
+#'   response = 1
+#' )
+#'
 #' @export
 
 mc_sic_covariance <- function(object, scope, idx, data, penalty = 2,

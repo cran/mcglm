@@ -17,67 +17,98 @@ mcglm(linear_pred, matrix_pred, link, variance, covariance,
        contrasts, weights, control_algorithm)
 }
 \arguments{
-\item{linear_pred}{a list of formula see \code{\link[stats]{formula}}
-for details.}
+\item{linear_pred}{A list of model formulas, one for each response.
+See \code{\link[stats]{formula}} for details.}
 
-\item{matrix_pred}{a list of known matrices to be used on the matrix
-linear predictor. For details see
-\code{\link[mcglm]{mc_matrix_linear_predictor}}.}
+\item{matrix_pred}{A list of known matrices defining the matrix linear
+predictor for the covariance structure. See
+\code{\link[mcglm]{mc_matrix_linear_predictor}} for details.}
 
-\item{link}{a list of link functions names. Options are:
-\code{"logit"}, \code{"probit"}, \code{"cauchit"}, \code{"cloglog"},
-\code{"loglog"}, \code{"identity"}, \code{"log"}, \code{"sqrt"},
-\code{"1/mu^2"} and \code{"inverse"}.
-See \code{\link{mc_link_function}} for details.}
+\item{link}{A list of link function names, one for each response.
+Possible values are \code{"logit"}, \code{"probit"}, \code{"cauchit"},
+\code{"cloglog"}, \code{"loglog"}, \code{"identity"}, \code{"log"},
+\code{"sqrt"}, \code{"1/mu^2"}, and \code{"inverse"}.}
 
-\item{variance}{a list of variance functions names.
-Options are: \code{"constant"}, \code{"tweedie"},
-\code{"poisson_tweedie"}, \code{"binomialP"} and \code{"binomialPQ"}. \cr
-See \code{\link{mc_variance_function}} for details.}
+\item{variance}{A list of variance function names.
+Possible values are \code{"constant"}, \code{"tweedie"},
+\code{"poisson_tweedie"}, \code{"binomialP"}, and \code{"binomialPQ"}.}
 
-\item{covariance}{a list of covariance link functions names.
-Options are: \code{"identity"}, \code{"inverse"} and
-exponential-matrix \code{"expm"}.}
+\item{covariance}{A list of covariance link function names.
+Possible values are \code{"identity"}, \code{"inverse"}, and
+\code{"expm"}.}
 
-\item{offset}{a list of offset values if any.}
+\item{offset}{A list of numeric vectors specifying offsets for each
+response. Use \code{NULL} if no offset is required.}
 
-\item{Ntrial}{a list of number of trials on Bernoulli
-experiments. It is useful only for \code{binomialP} and
+\item{Ntrial}{A list of numeric vectors specifying the number of trials
+for binomial responses. Only used for \code{binomialP} and
 \code{binomialPQ} variance functions.}
 
-\item{power_fixed}{a list of logicals indicating if the values of the
-power parameter should be estimated or not.}
+\item{power_fixed}{A list of logical values indicating whether the power
+parameter should be fixed (\code{TRUE}) or estimated (\code{FALSE}).}
 
 \item{data}{a data frame.}
 
-\item{control_initial}{a list of initial values for the fitting
-algorithm. If no values are supplied automatic initial values
-will be provided by the function \code{\link{mc_initial_values}}.}
+\item{control_initial}{A list of initial values for the fitting algorithm.
+If set to \code{"automatic"}, initial values are generated internally
+using \code{\link{mc_initial_values}}.}
 
-\item{contrasts}{extra arguments to passed to
+\item{contrasts}{An optional list of contrasts passed to
 \code{\link[stats]{model.matrix}}.}
 
-\item{weights}{A list of weights for model fitting. Each element of
-the list should be a vector of weights of size equals the number of
-observations. Missing observations should be annotated as NA.}
+\item{weights}{A list of numeric vectors of observation weights.
+Each element must have length equal to the number of observations.
+Missing observations should be coded as \code{NA}.}
 
-\item{control_algorithm}{a list of arguments to be passed for the
-fitting algorithm. See \code{\link[mcglm]{fit_mcglm}} for
-details.}
+\item{control_algorithm}{A list of control parameters passed to the
+fitting algorithm. See \code{\link[mcglm]{fit_mcglm}} for details.}
 }
 \value{
-mcglm returns an object of class 'mcglm'.
+An object of class \code{"mcglm"} representing a fitted multivariate
+covariance generalized linear model.
+
+The returned object is a list produced by the fitting routine
+\code{\link{fit_mcglm}}, augmented with additional components used by
+post–estimation methods. The main components include:
+
+\describe{
+  \item{beta_names}{A list of character vectors giving the names of the
+    regression coefficients for each response variable.}
+  \item{power_fixed}{A list of logical values indicating whether the
+    power parameters were fixed or estimated.}
+  \item{list_initial}{A list of initial values used in the fitting
+    algorithm.}
+  \item{n_obs}{An integer giving the number of observations.}
+  \item{link}{A list of link functions used in the model.}
+  \item{variance}{A list of variance functions used in the model.}
+  \item{covariance}{A list of covariance link functions used in the model.}
+  \item{linear_pred}{A list of formulas defining the linear predictors.}
+  \item{matrix_pred}{A list of matrices defining the matrix linear predictors.}
+  \item{list_X}{A list of design matrices corresponding to the linear
+    predictors.}
+  \item{observed}{A matrix of observed response values, with rows
+    corresponding to observations and columns to response variables.}
+  \item{Ntrial}{A list containing the number of trials for each response
+    variable, when applicable.}
+  \item{offset}{A list of offset vectors used in the model.}
+  \item{sparse}{A list of logical values indicating whether each matrix
+    linear predictor is treated as sparse.}
+  \item{weights}{A numeric vector of weights used in the fitting process.}
+  \item{data}{The data frame used to fit the model.}
+  \item{con}{A list of control parameters used by the fitting algorithm.}
+}
+
+Additional components may be present for internal use by methods such as
+\code{print}, \code{summary} and \code{predict}.
 }
 \description{
-The function \code{mcglm} is used to fit multivariate
-    covariance generalized linear models.
-    The models are specified by a set of lists giving a symbolic
-    description of the linear and matrix linear predictors.
-    The user can choose between a list of link, variance and covariance
-    functions. The models are fitted using an estimating function
-    approach, combining quasi-score functions for regression
-    parameters and Pearson estimating function for covariance
-    parameters. For details see Bonat and Jorgensen (2016).
+Fits multivariate covariance generalized linear models.
+  Models are specified through lists defining the linear predictors
+  and matrix linear predictors. The user can choose among different
+  link, variance, and covariance functions. Model fitting is based on
+  an estimating function approach, combining quasi-score functions for
+  regression parameters and Pearson estimating functions for covariance
+  parameters.
 }
 \seealso{
 \code{fit_mcglm}, \code{mc_link_function} and

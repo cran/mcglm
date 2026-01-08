@@ -10,7 +10,8 @@
 #' @param dU A matrix.
 #' @param n A numeric.
 #' @param sparse Logical.
-#' @return A matrix.
+#' @return A matrix with the derivative of the exponential matrix covariance link function.
+#'         The returned object is intended for internal use only.
 #' @seealso \code{\link[Matrix]{expm}}, \code{link[mcglm]{mc_dexp_gold}}
 #'     and \code{link[mcglm]{mc_dexpm}}.
 #' @keywords internal

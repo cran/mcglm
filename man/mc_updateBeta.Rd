@@ -2,27 +2,33 @@
 % Please edit documentation in R/mc_updatedBeta.R
 \name{mc_updateBeta}
 \alias{mc_updateBeta}
-\title{Updated regression parameters}
+\title{Update Regression Parameters}
 \usage{
 mc_updateBeta(list_initial, betas, information, n_resp)
 }
 \arguments{
-\item{list_initial}{A list of initial values.}
+\item{list_initial}{A list containing the current values of the model parameters. The
+element \code{regression} is updated by this function.}
 
-\item{betas}{A vector with actual regression parameters values.}
+\item{betas}{A numeric vector containing the current values of the regression
+parameters for all response variables.}
 
-\item{information}{A list with information about the number of
-parameters in the model. In general the output from
-\link{mc_getInformation}.}
+\item{information}{A list containing model dimension information, including the number
+of regression parameters per response variable. Typically the output
+of \code{\link{mc_getInformation}}.}
 
-\item{n_resp}{A numeric specyfing the number of response variables.}
+\item{n_resp}{An integer specifying the number of response variables in the model.}
 }
 \value{
-A list with updated values of the regression parameters.
+A list with the same structure as \code{list_initial}, where the
+element \code{regression} contains the updated regression parameter
+vectors for each response variable. The returned object is intended for internal use only.
 }
 \description{
-This function update a list of regression parameters. It
-    will be useful only inside the fitting algorithm.
+Updates the regression parameter vectors stored in a list used during
+the model fitting algorithm. This function is intended for internal
+use and is called repeatedly to redistribute the regression parameters
+across response-specific components.
 }
 \author{
 Wagner Hugo Bonat

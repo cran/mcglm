@@ -7,7 +7,9 @@
 #' @param derivada A matrix.
 #' @param inv_chol_Sigma A matrix.
 #' @param chol_Sigma A matrix.
-#' @return A list of matrix.
+#' @return A list of matrix. The matrices are the derivative of the Cholesky decomposition
+#' of Sigma or its inverse with respect to the dispersion parameters.
+#' The returned object is intended for internal use only.
 #' @keywords internal
 #' @details It is an internal function.
 

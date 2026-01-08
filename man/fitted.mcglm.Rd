@@ -7,16 +7,20 @@
 \method{fitted}{mcglm}(object, ...)
 }
 \arguments{
-\item{object}{an object of \code{mcglm} class.}
+\item{object}{A fitted object of class \code{mcglm}.}
 
-\item{...}{additional arguments affecting the summary produced. Note
-that there is no extra options for \code{mcglm} object class.}
+\item{...}{Additional arguments. Currently ignored and included for
+compatibility with the generic
+\code{\link[stats]{fitted}} function.}
 }
 \value{
-A matrix with fitted values.
+A numeric matrix of fitted values. Rows correspond to observations
+and columns correspond to response variables.
 }
 \description{
-Extract fitted values for objects of \code{mcglm} class.
+Extract fitted (mean) values from a fitted \code{mcglm} model.
+For multivariate responses, fitted values are returned in matrix
+form, with one column per response variable.
 }
 \author{
 Wagner Hugo Bonat, \email{wbonat@ufpr.br}

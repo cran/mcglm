@@ -1,55 +1,67 @@
-#' @title Variance Functions
-#' @author Wagner Hugo Bonat, \email{wbonat@@ufpr.br}
+#' @title Variance Functions for Generalized Linear Models
+#' @author Wagner Hugo Bonat
 #'
-#' @description Compute the variance function and its derivatives with
-#' respect to regression, dispersion and power parameters.
+#' @description
+#' Computes the variance function and its derivatives with respect to
+#' regression, dispersion, and power parameters. This function supports
+#' standard power variance functions as well as binomial responses.
+#' Intended primarily for internal use in model fitting.
 #'
-#' @param mu a numeric vector. In general the output from
+#' @param mu Numeric vector of expected values. Typically obtained from
 #'     \code{\link{mc_link_function}}.
-#' @param power a numeric value (\code{power} and \code{binomialP}) or
-#'     a vector (\code{binomialPQ}) of the power parameters.
-#' @param Ntrial number of trials, useful only when dealing with
+#'
+#' @param power Numeric value (for \code{power} and \code{binomialP})
+#'     or numeric vector of length two (for \code{binomialPQ}) representing
+#'     the power parameters of the variance function.
+#'
+#' @param Ntrial Positive integer or numeric. Number of trials for
 #'     binomial response variables.
-#' @param variance a string specifying the name (\code{power, binomialP
-#'     or binomialPQ}) of the variance function.
-#' @param inverse logical. Compute the inverse or not.
-#' @param derivative_power logical if compute (TRUE) or not (FALSE) the
-#'     derivatives with respect to the power parameter.
-#' @param derivative_mu logical if compute (TRUE) or not (FALSE) the
-#'     derivative with respect to the mu parameter.
-#' @return A list with from one to four elements depends on the
-#'     arguments.
 #'
-#' @seealso \code{\link{mc_link_function}}.
+#' @param variance Character string specifying the variance function type:
+#'     \code{"power"}, \code{"binomialP"}, or \code{"binomialPQ"}.
 #'
-#' @details The function \code{mc_variance_function} computes three
-#'     features related with the variance function. Depending on the
-#'     logical arguments, the function returns \eqn{V^{1/2}} and its
-#'     derivatives with respect to the parameters power and mu,
-#'     respectivelly.  The output is a named list, completely
-#'     informative about what the function has been computed.  For
-#'     example, if \code{inverse = FALSE}, \code{derivative_power =
-#'     TRUE} and \code{derivative_mu = TRUE}. The output will be a list,
-#'     with three elements: V_sqrt, D_V_sqrt_power and D_V_sqrt_mu.
+#' @param inverse Logical. If \code{TRUE}, computes the inverse square root
+#'     of the variance function.
 #'
-#' @usage mc_variance_function(mu, power, Ntrial, variance, inverse,
-#'                            derivative_power, derivative_mu)
+#' @param derivative_power Logical. If \code{TRUE}, computes the derivative
+#'     with respect to the power parameter.
 #'
-#' @source Bonat, W. H. and Jorgensen, B. (2016) Multivariate
-#'     covariance generalized linear models.
-#'     Journal of Royal Statistical Society - Series C 65:649--675.
+#' @param derivative_mu Logical. If \code{TRUE}, computes the derivative
+#'     with respect to \code{mu}.
 #'
-#' @export
+#' @return A named list containing one or more of the following elements,
+#'     depending on the combination of logical arguments:
+#'     \describe{
+#'       \item{V_sqrt}{Square root of the variance function.}
+#'       \item{V_inv_sqrt}{Inverse square root of the variance function.}
+#'       \item{D_V_sqrt_power}{Derivative of V_sqrt with respect to the power parameter.}
+#'       \item{D_V_inv_sqrt_power}{Derivative of V_inv_sqrt with respect to the power parameter.}
+#'       \item{D_V_sqrt_mu}{Derivative of V_sqrt with respect to \code{mu}.}
+#'       \item{D_V_inv_sqrt_mu}{Derivative of V_inv_sqrt with respect to \code{mu}.}
+#'     }
+#'
+#' @details
+#' The function computes the variance function and its derivatives used in
+#' the estimation of generalized linear models for multiple response variables.
+#' For binomial responses, it accounts for the number of trials and supports
+#' both single (\code{binomialP}) and double (\code{binomialPQ}) power specifications.
+#'
+#' @seealso \code{\link{mc_link_function}}
+#'
+#' @source Bonat, W. H. and Jorgensen, B. (2016) Multivariate covariance
+#' generalized linear models. Journal of the Royal Statistical Society:
+#' Series C (Applied Statistics), 65:649--675.
 #'
 #' @examples
-#' x1 <- seq(-1, 1, l = 5)
+#' x1 <- seq(-1, 1, length.out = 5)
 #' X <- model.matrix(~x1)
-#' mu <- mc_link_function(beta = c(1, 0.5), X = X, offset = NULL,
-#'                        link = "logit")
+#' mu <- mc_link_function(beta = c(1, 0.5), X = X, offset = NULL, link = "logit")
 #' mc_variance_function(mu = mu$mu, power = c(2, 1), Ntrial = 1,
 #'                      variance = "binomialPQ", inverse = FALSE,
 #'                      derivative_power = TRUE, derivative_mu = TRUE)
 #'
+#' @export
+
 
 ## Generic variance function -------------------------------------------
 mc_variance_function <- function(mu, power, Ntrial,

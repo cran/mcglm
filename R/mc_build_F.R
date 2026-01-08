@@ -1,14 +1,14 @@
-#' @title Auxiliary function: Build F matrix for Wald multivariate test
+#' @title Auxiliar function: Build F matrix for Wald multivariate test
 #' @name mc_build_F
 #' @author Wagner Hugo Bonat
 #'
-#' @description The function \code{mc_build_F} is just an auxiliary
+#' @description The function \code{mc_build_F} is just an auxiliar
 #'     function to construct the design matrix for multivariate Wald-type
 #'     test.
 #'
 #' @param vector A vector indexing model regression coefficients.
 #' @keywords internal
-#' @return A matrix.
+#' @return A matrix. The returned object is intended for internal use only.
 
 ## Building F matrix for multivariate hypothesis tests ---------------
 mc_build_F <- function(vector) {

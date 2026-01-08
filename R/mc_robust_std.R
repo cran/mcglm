@@ -1,25 +1,41 @@
-#' @title Robust Standard Error for Regression Parameters
+#' @title Robust Standard Errors for Regression Parameters
 #' @author Wagner Hugo Bonat, \email{wbonat@@ufpr.br}
 #'
-#' @description Compute robust standard error for regression parameters
-#'     in the context of clustered observations for an object of
-#'     \code{mcglm} class.
+#' @description
+#' Computes cluster-robust (sandwich-type) standard errors for the
+#' regression parameters of an object of class \code{mcglm}, accounting
+#' for within-cluster correlation.
 #'
-#' @param object an object of \code{mcglm} class.
-#' @param id a vector which identifies the clusters or subject indexes.
-#'     The length and order of \code{id} should be the same as the number of
-#'     observations. Data are assumed to be sorted so that observations
-#'     on a cluster are contiguous rows for all entities in the formula.
+#' @details
+#' The robust variance--covariance matrix is obtained using an empirical
+#' estimator based on clustered residuals and the sensitivity matrix of
+#' the estimating equations. The implementation assumes that the data are
+#' correctly ordered such that observations belonging to the same cluster
+#' are stored in contiguous rows.
 #'
-#' @return A variance-covariance matrix.
-#'     Note that the function assumes that the data are in the correct
-#'     order.
+#' @param object An object of class \code{mcglm} representing a fitted
+#'   marginal model.
+#' @param id An integer or factor vector identifying clusters or subjects.
+#'   Its length and ordering must match the number and ordering of the
+#'   observations used to fit the model.
 #'
-#' @source Nuamah, I. F. and Qu, Y. and Aminu, S. B. (1996). A SAS macro
-#' for stepwise correlated binary regression. Computer Methods
-#' and Programs in Biomedicine 49, 199--210.
+#' @return
+#' A list with two components:
+#' \describe{
+#'   \item{Std.Error}{A numeric vector containing the robust standard
+#'   errors of the regression parameter estimates.}
+#'   \item{vcov}{A numeric matrix giving the robust variance--covariance
+#'   matrix of the regression parameter estimates.}
+#' }
+#' The returned objects are computed under the assumption that the data
+#' are in the correct cluster order.
 #'
-#' @seealso \code{mc_bias_correct_std}.
+#' @source
+#' Nuamah, I. F., Qu, Y., and Aminu, S. B. (1996). A SAS macro for stepwise
+#' correlated binary regression. \emph{Computer Methods and Programs in
+#' Biomedicine}, 49, 199--210.
+#'
+#' @seealso \code{mc_bias_correct_std}
 #'
 #' @export
 

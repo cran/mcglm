@@ -13,10 +13,6 @@ vignette: >
 
 library(knitr)
 
-opts_chunk$set(
-    dev.args=list(family="Palatino"))
-
-options(width=68)
 ```
 
 ****
@@ -26,7 +22,7 @@ To install the stable version of [`mcglm`][], use
 
 ```{r, eval=FALSE}
 library(devtools)
-install_git("wbonat/mcglm")
+install_git("bonatwagner/mcglm")
 ```
 
 ```{r, eval=FALSE, error=FALSE, message=FALSE, warning=FALSE}
@@ -370,5 +366,5 @@ Note that, we estimate the power parameter rather than fix it at $p = 2$.
 
 <!---------------------------------------------------------------------- -->
 
-[`mcglm`]: https://github.com/wbonat/mcglm
-[mcglm/README]: https://github.com/wbonat/mcglm/blob/master/README.md
+[`mcglm`]: https://github.com/bonatwagner/mcglm
+[mcglm/README]: https://github.com/bonatwagner/mcglm/blob/main/README.md

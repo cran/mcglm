@@ -23,7 +23,9 @@ the values of the other parameters.}
 the conditional test.}
 }
 \value{
-Returns estimates, conditional standard errors and Z-statistics.
+Returns a data frame with parameter estimates, conditional standard
+errors and Z-statistics. It is used to compute conditional hypothesis tests
+in mcglm fitted models.
 }
 \description{
 Compute conditional hypotheses tests for fitted

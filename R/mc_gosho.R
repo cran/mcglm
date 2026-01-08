@@ -12,8 +12,11 @@
 #'     observations. Data are assumed to be sorted so that observations
 #'     on a cluster are contiguous rows for all entities in the formula.
 #' @param verbose logical. Print or not the GOSHO value.
-#' @return The value of the GOSHO criterion.
-#' Note that the function assumes that the data are in the correct order.
+#' @return An invisible list with a single numeric component:
+#' \describe{
+#'   \item{Gosho}{The Gosho Information Criterion, computed for longitudinal
+#'   data with a single response variable and scaled by the number of clusters.}
+#' }
 #'
 #' @source Wang, M. (2014). Generalized Estimating Equations in Longitudinal Data
 #' Analysis: A Review and Recent Developments. Advances in Statistics, 1(1)1--13.

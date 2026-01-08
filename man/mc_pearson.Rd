@@ -2,7 +2,12 @@
 % Please edit documentation in R/mc_pearson.R
 \name{mc_pearson}
 \alias{mc_pearson}
-\title{Pearson estimating function}
+\title{Pearson Estimating Function}
+\source{
+Bonat, W. H. and Jørgensen, B. (2016). Multivariate covariance generalized
+linear models. Journal of the Royal Statistical Society: Series C,
+65, 649--675.
+}
 \usage{
 mc_pearson(
   y_vec,
@@ -17,37 +22,72 @@ mc_pearson(
 )
 }
 \arguments{
-\item{y_vec}{A vector.}
+\item{y_vec}{Numeric vector of observed responses stacked across
+response variables.}
 
-\item{mu_vec}{A vector.}
+\item{mu_vec}{Numeric vector of fitted means corresponding to
+\code{y_vec}.}
 
-\item{Cfeatures}{A list of matrices.}
+\item{Cfeatures}{A list containing covariance-related components,
+typically including the covariance matrix \code{C}, its inverse
+\code{inv_C}, and the derivatives of \code{C} with respect to the
+dispersion parameters (\code{D_C}).}
 
-\item{inv_J_beta}{A matrix.}
+\item{inv_J_beta}{Optional matrix giving the inverse of the sensitivity
+matrix associated with the regression parameters. Required only when
+bias correction is requested.}
 
-\item{D}{A matrix.}
+\item{D}{Optional matrix of derivatives of the mean vector with respect
+to the regression parameters. Required only when bias correction is
+requested.}
 
-\item{correct}{Logical.}
+\item{correct}{Logical indicating whether the bias-corrected Pearson
+estimating function should be computed. Defaults to \code{FALSE}.}
 
-\item{compute_sensitivity}{Logical.}
+\item{compute_sensitivity}{Logical indicating whether the sensitivity
+matrix of the Pearson estimating function should be computed.
+Defaults to \code{TRUE}.}
 
-\item{compute_variability}{Logical.}
+\item{compute_variability}{Logical indicating whether the variability
+matrix of the Pearson estimating function should be computed.
+Defaults to \code{FALSE}.}
 
-\item{W}{Matrix of weights.}
+\item{W}{Numeric vector or diagonal matrix of weights associated with
+the observations.}
 }
 \value{
-A list with three components: (i) a vector of quasi-score
-    values, (ii) the sensitivity and (iii) variability matrices
-    associated with the Pearson estimating function.
+A list with the following components:
+\describe{
+  \item{Score}{A numeric vector containing the values of the Pearson
+  estimating function for the dispersion parameters.}
+  \item{Sensitivity}{A matrix giving the sensitivity (expected Jacobian)
+  of the Pearson estimating function. Returned only if
+  \code{compute_sensitivity = TRUE}.}
+  \item{Variability}{A matrix giving the variability of the Pearson
+  estimating function. Returned only if
+  \code{compute_variability = TRUE}.}
+  \item{Extra}{A list of intermediate quantities used in the
+  computation, mainly products involving derivatives of the covariance
+  matrix.}
+}
 }
 \description{
-Compute the Pearson estimating function its sensitivity
-    and variability matrices.
+Computes the Pearson estimating function for the dispersion parameters
+in multivariate covariance generalized linear models, together with its
+associated sensitivity and variability matrices. This function is used
+internally in the estimating function framework adopted by
+\code{mcglm}.
 }
 \details{
-Compute the Pearson estimating function its sensitivity and
-    variability matrices.  For more details see Bonat and Jorgensen
-    (2016) equations 6, 7 and 8.
+The Pearson estimating function is based on quadratic forms of the
+residuals and the inverse covariance matrix. When
+\code{correct = TRUE}, a bias-corrected version is computed using the
+correction term described in Bonat and Jørgensen (2016). The sensitivity
+and variability matrices correspond to Equations (6), (7) and (8) of
+that reference.
+
+This function is intended for internal use and is not designed to be
+called directly by end users.
 }
 \author{
 Wagner Hugo Bonat

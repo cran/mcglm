@@ -10,7 +10,8 @@
 #'@param n_obs A numeric specifying the number of observations in the
 #'     data set.
 #'@keywords internal
-#'@return A list of zero matrices.
+#'@return A list of matrices with elements equal to zero.
+#'     The returned object is intended for internal use only.
 #'@details It is an internal function.
 
 mc_build_bdiag <- function(n_resp, n_obs) {

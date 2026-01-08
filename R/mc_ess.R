@@ -8,7 +8,11 @@
 #' of \code{mcglm} class.
 #' @param verbose logical. Print or not the ESS value.
 #'
-#' @return Returns the value of the generalized error sum of squares (ESS).
+#' @return An invisible list with a single numeric component:
+#' \describe{
+#'   \item{ESS}{The generalized error sum of squares, scaled by the residual
+#'   degrees of freedom.}
+#' }
 #' @seealso \code{gof}, \code{plogLik}, \code{pAIC}, \code{pKLIC},
 #' \code{GOSHO} and \code{RJC}.
 #'
@@ -21,7 +25,7 @@
 #' @export
 
 ESS <- function(object, verbose = TRUE) {
-  if(isa(object, "mcglm")) {
+  if(inherits(object, "mcglm")) {
     b <- c(as.matrix(object$observed)) - c(as.matrix(object$fitted))
     ess <- as.numeric(t(b)%*%object$inv_C%*%b)
     df <- length(coef(object)$Estimates)
@@ -30,7 +34,7 @@ ESS <- function(object, verbose = TRUE) {
     if (verbose) cat("ESS", ess)
     return(invisible(list("ESS" = ess)))
   }
-  if(isa(object, "list")) {
+  if(inherits(object, "list")) {
     Y <- do.call(c,lapply(object, function(x)as.numeric(x$observed)))
     mu <-do.call(c,lapply(object, function(x)as.numeric(x$fitted)))
     b <- Y - mu

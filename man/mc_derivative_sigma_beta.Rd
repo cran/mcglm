@@ -2,7 +2,7 @@
 % Please edit documentation in R/mc_derivative_sigma_beta.R
 \name{mc_derivative_sigma_beta}
 \alias{mc_derivative_sigma_beta}
-\title{Derivatives of V^{1/2} with respect to beta.}
+\title{Derivatives of \eqn{V ^{1/2}} with respect to beta.}
 \usage{
 mc_derivative_sigma_beta(D, D_V_sqrt_mu, Omega, V_sqrt, variance)
 }
@@ -18,8 +18,9 @@ mc_derivative_sigma_beta(D, D_V_sqrt_mu, Omega, V_sqrt, variance)
 \item{variance}{A string specifying the variance function name.}
 }
 \value{
-A list of matrices, containg the derivatives of \eqn{V^{1/2}}
+A list of matrices, with the derivatives of \eqn{V^{1/2}}
     with respect to the regression parameters.
+    The returned object is intended for internal use only.
 }
 \description{
 Compute the derivatives of \eqn{V^{1/2}} matrix with

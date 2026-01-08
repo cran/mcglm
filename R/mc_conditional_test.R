@@ -20,7 +20,9 @@
 #' @param fixed index indicating which parameters should be fixed on
 #' the conditional test.
 #'
-#' @return Returns estimates, conditional standard errors and Z-statistics.
+#' @return Returns a data frame with parameter estimates, conditional standard
+#' errors and Z-statistics. It is used to compute conditional hypothesis tests
+#' in mcglm fitted models.
 #'
 #' @source Bonat, W. H. (2018). Multiple Response Variables Regression
 #' Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.

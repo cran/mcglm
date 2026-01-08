@@ -2,37 +2,42 @@
 % Please edit documentation in R/mc_variability.R
 \name{mc_variability}
 \alias{mc_variability}
-\title{Variability matrix}
+\title{Variability Matrix}
 \usage{
 mc_variability(sensitivity, product, inv_C, C, res, W)
 }
 \arguments{
-\item{sensitivity}{A matrix. In general the output from
-\code{mc_sensitivity}.}
+\item{sensitivity}{A numeric matrix representing the sensitivity matrix.
+Typically obtained from \code{\link{mc_sensitivity}}.}
 
-\item{product}{A list of matrix.}
+\item{product}{A list of numeric matrices, usually used to compute
+contributions to the variability matrix.}
 
-\item{inv_C}{A matrix. In general the output from \code{mc_build_C}.}
+\item{inv_C}{A numeric matrix representing the inverse of the covariance
+matrix, usually obtained from \code{\link{mc_build_C}}.}
 
-\item{C}{A matrix. In general the output from \code{mc_build_C}.}
+\item{C}{A numeric matrix representing the covariance matrix, usually
+obtained from \code{\link{mc_build_C}}.}
 
-\item{res}{A vector. The residuals vector, i.e. (y_vec - mu_vec).}
+\item{res}{A numeric vector of residuals, defined as \eqn{y - \mu}.}
 
-\item{W}{Matrix of weights.}
+\item{W}{A numeric matrix of weights.}
 }
 \value{
-The variability matrix associated witht the Pearson
-    estimating function.
+A symmetric numeric matrix representing the variability matrix associated
+with the Pearson estimating function. The returned object is intended for internal use only.
 }
 \description{
-Compute the variability matrix associated with the
-    Pearson estimating function.
+Computes the variability matrix associated with the Pearson estimating
+function. This function is intended for internal use in the fitting
+algorithm and implements Equation 8 from Bonat and Jorgensen (2016).
 }
 \details{
-This function implements the equation 8 of Bonat and
-    Jorgensen (2016).
+This function implements Equation 8 from Bonat and Jorgensen (2016), which
+defines the variability matrix used in generalized estimating equations
+for multiple response variables.
 }
 \author{
-Wagner Hugo Bonat and Eduardo Elias Ribeiro Jr
+Wagner Hugo Bonat
 }
 \keyword{internal}

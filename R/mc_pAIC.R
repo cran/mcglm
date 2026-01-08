@@ -1,19 +1,44 @@
 #' @title Pseudo Akaike Information Criterion
 #' @author Wagner Hugo Bonat, \email{wbonat@@ufpr.br}
 #'
-#' @description Extract the pseudo Akaike information criterion (pAIC)
-#' for objects of \code{mcglm} class.
+#' @description
+#' Computes the pseudo Akaike information criterion (pAIC) for fitted
+#' multivariate covariance generalized linear models. The pAIC is defined
+#' as
+#' \deqn{pAIC = -2 \, \ell_p + 2 \, \text{df},}
+#' where \eqn{\ell_p} is the pseudo log-likelihood and \eqn{\text{df}}
+#' denotes the effective number of parameters in the model.
 #'
-#' @param object an object or a list of objects representing a model
-#' of \code{mcglm} class.
-#' @param verbose logical. Print or not the pAIC value.
-#' @return Returns the value of the pseudo Akaike information criterion (pAIC).
+#' This criterion is intended for model comparison within the class of
+#' \code{mcglm} models fitted to the same data.
 #'
-#' @seealso \code{gof}, \code{plogLik}, \code{ESS}, \code{pKLIC},
-#' \code{GOSHO} and \code{RJC}.
+#' @param object An object of class \code{mcglm} or a list of such objects.
+#'   When a list is provided, the pseudo log-likelihood is computed for
+#'   each model.
+#' @param verbose Logical indicating whether the pAIC value should be
+#'   printed to the console. Defaults to \code{TRUE}.
 #'
-#' @source Bonat, W. H. (2018). Multiple Response Variables Regression
-#' Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
+#' @return
+#' An (invisible) named list with a single element:
+#' \describe{
+#'   \item{pAIC}{A numeric value giving the pseudo Akaike information
+#'   criterion associated with the fitted model(s).}
+#' }
+#'
+#' @details
+#' The pAIC is based on the pseudo log-likelihood returned by
+#' \code{\link{plogLik}} and should be used with caution, as it does not
+#' correspond to a true likelihood-based information criterion.
+#' Comparisons are meaningful only for models fitted to the same response
+#' data.
+#'
+#' @seealso
+#' \code{gof}, \code{plogLik}, \code{ESS}, \code{pKLIC},
+#' \code{GOSHO}, \code{RJC}
+#'
+#' @source
+#' Bonat, W. H. (2018). Multiple Response Variables Regression Models in R:
+#' The mcglm Package. Journal of Statistical Software, 84(4), 1--30.
 #'
 #' @export
 

@@ -2,30 +2,58 @@
 % Please edit documentation in R/mc_quasi_score.R
 \name{mc_quasi_score}
 \alias{mc_quasi_score}
-\title{Quasi-score function}
+\title{Quasi-Score Function}
 \usage{
 mc_quasi_score(D, inv_C, y_vec, mu_vec, W)
 }
 \arguments{
-\item{D}{A matrix. In general the output from
+\item{D}{A numeric matrix corresponding to the derivative of the mean
+vector with respect to the regression parameters. This matrix is
+typically obtained from the output of
 \code{\link[mcglm]{mc_link_function}}.}
 
-\item{inv_C}{A matrix. In general the output from
+\item{inv_C}{A numeric matrix giving the inverse of the covariance
+matrix of the response vector, usually obtained from
 \code{\link[mcglm]{mc_build_C}}.}
 
-\item{y_vec}{A vector.}
+\item{y_vec}{A numeric vector containing the stacked observed responses.}
 
-\item{mu_vec}{A vector.}
+\item{mu_vec}{A numeric vector containing the stacked fitted mean values.}
 
-\item{W}{Matrix of weights.}
+\item{W}{A numeric matrix of weights, typically diagonal, accounting for
+missing observations or differential weighting of the responses.}
 }
 \value{
-The quasi-score vector, the Sensivity and variability
-    matrices.
+A list with the following components:
+\describe{
+  \item{Score}{A numeric vector containing the quasi-score values for the
+  regression parameters.}
+  \item{Sensitivity}{A numeric matrix giving the sensitivity matrix of
+  the quasi-score function.}
+  \item{Variability}{A numeric matrix giving the variability matrix of
+  the quasi-score function.}
+}
 }
 \description{
-Compute the quasi-score function, its sensitivy and
-    variability matrix.
+Computes the quasi-score function for the regression parameters in
+multivariate covariance generalized linear models, together with its
+associated sensitivity and variability matrices. These quantities are
+key components of the estimating function approach used to fit
+\code{mcglm} models.
+}
+\details{
+Let \eqn{y} denote the response vector, \eqn{\mu} its mean, \eqn{D} the
+derivative of \eqn{\mu} with respect to the regression parameters, and
+\eqn{C} the covariance matrix of \eqn{y}. The quasi-score is defined as
+\deqn{
+  U_\beta = D^\top C^{-1} W (y - \mu),
+}
+where \eqn{W} is a weight matrix. The sensitivity and variability matrices
+are computed according to standard estimating function theory and are
+used in the iterative fitting algorithm and for inference.
+
+This function is internal and not intended to be called directly by
+end users.
 }
 \author{
 Wagner Hugo Bonat

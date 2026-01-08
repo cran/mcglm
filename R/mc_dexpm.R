@@ -14,9 +14,9 @@
 #'     \code{sparse = FALSE} the class will be 'dgMatrix'.
 #' @param inverse Logical defining if the inverse will be computed or
 #'     not.
-#' @return A list with \eqn{\Omega = expm(U)} its inverse (if
-#'     \code{inverse = TRUE}) and auxiliares matrices to compute the
-#'     derivatives.
+#' @return A list containing \eqn{\Omega = expm(U)}, its inverse (if
+#'   \code{inverse = TRUE}), and auxiliary matrices used to compute the
+#'   derivatives. The returned object is intended for internal use only.
 #' @keywords internal
 #' @seealso \code{\link[Matrix]{expm}}, \code{\link[base]{eigen}},
 #'     \code{link[mcglm]{mc_dexp_gold}}.

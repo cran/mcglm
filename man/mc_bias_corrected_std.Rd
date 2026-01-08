@@ -20,9 +20,8 @@ observations. The data set are assumed to be sorted so that
 observations on a cluster are contiguous rows for all entities.}
 }
 \value{
-A variance-covariance matrix.
-   Note that the function assumes that the data are in the correct
-   order.
+A list with two elements. A vector of standard error and a variance-covariance
+    matrix computed based on a bias corrected approach as described in the reference.
 }
 \description{
 Compute bias-corrected standard error for regression

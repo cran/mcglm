@@ -17,7 +17,8 @@ mc_derivative_sigma_between(n_resp)
 \item{inverse}{Logical.}
 }
 \value{
-A list with sigmab and its derivatives with respect to rho.
+A list of matrices. The function returns a list of matrices with \code{sigmab}
+    and its derivatives with respect to rho. The returned object is intended for internal use only.
 }
 \description{
 This function builds the correlation matrix between

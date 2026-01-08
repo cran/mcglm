@@ -1,21 +1,22 @@
-#' @title Conditional Auto regressive Model Structure
+#' @title Conditional Autoregressive Model Structure
 #' @author Wagner Hugo Bonat, \email{wbonat@@ufpr.br}
 #'
 #' @description The function \code{mc_car} helps to build the components
 #' of the matrix linear predictor used for fitting conditional
-#' auto regressive models. This function is used in general for fitting
-#' spatial areal data using the well known conditional auto regressive
-#' models (CAR). This function depends on a list of neighbors, such a
+#' autoregressive models. This function is used in general for fitting
+#' spatial areal data using the well known conditional autoregressive
+#' models (CAR). This function depends on a list of neighboors, such a
 #' list can be constructed, for example using the
 #' \code{tri2nb} function from the \code{spdep} package
 #' based on spatial coordinates. This way to specify the matrix linear
 #' predictor can also be applied for spatial continuous data,
 #' as an approximation.
 #'
-#' @param list_neigh list of neighbors.
+#' @param list_neigh list of neighboors.
 #' @param intrinsic logical.
 #' @return A list of a matrix (\code{intrinsic = TRUE}) or two matrices
-#' (\code{intrinsic = FALSE}).
+#' (\code{intrinsic = FALSE}). The main use of these matrices are as input in the
+#' \code{mcglm} function as linear covariance models in the argument \code{matrix_pred}.
 #'
 #' @source Bonat, W. H. (2018). Multiple Response Variables Regression
 #' Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.

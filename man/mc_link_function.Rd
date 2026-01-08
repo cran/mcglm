@@ -54,7 +54,15 @@ Options are: \code{"logit"}, \code{"probit"}, \code{"cauchit"},
 A user defined link function can be used (see Details).}
 }
 \value{
-A list with two elements: mu and D (see Details).
+A list with the following components:
+\describe{
+  \item{mu}{A numeric vector of length \eqn{n} containing the mean
+  response values obtained by applying the inverse link function to
+  the linear predictor.}
+  \item{D}{A numeric matrix of dimension \eqn{n \times p} containing
+  the derivatives of \eqn{\mu} with respect to the regression parameters
+  \eqn{\beta}.}
+}
 }
 \description{
 The \code{mc_link_function} is a customized call of the

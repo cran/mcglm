@@ -8,7 +8,8 @@
 #' @param n_resp A numeric.
 #' @param inverse Logical.
 #' @keywords internal
-#' @return A list with sigmab and its derivatives with respect to rho.
+#' @return A list of matrices. The function returns a list of matrices with \code{sigmab}
+#'     and its derivatives with respect to rho. The returned object is intended for internal use only.
 
 mc_build_sigma_between <- function(rho, n_resp, inverse = FALSE) {
     output <- list(Sigmab = 1, D_Sigmab = 1)

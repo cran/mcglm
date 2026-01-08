@@ -4,28 +4,48 @@
 \alias{pAIC}
 \title{Pseudo Akaike Information Criterion}
 \source{
-Bonat, W. H. (2018). Multiple Response Variables Regression
-Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
+Bonat, W. H. (2018). Multiple Response Variables Regression Models in R:
+The mcglm Package. Journal of Statistical Software, 84(4), 1--30.
 }
 \usage{
 pAIC(object, verbose = TRUE)
 }
 \arguments{
-\item{object}{an object or a list of objects representing a model
-of \code{mcglm} class.}
+\item{object}{An object of class \code{mcglm} or a list of such objects.
+When a list is provided, the pseudo log-likelihood is computed for
+each model.}
 
-\item{verbose}{logical. Print or not the pAIC value.}
+\item{verbose}{Logical indicating whether the pAIC value should be
+printed to the console. Defaults to \code{TRUE}.}
 }
 \value{
-Returns the value of the pseudo Akaike information criterion (pAIC).
+An (invisible) named list with a single element:
+\describe{
+  \item{pAIC}{A numeric value giving the pseudo Akaike information
+  criterion associated with the fitted model(s).}
+}
 }
 \description{
-Extract the pseudo Akaike information criterion (pAIC)
-for objects of \code{mcglm} class.
+Computes the pseudo Akaike information criterion (pAIC) for fitted
+multivariate covariance generalized linear models. The pAIC is defined
+as
+\deqn{pAIC = -2 \, \ell_p + 2 \, \text{df},}
+where \eqn{\ell_p} is the pseudo log-likelihood and \eqn{\text{df}}
+denotes the effective number of parameters in the model.
+
+This criterion is intended for model comparison within the class of
+\code{mcglm} models fitted to the same data.
+}
+\details{
+The pAIC is based on the pseudo log-likelihood returned by
+\code{\link{plogLik}} and should be used with caution, as it does not
+correspond to a true likelihood-based information criterion.
+Comparisons are meaningful only for models fitted to the same response
+data.
 }
 \seealso{
 \code{gof}, \code{plogLik}, \code{ESS}, \code{pKLIC},
-\code{GOSHO} and \code{RJC}.
+\code{GOSHO}, \code{RJC}
 }
 \author{
 Wagner Hugo Bonat, \email{wbonat@ufpr.br}

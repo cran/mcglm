@@ -18,7 +18,14 @@ gof(object)
 of \code{mcglm} class.}
 }
 \value{
-Returns a data frame containing goodness-of-fit measures.
+A data frame with the following columns:
+\describe{
+  \item{plogLik}{Numeric value of the pseudo Gaussian log-likelihood.}
+  \item{Df}{Integer giving the number of estimated parameters.}
+  \item{pAIC}{Numeric value of the pseudo Akaike Information Criterion.}
+  \item{pKLIC}{Numeric value of the pseudo Kullback–Leibler Information Criterion.}
+  \item{BIC}{Numeric value of the pseudo Bayesian Information Criterion.}
+}
 }
 \description{
 Extract the pseudo Gaussian log-likelihood (plogLik),

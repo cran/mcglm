@@ -13,29 +13,35 @@
 )
 }
 \arguments{
-\item{object}{an object of \code{mcglm} class.}
+\item{object}{An object of class \code{mcglm}.}
 
-\item{std.error}{logical. If \code{TRUE} returns the standard errors
-for the estimates. Default is \code{FALSE}.}
+\item{std.error}{Logical indicating whether standard errors should be returned
+alongside the parameter estimates. Default is \code{FALSE}.}
 
-\item{response}{a numeric vector specifyng for which response
-variable the coefficients should be returned.}
+\item{response}{Integer vector indicating for which response variables the
+coefficients should be returned. If \code{NA}, coefficients for
+all response variables are returned.}
 
-\item{type}{a string vector (can be 1 element length) specifying which
-coefficients should be returned. \cr
-Options are \code{"beta"}, \code{"tau"}, \code{"power"}, \code{"tau"} and
-\code{"correlation"}.}
+\item{type}{Character vector specifying which type of coefficients should be
+returned. Possible values are \code{"beta"}, \code{"tau"},
+\code{"power"} and \code{"correlation"}.}
 
-\item{...}{additional arguments affecting the summary produced. Note
-that there is no extra options for \code{mcglm} object class.}
+\item{...}{Additional arguments. Currently ignored and included for
+compatibility with the generic \code{\link[stats]{coef}} function.}
 }
 \value{
-A \code{data.frame} with parameters names, estimates,
-    response variable number and parameters type.
+A \code{data.frame} with one row per parameter, containing:
+\itemize{
+  \item \code{Estimates}: parameter estimates;
+  \item \code{Std.error}: standard errors (if requested);
+  \item \code{Parameters}: parameter names;
+  \item \code{Type}: parameter type;
+  \item \code{Response}: response variable index.
+}
 }
 \description{
-Extract model coefficients for objects
-             of \code{mcglm} class.
+Extract regression, dispersion and correlation parameter estimates
+from objects of class \code{mcglm}.
 }
 \author{
 Wagner Hugo Bonat, \email{wbonat@ufpr.br}

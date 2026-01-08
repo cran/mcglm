@@ -4,10 +4,10 @@
 \alias{mc_twin}
 \alias{mc_twin_bio}
 \alias{mc_twin_full}
-\title{Twin Models Structure}
+\title{Twin Model Covariance Structures}
 \source{
-Bonat, W. H. (2018). Multiple Response Variables Regression
-Models in R: The mcglm Package. Journal of Statistical Software, 84(4):1--30.
+Bonat, W. H. (2018). Multiple Response Variables Regression Models in R:
+The mcglm Package. Journal of Statistical Software, 84(4), 1--30.
 }
 \usage{
 mc_twin(id, twin.id, type, replicate = NULL, structure, data)
@@ -17,44 +17,56 @@ mc_twin_bio(id, twin.id, type, replicate = NULL, structure, data)
 mc_twin_full(id, twin.id, type, replicate, formula, data)
 }
 \arguments{
-\item{id}{name of the column (string) containing the twin index.
-It should be the same index (number) for both twins.}
+\item{id}{A string indicating the name of the column in \code{data} that
+identifies the twin pair. The same identifier must be shared by both
+twins in a pair.}
 
-\item{twin.id}{name of the column (string) containing the twin index
-inside the pair. In general 1 for the first twin and 2 for the second
-twin.}
+\item{twin.id}{A string indicating the name of the column in \code{data} that
+identifies the twin within each pair. Typically coded as \code{1} and
+\code{2}.}
 
-\item{type}{name of the column (string) containing the indication of
-the twin as mz or dz. It should be a factor with only two levels mz and dz.
-Be sure that the reference level is mz.}
+\item{type}{A string indicating the name of the column in \code{data} that
+identifies the zygosity type. This variable must be a factor with
+exactly two levels: \code{"mz"} and \code{"dz"}, where \code{"mz"} is
+taken as the reference level.}
 
-\item{replicate}{name of the column (string) containing the index
-for more than one observation taken at the same twin pair. It is used
-for example in twin longitudinal studies. In that case, the replication
-column should contain the time index.}
+\item{replicate}{An optional string indicating the name of the column in \code{data}
+that identifies replicated observations within the same twin pair,
+such as time points in longitudinal twin studies. If provided, it is
+treated as a factor.}
 
-\item{structure}{model type options are full, flex, uns, ACE, ADE,
-AE, CE and E. See example for details.}
+\item{structure}{A string specifying the covariance structure to be constructed.
+Available options are \code{"full"}, \code{"flex"}, \code{"uns"},
+\code{"ACE"}, \code{"ADE"}, \code{"AE"}, \code{"CE"} and \code{"E"}.}
 
-\item{data}{data set.}
+\item{data}{A data frame containing all variables referenced by the model.}
 
-\item{formula}{internal.}
+\item{formula}{Internal argument used to define flexible and unstructured covariance
+models. Not intended for direct user specification.}
 }
 \value{
-A list of matrices of \code{dgCMatrix} class.
+A list of sparse matrices of class \code{dgCMatrix}, representing the
+components of the matrix linear predictor to be used in the
+\code{matrix_pred} argument of \code{\link{mcglm}}.
 }
 \description{
-The function \code{mc_twin} helps to build the components
-of the matrix linear predictor associated with ACDE models for
-analysis of twin data.
+Constructs the components of the matrix linear predictor for twin data
+analysis under ACDE-type models. The function generates covariance
+structures suitable for monozygotic (MZ) and dizygotic (DZ) twins and
+supports several biologically motivated and flexible model
+parameterizations.
 }
-\examples{
-id <- rep(1:5, each = 4)
-id.twin <- rep(1:2, 10)
+\details{
+For biologically motivated structures (\code{"ACE"}, \code{"ADE"},
+\code{"AE"}, \code{"CE"}, \code{"E"}), the function builds covariance
+matrices based on classical twin modeling assumptions. For flexible
+and unstructured options (\code{"full"}, \code{"flex"}, \code{"uns"}),
+the covariance structure is constructed using matrix linear predictors.
 }
 \seealso{
-\code{mc_id}, \code{mc_dist}, \code{mc_car},
-\code{mc_rw}, \code{mc_ns}, \code{mc_dglm} and \code{mc_mixed}.
+\code{\link{mc_id}}, \code{\link{mc_dist}}, \code{\link{mc_car}},
+\code{\link{mc_rw}}, \code{\link{mc_ns}}, \code{\link{mc_dglm}},
+\code{\link{mc_mixed}}.
 }
 \author{
 Wagner Hugo Bonat, \email{wbonat@ufpr.br}

@@ -10,14 +10,14 @@
 #' @param D A matrix.
 #' @keywords internal
 #' @return The cross-variability matrix between regression and
-#'     covariance parameters.
+#'     covariance parameters. The returned object is intended for internal use only.
 
 mc_cross_variability <- function(Product_cov, inv_C, res, D) {
     Wlist <- lapply(Product_cov, mc_multiply2, bord2 = inv_C)
     A <- t(D) %*% inv_C
     n_beta <- dim(A)[1]
     n_cov <- length(Product_cov)
-    cross_variability <- Matrix(NA, ncol = n_cov, nrow = n_beta)
+    cross_variability <- Matrix(NA_real_, ncol = n_cov, nrow = n_beta)
     for (j in 1:n_beta) {
         for (i in 1:n_cov) {
             cross_variability[j, i] <-

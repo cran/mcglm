@@ -21,7 +21,9 @@ mc_derivative_C_rho(
 \item{II}{A diagonal matrix.}
 }
 \value{
-A matrix.
+A list of matrices. The function returns a list of matrices corresponding
+to the derivatives of the variance-covariance matrix with respect to the correlations
+parameters rho. The returned object is intended for internal use only.
 }
 \description{
 Compute the derivative of the C matrix with respect to

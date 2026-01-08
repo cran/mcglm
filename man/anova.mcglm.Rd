@@ -2,42 +2,63 @@
 % Please edit documentation in R/mc_S3_methods.R
 \name{anova.mcglm}
 \alias{anova.mcglm}
-\title{Anova Tables}
+\title{Wald Tests for Fixed Effects in mcglm Models}
 \usage{
-\method{anova}{mcglm}(object, ...)
+\method{anova}{mcglm}(object, ..., verbose = TRUE)
 }
 \arguments{
-\item{object}{an object of class \code{mcglm}, usually, a result of a
-call to \code{mcglm()} function.}
+\item{object}{An object of class \code{mcglm}, typically the result of
+a call to \code{\link{mcglm}}.}
 
-\item{...}{additional arguments affecting the summary produced. Note
-that there is no extra options for mcglm object class.}
+\item{...}{Additional arguments. Currently ignored.}
+
+\item{verbose}{Logical indicating whether the Wald test results should be printed
+to the console. If \code{FALSE}, the function silently returns the
+results.}
 }
 \value{
-A \code{data.frame} with Chi-square statistic to test the
-    null hypothesis of a parameter, or a set of parameters, be
-    zero. Degree of freedom (Df) and p-values.
-    The Wald test based on the observed covariance matrix of
-    the parameters is used.
+A list of data frames, one for each response variable. Each data frame
+contains the results of Wald chi-square tests for the fixed-effect
+terms in the corresponding linear predictor, with the following
+columns:
+\describe{
+  \item{Covariate}{Name of the covariate or model term tested.}
+  \item{Chi.Square}{Value of the Wald chi-square statistic.}
+  \item{Df}{Degrees of freedom associated with the test.}
+  \item{p.value}{P-value of the Wald test.}
+}
+The returned object is invisible and is primarily intended for
+programmatic use.
 }
 \description{
-Performs Wald tests of the significance for the linear
-predictor components by response variables. This function is useful
-for joint hypothesis tests of regression coefficients associated with
-categorical covariates with more than two levels. It is not designed
-for model comparison.
+Performs Wald chi-square tests for assessing the significance of
+fixed-effect terms in the linear predictors of an \code{mcglm} model.
+The tests are conducted separately for each response variable and
+are particularly useful for joint hypothesis testing of regression
+coefficients associated with categorical covariates with more than
+two levels. This function is not intended for model comparison.
+}
+\details{
+The Wald tests are computed using the observed covariance matrix of
+the regression parameter estimates. For each response variable, joint
+tests are performed for sets of parameters corresponding to the same
+model term, as defined by the design matrix.
 }
 \examples{
-x1 <- seq(-1, 1, l = 100)
+x1 <- seq(-1, 1, length.out = 100)
 x2 <- gl(5, 20)
 beta <- c(5, 0, -2, -1, 1, 2)
 X <- model.matrix(~ x1 + x2)
 set.seed(123)
-y <- rnorm(100, mean = X\%*\%beta, sd = 1)
-data = data.frame("y" = y, "x1" = x1, "x2" = x2)
-fit.anova <- mcglm(c(y ~ x1 + x2), list(mc_id(data)), data = data)
-anova(fit.anova)
+y <- rnorm(100, mean = X \%*\% beta, sd = 1)
+data <- data.frame(y = y, x1 = x1, x2 = x2)
+fit <- mcglm(c(y ~ x1 + x2), list(mc_id(data)), data = data)
+anova(fit)
 
+}
+\seealso{
+\code{\link{summary.mcglm}}, \code{\link{coef.mcglm}},
+  \code{\link{vcov.mcglm}}
 }
 \author{
 Wagner Hugo Bonat, \email{wbonat@ufpr.br}

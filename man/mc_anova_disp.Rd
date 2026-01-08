@@ -2,53 +2,41 @@
 % Please edit documentation in R/mc_anova_disp.R
 \name{mc_anova_disp}
 \alias{mc_anova_disp}
-\title{Anova Tables for dispersion components}
+\title{Wald Tests for Dispersion Components}
 \usage{
 mc_anova_disp(object, idx_list, names_list, ...)
 }
 \arguments{
-\item{object}{an object of class \code{mcglm}, usually, a result of a
-call to \code{mcglm()} function.}
+\item{object}{An object of class \code{"mcglm"}, typically the result
+of a call to \code{\link{mcglm}}.}
 
-\item{idx_list}{list with indexes for parameter tests.}
+\item{idx_list}{A list of integer vectors indexing dispersion
+parameters to be jointly tested for each response.}
 
-\item{names_list}{list of names to appear in the anova table.}
+\item{names_list}{A list of character vectors with covariate names to
+be displayed in the output tables.}
 
-\item{...}{additional arguments affecting the summary produced. Note
-that there is no extra options for mcglm object class.}
+\item{...}{Currently not used.}
 }
 \value{
-A \code{data.frame} with Chi-square statistic to test the
-    null hypothesis of a parameter, or a set of parameters, be
-    zero. Degree of freedom (Df) and p-values.
-    The Wald test based on the observed covariance matrix of
-    the parameters is used.
+The object is a list of data frames, one per response variable. Each
+data frame contains the following columns:
+\describe{
+  \item{Covariate}{Name of the covariate associated with the dispersion
+  parameters being tested.}
+  \item{Chi.Square}{Wald chi-square test statistic.}
+  \item{Df}{Degrees of freedom of the test.}
+  \item{p.value}{P-value associated with the chi-square test.}
+}
 }
 \description{
-IT IS AN EXPERIMENTAL FUNCTION BE CAREFUL!
-Performs Wald tests of the significance for the dispersion
-components by response variables. This function is useful
-for joint hypothesis tests of dispersion coefficients associated with
+Performs Wald chi-square tests for dispersion (covariance) parameters
+by response variable in multivariate covariance generalized linear
+models fitted with \code{\link{mcglm}}. This function is intended for
+joint hypothesis testing of dispersion coefficients associated with
 categorical covariates with more than two levels. It is not designed
 for model comparison.
 }
-\examples{
-x1 <- seq(0, 1, l = 100)
-x2 <- gl(5, 20)
-beta <- c(5, 0, -2, -1, 1, 2)
-X <- model.matrix(~ x1 + x2)
-set.seed(123)
-y <- rnorm(100, mean = 10, sd = X\%*\%beta)
-data = data.frame("y" = y, "x1" = x1, "x2" = x2, "id" = 1)
-fit.anova <- mcglm(c(y ~ 1), list(mc_dglm(~ x1 + x2, id = "id", data)),
-                   control_algorithm = list(tuning = 0.9), data = data)
-X <- model.matrix(~ x1 + x2, data = data)
-idx <- attr(X, "assign")
-idx_list <- list("idx" = idx, "idx" = idx)
-names_list <- list(colnames(X), colnames(X))
-mc_anova_disp(object = fit.anova, idx = idx_list, names_list = names_list)
-
-}
-\author{
-Wagner Hugo Bonat, \email{wbonat@ufpr.br}
+\seealso{
+\code{\link{mcglm}}, \code{\link{vcov}}, \code{\link{coef}}
 }

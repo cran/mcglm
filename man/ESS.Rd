@@ -20,7 +20,11 @@ of \code{mcglm} class.}
 \item{verbose}{logical. Print or not the ESS value.}
 }
 \value{
-Returns the value of the generalized error sum of squares (ESS).
+An invisible list with a single numeric component:
+\describe{
+  \item{ESS}{The generalized error sum of squares, scaled by the residual
+  degrees of freedom.}
+}
 }
 \description{
 Extract the generalized error sum of squares (ESS) for

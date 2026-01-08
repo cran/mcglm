@@ -3,93 +3,52 @@
 \docType{data}
 \name{ahs}
 \alias{ahs}
-\title{Australian Health Survey}
+\title{Australian Health Survey Data}
 \format{
-a \code{data.frame} with 5190 records and 15 variables.
+A \code{data.frame} with 5190 observations and 15 variables:
+\describe{
+  \item{\code{sex}}{Factor with levels \code{male} and \code{female}.}
+  \item{\code{age}}{Respondent's age in years divided by 100.}
+  \item{\code{income}}{Respondent's annual income in Australian dollars divided by 1000.}
+  \item{\code{levyplus}}{Factor indicating coverage by private health insurance for private patients in public hospital with doctor of choice (1) or otherwise (0).}
+  \item{\code{freepoor}}{Factor indicating government coverage due to low income, recent immigration, or unemployment (1) or otherwise (0).}
+  \item{\code{freerepa}}{Factor indicating government coverage due to old-age/disability pension, veteran status, or family of deceased veteran (1) or otherwise (0).}
+  \item{\code{illnes}}{Number of illnesses in the past two weeks, capped at 5.}
+  \item{\code{actdays}}{Number of days of reduced activity in the past two weeks due to illness or injury.}
+  \item{\code{hscore}}{General health questionnaire score (Goldberg's method); higher scores indicate poorer health.}
+  \item{\code{chcond}}{Factor with levels: \code{limited} (chronic condition with activity limitation), \code{nonlimited} (chronic condition without limitation), \code{otherwise} (reference level).}
+  \item{\code{Ndoc}}{Number of consultations with a doctor or specialist (response variable).}
+  \item{\code{Nndoc}}{Number of consultations with health professionals (response variable).}
+  \item{\code{Nadm}}{Number of admissions to hospital, psychiatric hospital, nursing, or convalescence home in the past 12 months (response variable).}
+  \item{\code{Nhosp}}{Number of nights in a hospital during the most recent admission.}
+  \item{\code{Nmed}}{Total number of prescribed and non-prescribed medications used in the past two days.}
+}
 }
 \source{
-Deb, P. and Trivedi, P. K. (1997) Demand for medical care by
-    the elderly: A finite mixture approach. Journal of Applied
-    Econometrics 12(3):313--336.
+Deb, P. and Trivedi, P. K. (1997) "Demand for medical care by the elderly: A finite mixture approach." \emph{Journal of Applied Econometrics}, 12(3):313--336.
 
-Bonat, W. H. and Jorgensen, B. (2016) Multivariate
-    covariance generalized linear models.
-    Journal of Royal Statistical Society - Series C 65:649--675.
+Bonat, W. H. and Jorgensen, B. (2016) "Multivariate covariance generalized linear models." \emph{Journal of the Royal Statistical Society: Series C}, 65:649--675.
 }
 \usage{
 data(ahs)
 }
 \description{
-The Australian health survey was used by Bonat and
-    Jorgensen (2016) as an example of multivariate count regression
-    model. The data consists of five count response variables
-    concerning health system access measures and nine covariates
-    concerning social conditions in Australian for 1987-88.
-
-\itemize{
-
-\item \code{sex} - Factor with levels \code{male} and \code{female}.
-
-\item \code{age} - Respondent's age in years divided by 100.
-
-\item \code{income} - Respondent's annual income in Australian
-    dollars divided by 1000.
-
-\item \code{levyplus} - Coded factor. If respondent is covered by
-    private health insurance fund for private patients in public
-    hospital with doctor of choice (1) or otherwise (0).
-
-\item \code{freepoor} - Coded factor. If respondent is covered by
-    government because low income, recent immigrant, unemployed (1)
-    or otherwise (0).
-
-\item \code{freerepa} - Coded factor. If respondent is covered free
-    by government because of old-age or disability pension, or
-    because invalid veteran or family of deceased veteran (1) or
-    otherwise (0).
-
-\item \code{illnes} - Number of illnesses in past 2 weeks, with 5 or
-    illnesses coded as 5.
-
-\item \code{actdays} - Number of days of reduced activity in the past
-    two weeks due to illness or injury.
-
-\item \code{hscore} - Respondent's general health questionnaire score
-    using Goldberg's method. High score indicates poor health.
-
-\item \code{chcond} - Factor with three levels. If respondent has
-    chronic condition(s) and is limited in activity (\code{limited}),
-    or if the respondent has chronic condition(s) but is not limited
-    in activity (\code{nonlimited}) or otherwise (\code{otherwise},
-    reference level).
-
-\item \code{Ndoc} - Number of consultations with a doctor or
-    specialist (response variable).
-
-\item \code{Nndoc} - Number of consultations with health
-    professionals (response variable).
-
-\item \code{Nadm} - Number of admissions to a hospital, psychiatric
-    hospital, nursing or convalescence home in the past 12 months
-    (response variable).
-
-\item \code{Nhosp} - Number of nights in a hospital during the most
-    recent admission.
-
-\item \code{Nmed} - Total number of prescribed and non prescribed
-    medications used in the past two days.
-
-}
+The Australian Health Survey (AHS) was used by Bonat and Jorgensen (2016)
+as an example of multivariate count regression modeling. The dataset
+contains five count response variables related to health system usage and
+nine covariates related to social conditions in Australia for the years
+1987-88.
 }
 \examples{
-require(mcglm)
-data(ahs, package="mcglm")
+library(mcglm)
+data(ahs, package = "mcglm")
 form1 <- Ndoc ~ income + age
 form2 <- Nndoc ~ income + age
 Z0 <- mc_id(ahs)
 fit.ahs <- mcglm(linear_pred = c(form1, form2),
-                 matrix_pred = list(Z0, Z0), link = c("log","log"),
-                 variance = c("poisson_tweedie","poisson_tweedie"),
+                 matrix_pred = list(Z0, Z0),
+                 link = c("log", "log"),
+                 variance = c("poisson_tweedie", "poisson_tweedie"),
                  data = ahs)
 summary(fit.ahs)
 }

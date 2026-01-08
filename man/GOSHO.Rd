@@ -21,8 +21,11 @@ on a cluster are contiguous rows for all entities in the formula.}
 \item{verbose}{logical. Print or not the GOSHO value.}
 }
 \value{
-The value of the GOSHO criterion.
-Note that the function assumes that the data are in the correct order.
+An invisible list with a single numeric component:
+\describe{
+  \item{Gosho}{The Gosho Information Criterion, computed for longitudinal
+  data with a single response variable and scaled by the number of clusters.}
+}
 }
 \description{
 Extract the Gosho Information Criterion (GOSHO)

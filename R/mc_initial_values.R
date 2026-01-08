@@ -27,8 +27,17 @@
 #' @param contrasts list of contrasts to be used in the
 #'     \code{\link[stats]{model.matrix}}.
 #' @param data data frame.
-#' @return Return a list of initial values to be used while fitting
-#'     in the \code{mcglm} function.
+#' @return A list containing initial values for model parameters:
+#' \describe{
+#'   \item{regression}{A list of numeric vectors with initial values for the
+#'   regression parameters of each response variable.}
+#'   \item{power}{A list of numeric vectors with initial values for the power
+#'   parameters associated with the variance functions.}
+#'   \item{tau}{A list of numeric vectors with initial values for the dispersion
+#'   and covariance-related parameters in the matrix linear predictor.}
+#'   \item{rho}{A numeric vector with initial values for the correlation
+#'   parameters between response variables.}
+#' }
 #'
 #' @details To obtain initial values for multivariate covariance
 #' generalized linear models the function \cr \code{mc_initial_values} fits

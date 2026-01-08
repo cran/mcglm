@@ -21,8 +21,8 @@ mc_build_sigma(
 \item{mu}{A numeric vector. In general the output from
 \code{\link{mc_link_function}}.}
 
-\item{Ntrial}{A numeric vector, or NULL or a numeric specifying the
-number of trials in the binomial experiment. It is useful only
+\item{Ntrial}{A numeric vector, or NULL or a numeric specifing the
+number of trials in the binomial experiment. It is usefull only
 when using variance = binomialP or binomialPQ. In the other cases
 it will be ignored.}
 
@@ -36,10 +36,10 @@ argument specifies both p and q.}
 
 \item{sparse}{Logical.}
 
-\item{variance}{String specifying the variance function: constant,
+\item{variance}{String specifing the variance function: constant,
 tweedie, poisson_tweedie, binomialP or binomialPQ.}
 
-\item{covariance}{String specifying the covariance function: identity,
+\item{covariance}{String specifing the covariance function: identity,
 inverse or expm.}
 
 \item{power_fixed}{Logical if the power parameter is fixed at initial
@@ -50,9 +50,10 @@ will be estimated.}
 with respect to regression parameters.}
 }
 \value{
-A list with the Cholesky decomposition of \eqn{\Sigma},
-    \eqn{\Sigma^{-1}} and the derivative of \eqn{\Sigma} with respect
-    to the power and tau parameters.
+A list of matrices. The function returns a list of matrices with the
+    Cholesky decomposition of \eqn{\Sigma}, \eqn{\Sigma^{-1}} and the derivative
+    of \eqn{\Sigma} with respect to the power and tau parameters.
+    The returned object is intended for internal use only.
 }
 \description{
 This function builds a variance-covariance matrix, based

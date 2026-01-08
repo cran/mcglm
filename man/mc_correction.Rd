@@ -20,7 +20,7 @@ output of the \code{[mcglm]{mc_quasi_score}}.}
 }
 \value{
 A vector with the correction terms to be used on the Pearson
-    estimating function.
+    estimating function. The returned object is intended for internal use only.
 }
 \description{
 Compute the correction term associated with the Pearson

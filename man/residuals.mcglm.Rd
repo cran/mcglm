@@ -2,30 +2,36 @@
 % Please edit documentation in R/mc_S3_methods.R
 \name{residuals.mcglm}
 \alias{residuals.mcglm}
-\title{Residuals}
+\title{Residuals for mcglm Objects}
 \usage{
-\method{residuals}{mcglm}(object, type = "raw", ...)
+\method{residuals}{mcglm}(object, type = c("raw", "pearson", "standardized"), ...)
 }
 \arguments{
-\item{object}{an object of \code{mcglm} class.}
+\item{object}{An object of class \code{mcglm}.}
 
-\item{type}{the type of residuals which should be returned.
-Options are: \code{"raw"} (default), \code{"pearson"} and
-\code{"standardized"}.}
+\item{type}{A character string specifying the type of residuals to be returned.
+Options are:
+\describe{
+  \item{\code{"raw"}}{Raw residuals, defined as observed minus fitted values.}
+  \item{\code{"pearson"}}{Pearson residuals, scaled by the marginal standard deviation.}
+  \item{\code{"standardized"}}{Standardized residuals, obtained using the inverse covariance matrix.}
+}}
 
-\item{...}{additional arguments affecting the residuals
-produced. Note that there is no extra options for mcglm object
-class.}
+\item{...}{Further arguments passed to or from other methods. Currently ignored.}
 }
 \value{
-The function \code{residuals.mcglm} returns a matrix of
-residuals values.
+A numeric matrix of class \code{Matrix} with dimensions
+\eqn{n \times r}, where \eqn{n} is the number of observations and
+\eqn{r} is the number of response variables.
 }
 \description{
-Compute residuals for an object of \code{mcglm} class.
+Computes residuals for a fitted \code{mcglm} object. Different types
+of residuals can be extracted, depending on the specified argument
+\code{type}.
 }
 \seealso{
-\code{fitted}.
+\code{\link[stats]{residuals}},
+\code{\link{fitted.mcglm}}
 }
 \author{
 Wagner Hugo Bonat, \email{wbonat@ufpr.br}

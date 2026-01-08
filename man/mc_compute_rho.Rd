@@ -17,8 +17,9 @@ of \code{mcglm} class.}
 \item{level}{the confidence level required.}
 }
 \value{
-Returns estimate, standard error and confidential interval for
-the spatial autocorrelation parameter.
+Returns a data frame with parameter estimate, standard error and
+confidential interval for the spatial autocorrelation parameter. It is used
+in the case of spatial models using the \code{mc_car} specification.
 }
 \description{
 Compute autocorrelation estimates based on a fitted model

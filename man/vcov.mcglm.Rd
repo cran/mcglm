@@ -2,22 +2,27 @@
 % Please edit documentation in R/mc_S3_methods.R
 \name{vcov.mcglm}
 \alias{vcov.mcglm}
-\title{Variance-Covariance Matrix}
+\title{Variance-Covariance Matrix for mcglm Objects}
 \usage{
 \method{vcov}{mcglm}(object, ...)
 }
 \arguments{
-\item{object}{an object of \code{mcglm} class.}
+\item{object}{An object of class \code{mcglm}.}
 
-\item{...}{additional arguments affecting the summary produced. Note
-that there is no extra options for mcglm object class.}
+\item{...}{Further arguments passed to or from other methods. Currently ignored.}
 }
 \value{
-A variance-covariance matrix.
+A numeric matrix representing the variance-covariance matrix of all
+estimated model parameters. Row and column names correspond to the
+parameter identifiers.
 }
 \description{
-Returns the variance-covariance matrix for an object
-of \code{mcglm} class.
+Extracts the variance-covariance matrix of the estimated parameters
+from a fitted \code{mcglm} object.
+}
+\seealso{
+\code{\link{coef.mcglm}},
+\code{\link{summary.mcglm}}
 }
 \author{
 Wagner Hugo Bonat, \email{wbonat@ufpr.br}

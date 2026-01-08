@@ -1,95 +1,124 @@
-#' @title Anova Tables for dispersion components
-#' @author Wagner Hugo Bonat, \email{wbonat@@ufpr.br}
+#' @title Wald Tests for Dispersion Components
 #'
-#' @description IT IS AN EXPERIMENTAL FUNCTION BE CAREFUL!
-#' Performs Wald tests of the significance for the dispersion
-#' components by response variables. This function is useful
-#' for joint hypothesis tests of dispersion coefficients associated with
+#' @description
+#' Performs Wald chi-square tests for dispersion (covariance) parameters
+#' by response variable in multivariate covariance generalized linear
+#' models fitted with \code{\link{mcglm}}. This function is intended for
+#' joint hypothesis testing of dispersion coefficients associated with
 #' categorical covariates with more than two levels. It is not designed
 #' for model comparison.
 #'
-#' @param object an object of class \code{mcglm}, usually, a result of a
-#'     call to \code{mcglm()} function.
-#' @param idx_list list with indexes for parameter tests.
-#' @param names_list list of names to appear in the anova table.
-#' @param ... additional arguments affecting the summary produced. Note
-#'     that there is no extra options for mcglm object class.
+#' @param object An object of class \code{"mcglm"}, typically the result
+#'   of a call to \code{\link{mcglm}}.
+#' @param idx_list A list of integer vectors indexing dispersion
+#'   parameters to be jointly tested for each response.
+#' @param names_list A list of character vectors with covariate names to
+#'   be displayed in the output tables.
+#' @param ... Currently not used.
 #'
-#' @return A \code{data.frame} with Chi-square statistic to test the
-#'     null hypothesis of a parameter, or a set of parameters, be
-#'     zero. Degree of freedom (Df) and p-values.
-#'     The Wald test based on the observed covariance matrix of
-#'     the parameters is used.
-#' @examples
-#' x1 <- seq(0, 1, l = 100)
-#' x2 <- gl(5, 20)
-#' beta <- c(5, 0, -2, -1, 1, 2)
-#' X <- model.matrix(~ x1 + x2)
-#' set.seed(123)
-#' y <- rnorm(100, mean = 10, sd = X%*%beta)
-#' data = data.frame("y" = y, "x1" = x1, "x2" = x2, "id" = 1)
-#' fit.anova <- mcglm(c(y ~ 1), list(mc_dglm(~ x1 + x2, id = "id", data)),
-#'                    control_algorithm = list(tuning = 0.9), data = data)
-#' X <- model.matrix(~ x1 + x2, data = data)
-#' idx <- attr(X, "assign")
-#' idx_list <- list("idx" = idx, "idx" = idx)
-#' names_list <- list(colnames(X), colnames(X))
-#' mc_anova_disp(object = fit.anova, idx = idx_list, names_list = names_list)
+#' @return
+#' The object is a list of data frames, one per response variable. Each
+#' data frame contains the following columns:
+#' \describe{
+#'   \item{Covariate}{Name of the covariate associated with the dispersion
+#'   parameters being tested.}
+#'   \item{Chi.Square}{Wald chi-square test statistic.}
+#'   \item{Df}{Degrees of freedom of the test.}
+#'   \item{p.value}{P-value associated with the chi-square test.}
+#' }
+#'
+#' @seealso \code{\link{mcglm}}, \code{\link{vcov}}, \code{\link{coef}}
 #'
 #' @export
 
 mc_anova_disp <- function(object, idx_list, names_list, ...) {
+
+  ## ---- Argument checks ----
+  if (!inherits(object, "mcglm")) {
+    stop("'object' must be an object of class 'mcglm'.", call. = FALSE)
+  }
+
   n_resp <- length(object$mu_list)
-  n_disp <- lapply(object$matrix_pred, length)
-  idx.list <- list()
-  for (i in 1:n_resp) {
-    idx.list[[i]] <- rep(i, n_disp[i])
+
+  if (length(idx_list) != n_resp) {
+    stop("'idx_list' must have one element per response.", call. = FALSE)
   }
+
+  if (length(names_list) != n_resp) {
+    stop("'names_list' must have one element per response.", call. = FALSE)
+  }
+
+  ## ---- Extract covariance matrix ----
   vv <- vcov(object)
-  n_par <- dim(vv)[1]
-  idx.vec <- do.call(c, idx.list)
-  n_beta <- n_par - length(idx.vec)
-  idx.vec <- c(rep(0, n_beta), idx.vec)
-  temp.vcov <- list()
-  temp.disp <- list()
-  for (i in 1:n_resp) {
-    idx.id <- idx.vec == i
-    temp.vcov[[i]] <- vv[idx.id, idx.id]
-    temp.disp[[i]] <- coef(object, type = "tau", response = i)$Estimates
+  n_par <- nrow(vv)
+
+  ## ---- Identify dispersion parameter blocks ----
+  n_disp <- vapply(object$matrix_pred, length, integer(1))
+  idx_disp <- rep(seq_len(n_resp), n_disp)
+
+  n_beta <- n_par - length(idx_disp)
+  idx_full <- c(rep(0L, n_beta), idx_disp)
+
+  ## ---- Split covariance matrix and parameters by response ----
+  vcov_list <- vector("list", n_resp)
+  disp_list <- vector("list", n_resp)
+
+  for (i in seq_len(n_resp)) {
+    sel <- idx_full == i
+    vcov_list[[i]] <- vv[sel, sel, drop = FALSE]
+    disp_list[[i]] <- coef(object, type = "tau", response = i)$Estimates
   }
-  saida <- list()
-  for (i in 1:n_resp) {
+
+  ## ---- Wald tests ----
+  out <- vector("list", n_resp)
+
+  for (i in seq_len(n_resp)) {
+
     idx <- idx_list[[i]]
-    names <- names_list[[i]]
-    if (names[1] == "(Intercept)") {
+    nm  <- names_list[[i]]
+
+    if (length(idx) != length(disp_list[[i]])) {
+      stop("Length mismatch between 'idx_list' and dispersion parameters.",
+           call. = FALSE)
+    }
+
+    ## Remove intercept if present
+    if (!is.null(nm) && nm[1] == "(Intercept)") {
       idx <- idx[-1]
-      names <- names[-1]
-      temp.disp[[i]] <- temp.disp[[i]][-1]
-      temp.vcov[[i]] <- temp.vcov[[i]][-1, -1]
+      nm  <- nm[-1]
+      disp_list[[i]] <- disp_list[[i]][-1]
+      vcov_list[[i]] <- vcov_list[[i]][-1, -1, drop = FALSE]
     }
-    n_terms <- length(unique(idx))
-    X2.resp <- list()
-    for (j in 1:n_terms) {
-      idx.TF <- idx == j
-      temp <- as.numeric(
-        t(temp.disp[[i]][idx.TF]) %*%
-          solve(as.matrix(temp.vcov[[i]])[idx.TF, idx.TF]) %*%
-          temp.disp[[i]][idx.TF])
-      nbeta.test <- length(temp.disp[[i]][idx.TF])
-      X2.resp[[j]] <-
-        data.frame(Covariate = names[idx.TF][1],
-                   Chi.Square = round(temp, 4), Df = nbeta.test,
-                   p.value = round(pchisq(temp, nbeta.test,
-                                          lower.tail = FALSE),
-                                   4))
+
+    terms <- sort(unique(idx))
+    res_i <- vector("list", length(terms))
+
+    for (j in seq_along(terms)) {
+
+      sel <- idx == terms[j]
+      beta <- disp_list[[i]][sel]
+      V    <- vcov_list[[i]][sel, sel, drop = FALSE]
+
+      invV <- tryCatch(
+        chol2inv(chol(V)),
+        error = function(e) solve(V, tol = 1e-10)
+      )
+
+      X2 <- as.numeric(t(beta) %*% invV %*% beta)
+      df <- length(beta)
+
+      res_i[[j]] <- data.frame(
+        Covariate  = nm[sel][1],
+        Chi.Square = X2,
+        Df         = df,
+        p.value    = pchisq(X2, df, lower.tail = FALSE)
+      )
     }
-    saida[[i]] <- do.call(rbind, X2.resp)
+
+    out[[i]] <- do.call(rbind, res_i)
+    rownames(out[[i]]) <- NULL
   }
-  cat("Wald test for fixed effects\n")
-  for(i in 1:n_resp) {
-    cat("\n")
-    print(saida[[i]])
-    cat("\n")
-  }
-  return(invisible(saida))
+  return(out)
 }
+
+

@@ -2,29 +2,43 @@
 % Please edit documentation in R/mc_manova_disp.R
 \name{mc_manova_disp}
 \alias{mc_manova_disp}
-\title{MANOVA-type test for mcglm objects.}
+\title{MANOVA-Type Test for Dispersion Components of mcglm Models}
 \usage{
-mc_manova_disp(object, idx, names, ...)
+mc_manova_disp(object, idx, effect_names, ...)
 }
 \arguments{
-\item{object}{an object of \code{mcglm} class.}
+\item{object}{An object of class \code{"mcglm"}.}
 
-\item{idx}{vector of indexes for parameter tests.}
+\item{idx}{An integer vector defining the grouping structure
+of dispersion parameters to be tested.}
 
-\item{names}{vector of names to appear in the ANOVA table.}
+\item{effect_names}{A character vector with labels for the tested
+dispersion effects.}
 
-\item{...}{additional arguments affecting the summary produced. Note
-that there is no extra options for mcglm object class.}
+\item{...}{Further arguments (currently not used).}
 }
 \value{
-MANOVA table for mcglm objects.
+A data frame containing the MANOVA-type test results for the
+dispersion parameters with the following columns:
+\describe{
+  \item{Effects}{Names of the tested dispersion effects.}
+  \item{Df}{Degrees of freedom associated with each effect.}
+  \item{Hotelling-Lawley}{Hotelling–Lawley trace statistic.}
+  \item{Chi-square}{Chi-square test statistic.}
+  \item{p-value}{P-values from the chi-square approximation.}
+}
 }
 \description{
-IT IS AN EXPERIMENTAL FUNCTION BE CAREFUL!
-MANOVA-type test for multivariate covariance generalized
-linear models. This function is specify for the dispersion components.
+Performs a MANOVA-type Wald test for the dispersion parameters
+of multivariate covariance generalized linear models fitted
+using \code{\link{mcglm}}. The test is based on quadratic forms
+of the estimated dispersion parameters and their covariance
+matrix, yielding statistics analogous to the Hotelling–Lawley trace.
+}
+\seealso{
+\code{\link{mcglm}}, \code{\link{mc_manova}},
+  \code{\link{coef.mcglm}}, \code{\link{vcov.mcglm}}
 }
 \author{
 Wagner Hugo Bonat, \email{wbonat@ufpr.br}
 }
-\keyword{internal}
